@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Form, Button } from "react-bootstrap";
 import { Link, Navigate } from "react-router-dom";
 import GoogleButton from "react-google-button";
@@ -7,12 +7,29 @@ import LoginData from "../../../interfaces/LoginData";
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
+/* const urlString = window.location.href;
+      const url = new URL(urlString);
+      const accessToken = url.searchParams.get("accessToken");
+      if (accessToken !== null) {
+        console.log(accessToken);
+        //localStorage.setItem("accessToken", accessToken.accessToken);
+      }
+      */
+
 const Login = () => {
+  useEffect(() => {
+    const urlString = window.location.href;
+    const url = new URL(urlString);
+    const accessToken = url.searchParams.get("accessToken");
+    if (accessToken !== null) {
+      localStorage.setItem("accessToken", accessToken);
+    }
+  }, []);
+
   const [formData, setFormData] = useState<LoginData>({
     email: "",
     password: "",
   });
-  const [redirect, setRedirect] = useState(false);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -21,10 +38,10 @@ const Login = () => {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    userGoogleLogin(formData, setRedirect);
+    userGoogleLogin(formData);
   };
 
-  if (redirect) {
+  if (localStorage.getItem("accessToken")) {
     return <Navigate to="/profile" />;
   }
 

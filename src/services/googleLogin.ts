@@ -2,10 +2,7 @@ import LoginData from "../interfaces/LoginData";
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
-const userGoogleLogin = async (
-  loginData: LoginData,
-  setRedirect: React.Dispatch<React.SetStateAction<boolean>>
-) => {
+const userGoogleLogin = async (loginData: LoginData) => {
   try {
     const response = await fetch(`${apiUrl}/users/login`, {
       method: "POST",
@@ -16,9 +13,6 @@ const userGoogleLogin = async (
     });
 
     if (response.ok) {
-      const accessToken = await response.json();
-      localStorage.setItem("accessToken", accessToken.accessToken);
-      setRedirect(true);
     } else {
       console.error("Login information wrong");
     }

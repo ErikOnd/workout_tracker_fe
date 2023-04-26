@@ -1,6 +1,5 @@
-// Import modules and components
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import Profile from "./components/pages/Profile/Profile";
 import CreateWorkout from "./components/pages/CreateWorkout/CreateWorkout";
@@ -12,12 +11,16 @@ import Register from "./components/pages/Register/Register";
 import NotFound from "./components/pages/NotFound/NotFound";
 import Login from "./components/pages/Login/Login";
 
-// Define App component
 function App() {
-  // Define state
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  // Render component
+  useEffect(() => {
+    const accessToken = localStorage.getItem("accessToken");
+    if (accessToken) {
+      setIsLoggedIn(true);
+    }
+  }, []);
+
   return (
     <BrowserRouter>
       <Routes>
@@ -75,10 +78,7 @@ function App() {
           }
         />
 
-        <Route
-          path="/login"
-          element={<Login /* setIsLoggedIn={setIsLoggedIn} */ />}
-        />
+        <Route path="/login" element={<Login />} />
 
         <Route path="/register" element={<Register />} />
 
