@@ -32,7 +32,7 @@ function App() {
         />
 
         <Route
-          path="/createWorkout"
+          path="/workouts"
           element={
             isLoggedIn ? (
               <CreateWorkout />
@@ -43,14 +43,14 @@ function App() {
         />
 
         <Route
-          path="/ContactUs"
+          path="/contact"
           element={
             isLoggedIn ? <ContactUs /> : <Navigate to="/login" replace={true} />
           }
         />
 
         <Route
-          path="/FindWorkout"
+          path="/find-workouts"
           element={
             isLoggedIn ? (
               <FindWorkout />
@@ -61,20 +61,9 @@ function App() {
         />
 
         <Route
-          path="/Progress"
+          path="/progress"
           element={
             isLoggedIn ? <Progress /> : <Navigate to="/login" replace={true} />
-          }
-        />
-
-        <Route
-          path="/YourWorkouts"
-          element={
-            isLoggedIn ? (
-              <YourWorkouts />
-            ) : (
-              <Navigate to="/login" replace={true} />
-            )
           }
         />
 

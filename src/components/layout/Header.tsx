@@ -1,21 +1,36 @@
 import React from "react";
-import { Navbar, Container, Nav } from "react-bootstrap";
+import { Navbar, Container, Nav, Image } from "react-bootstrap";
 import "./Header.css";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   return (
     <Navbar bg="transparent" expand="lg" variant="dark" fixed="top">
-      <Container fluid>
-        <Navbar.Brand href="#">LOGO</Navbar.Brand>
+      <Container fluid className="px-5 align-items-start">
+        <Navbar.Brand href="#">
+          <Image
+            src="https://res.cloudinary.com/dyy38u8x7/image/upload/v1682580357/Logo_pof5u1.png"
+            alt="logo"
+            className="logo"
+          ></Image>
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls="navbar-nav" />
         <Navbar.Collapse id="navbar-nav">
-          <Nav className="ml-auto">
-            <Nav.Link href="#">Profile</Nav.Link>
-            <Nav.Link href="#">Your Workouts</Nav.Link>
-            <Nav.Link href="#">Progress</Nav.Link>
-            <Nav.Link href="#">Find Workouts</Nav.Link>
-            <Nav.Link href="#">
-              <span>Contact</span>
+          <Nav className="ml-auto mt-2">
+            <Nav.Link as={Link} to="/profile">
+              Profile
+            </Nav.Link>
+            <Nav.Link as={Link} to="/workouts">
+              Your Workouts
+            </Nav.Link>
+            <Nav.Link as={Link} to="/progress">
+              Progress
+            </Nav.Link>
+            <Nav.Link as={Link} to="/find-workouts">
+              Find Workouts
+            </Nav.Link>
+            <Nav.Link as={Link} to="/contact">
+              <span className="contact-btn">Contact</span>
             </Nav.Link>
           </Nav>
         </Navbar.Collapse>

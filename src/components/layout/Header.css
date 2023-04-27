@@ -1,4 +1,19 @@
 .nav-link {
   font-size: 20px;
-  color: #ff8a00 !important;
+  color: white !important;
+}
+
+.contact-btn {
+  background-color: #ff8a00;
+  padding-inline: 20px;
+  padding-block: 10px;
+  border-radius: 15px;
+}
+
+.logo {
+  max-width: 150px;
+}
+
+.navbar-toggler.collapsed {
+  background-color: #ff8a00;
 }
