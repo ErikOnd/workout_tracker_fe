@@ -2,19 +2,17 @@ import React, { useEffect, useState } from "react";
 import { Container, Form, Button } from "react-bootstrap";
 import { Link, Navigate } from "react-router-dom";
 import GoogleButton from "react-google-button";
-import userGoogleLogin from "../../../services/googleLogin";
+import userLogin from "../../../services/userLogin";
 import LoginData from "../../../interfaces/LoginData";
+import storeAccessToken from "../../../helpers/storeAccessToken";
+import { useNavigate } from "react-router-dom";
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
 const Login = () => {
+  const navigate = useNavigate();
   useEffect(() => {
-    const urlString = window.location.href;
-    const url = new URL(urlString);
-    const accessToken = url.searchParams.get("accessToken");
-    if (accessToken !== null) {
-      localStorage.setItem("accessToken", accessToken);
-    }
+    storeAccessToken();
   }, []);
 
   const [formData, setFormData] = useState<LoginData>({
@@ -27,9 +25,15 @@ const Login = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    userGoogleLogin(formData);
+    const path = await userLogin(formData);
+
+    if (path) {
+      navigate(path);
+    } else {
+      console.error("Failed to log in");
+    }
   };
 
   if (localStorage.getItem("accessToken")) {

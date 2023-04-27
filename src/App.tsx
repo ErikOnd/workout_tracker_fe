@@ -2,11 +2,10 @@ import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 import Profile from "./components/pages/Profile/Profile";
-import CreateWorkout from "./components/pages/CreateWorkout/CreateWorkout";
+import Workouts from "./components/pages/Workouts/Workouts";
 import ContactUs from "./components/pages/ContactUs/ContactUs";
 import FindWorkout from "./components/pages/FindWorkouts/FindWorkout";
 import Progress from "./components/pages/Progress/Progress";
-import YourWorkouts from "./components/pages/YourWorkouts/YourWorkouts";
 import Register from "./components/pages/Register/Register";
 import NotFound from "./components/pages/NotFound/NotFound";
 import Login from "./components/pages/Login/Login";
@@ -20,7 +19,6 @@ function App() {
       setIsLoggedIn(true);
     }
   }, []);
-
   return (
     <BrowserRouter>
       <Routes>
@@ -34,11 +32,7 @@ function App() {
         <Route
           path="/workouts"
           element={
-            isLoggedIn ? (
-              <CreateWorkout />
-            ) : (
-              <Navigate to="/login" replace={true} />
-            )
+            isLoggedIn ? <Workouts /> : <Navigate to="/login" replace={true} />
           }
         />
 

@@ -2,26 +2,24 @@ import React, { useEffect, useState } from "react";
 import { Container, Form, Button } from "react-bootstrap";
 import { Link, Navigate } from "react-router-dom";
 import GoogleButton from "react-google-button";
-import userGoogleLogin from "../../../services/googleLogin";
 import RegisterData from "../../../interfaces/RegisterData";
 import Alert from "react-bootstrap/Alert";
+import userRegistration from "../../../services/userRegistration";
+import storeAccessToken from "../../../helpers/storeAccessToken";
+import { useNavigate } from "react-router-dom";
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
 const Register = () => {
+  const navigate = useNavigate();
   useEffect(() => {
-    const urlString = window.location.href;
-    const url = new URL(urlString);
-    const accessToken = url.searchParams.get("accessToken");
-    if (accessToken !== null) {
-      localStorage.setItem("accessToken", accessToken);
-    }
+    storeAccessToken();
   }, []);
 
   const [error, setError] = useState(false);
 
   const [formData, setFormData] = useState<RegisterData>({
-    name: "",
+    username: "",
     email: "",
     password: "",
     confirmPassword: "",
@@ -32,17 +30,20 @@ const Register = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (formData.password !== formData.confirmPassword) {
       setError(true);
     } else {
       setError(false);
-    }
-  };
 
-  const handleGoogleLogin = () => {
-    userGoogleLogin(formData);
+      const path = await userRegistration(formData);
+      if (path) {
+        navigate(path);
+      } else {
+        console.error("Failed to log in");
+      }
+    }
   };
 
   if (localStorage.getItem("accessToken")) {
@@ -62,7 +63,7 @@ const Register = () => {
               type="text"
               name="username"
               placeholder="Enter username"
-              value={formData.name}
+              value={formData.username}
               onChange={handleInputChange}
             />
           </Form.Group>
@@ -105,7 +106,7 @@ const Register = () => {
           </Button>
 
           <a href={`${apiUrl}/users/googleLogin`}>
-            <GoogleButton onClick={handleGoogleLogin} className="mt-3" />
+            <GoogleButton className="mt-3" />
           </a>
 
           <div className="text-center mt-3">
