@@ -34,7 +34,7 @@ const Profile = () => {
                       <span className="ml-auto">34</span>
                     </Row>
                     <Row className="d-flex justify-content-between profile-row mt-3">
-                      <span className="highlight">Generalr Progress:</span>{" "}
+                      <span className="highlight">General Progress:</span>{" "}
                       <span>7.43%</span>
                     </Row>
                     <Row className="d-flex justify-content-between profile-row mt-3">

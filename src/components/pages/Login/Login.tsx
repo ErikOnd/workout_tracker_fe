@@ -7,15 +7,6 @@ import LoginData from "../../../interfaces/LoginData";
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
-/* const urlString = window.location.href;
-      const url = new URL(urlString);
-      const accessToken = url.searchParams.get("accessToken");
-      if (accessToken !== null) {
-        console.log(accessToken);
-        //localStorage.setItem("accessToken", accessToken.accessToken);
-      }
-      */
-
 const Login = () => {
   useEffect(() => {
     const urlString = window.location.href;
@@ -84,6 +75,7 @@ const Login = () => {
           <div className="text-center mt-3">
             Don't have an account?
             <Link to="/register" className="link-primary">
+              {" "}
               Register here
             </Link>
           </div>

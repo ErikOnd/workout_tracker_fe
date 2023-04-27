@@ -1,6 +1,7 @@
 import React from "react";
 import { Navbar, Container, Nav, Image } from "react-bootstrap";
 import "./Header.css";
+import { BoxArrowRight } from "react-bootstrap-icons";
 import { Link } from "react-router-dom";
 
 const Header = () => {
@@ -31,6 +32,17 @@ const Header = () => {
             </Nav.Link>
             <Nav.Link as={Link} to="/contact">
               <span className="contact-btn">Contact</span>
+            </Nav.Link>
+            <Nav.Link as={Link} to="/login">
+              <BoxArrowRight
+                onClick={() => {
+                  localStorage.removeItem("accessToken");
+                }}
+                size={30}
+                data-toggle="tooltip"
+                data-placement="bottom"
+                title="Logout"
+              ></BoxArrowRight>
             </Nav.Link>
           </Nav>
         </Navbar.Collapse>
