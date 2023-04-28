@@ -1,5 +1,5 @@
 import React from "react";
-import { Navbar, Container, Nav } from "react-bootstrap";
+import { Navbar, Container, Nav, NavDropdown } from "react-bootstrap";
 import "./Header.css";
 import { BoxArrowRight } from "react-bootstrap-icons";
 import { Link } from "react-router-dom";
@@ -15,14 +15,19 @@ const Header = () => {
             <Nav.Link as={Link} to="/profile">
               Profile
             </Nav.Link>
-            <Nav.Link as={Link} to="/workouts">
-              Your Workouts
-            </Nav.Link>
+            <NavDropdown title="Workouts" id="basic-nav-dropdown">
+              <NavDropdown.Item as={Link} to="/your-workouts">
+                Your Workouts
+              </NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/create-workout">
+                Create Workout
+              </NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/find-workouts">
+                Find Workouts
+              </NavDropdown.Item>
+            </NavDropdown>
             <Nav.Link as={Link} to="/progress">
               Progress
-            </Nav.Link>
-            <Nav.Link as={Link} to="/find-workouts">
-              Find Workouts
             </Nav.Link>
             <Nav.Link as={Link} to="/contact">
               <span className="orange-btn">Contact</span>

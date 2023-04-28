@@ -2,9 +2,10 @@ import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 import Profile from "./components/pages/Profile/Profile";
-import Workouts from "./components/pages/Workouts/Workouts";
-import ContactUs from "./components/pages/ContactUs/ContactUs";
+import CreateWorkout from "./components/pages/CreateWorkout/CreateWorkout";
 import FindWorkout from "./components/pages/FindWorkouts/FindWorkout";
+import YourWorkouts from "./components/pages/YourWorkouts/YourWorkouts";
+import ContactUs from "./components/pages/ContactUs/ContactUs";
 import Progress from "./components/pages/Progress/Progress";
 import Register from "./components/pages/Register/Register";
 import NotFound from "./components/pages/NotFound/NotFound";
@@ -30,16 +31,24 @@ function App() {
         />
 
         <Route
-          path="/workouts"
+          path="/your-workouts"
           element={
-            isLoggedIn ? <Workouts /> : <Navigate to="/login" replace={true} />
+            isLoggedIn ? (
+              <YourWorkouts />
+            ) : (
+              <Navigate to="/login" replace={true} />
+            )
           }
         />
 
         <Route
-          path="/contact"
+          path="/create-workout"
           element={
-            isLoggedIn ? <ContactUs /> : <Navigate to="/login" replace={true} />
+            isLoggedIn ? (
+              <CreateWorkout />
+            ) : (
+              <Navigate to="/login" replace={true} />
+            )
           }
         />
 
@@ -51,6 +60,13 @@ function App() {
             ) : (
               <Navigate to="/login" replace={true} />
             )
+          }
+        />
+
+        <Route
+          path="/contact"
+          element={
+            isLoggedIn ? <ContactUs /> : <Navigate to="/login" replace={true} />
           }
         />
 
