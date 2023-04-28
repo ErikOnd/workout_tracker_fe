@@ -1,5 +1,5 @@
 import React from "react";
-import { Navbar, Container, Nav, Image } from "react-bootstrap";
+import { Navbar, Container, Nav } from "react-bootstrap";
 import "./Header.css";
 import { BoxArrowRight } from "react-bootstrap-icons";
 import { Link } from "react-router-dom";
@@ -8,13 +8,7 @@ const Header = () => {
   return (
     <Navbar bg="transparent" expand="lg" variant="dark" fixed="top">
       <Container fluid className="px-5 align-items-start">
-        <Navbar.Brand href="#">
-          <Image
-            src="https://res.cloudinary.com/dyy38u8x7/image/upload/v1682580357/Logo_pof5u1.png"
-            alt="logo"
-            className="logo"
-          ></Image>
-        </Navbar.Brand>
+        <Navbar.Brand href="#"></Navbar.Brand>
         <Navbar.Toggle aria-controls="navbar-nav" />
         <Navbar.Collapse id="navbar-nav">
           <Nav className="ml-auto mt-2">

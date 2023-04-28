@@ -15,7 +15,6 @@
 }
 
 .profile-card {
-  margin-left: 13vw;
   background-color: rgba(255, 255, 255, 0);
   max-width: 25rem;
   border: none;
@@ -37,18 +36,6 @@
   position: absolute;
   bottom: 5px;
   right: 5px;
-}
-
-.quote-col {
-  margin-top: 400px;
-  margin-right: 55px;
-  margin-left: 100px;
-}
-
-.inspiring-quote {
-  color: rgba(255, 255, 255, 0.8);
-  font-family: "Times New Roman", Times, serif;
-  font-size: 80px;
 }
 
 .card-title.h5 {
@@ -75,22 +62,4 @@
   width: 200px;
   object-fit: cover;
   border-radius: 50%;
-}
-
-@media screen and (max-width: 1600px) {
-  .inspiring-quote {
-    font-size: 70px;
-  }
-}
-
-@media screen and (max-width: 1400px) {
-  .inspiring-quote {
-    font-size: 60px;
-  }
-}
-
-@media screen and (max-width: 1250px) {
-  .inspiring-quote {
-    font-size: 40px;
-  }
 }
