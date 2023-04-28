@@ -4,6 +4,8 @@ import { PencilSquare } from "react-bootstrap-icons";
 import "./Profile.css";
 import Header from "../../layout/Header";
 import ProfileModal from "./ProfileModal";
+import Footer from "../../layout/Footer";
+
 const Profile = () => {
   const [show, setShow] = useState(false);
 
@@ -45,6 +47,9 @@ const Profile = () => {
             </Card.Body>
           </Card>
         </Row>
+        <div className="footer-div">
+          <Footer />
+        </div>
       </div>
       <ProfileModal show={show} handleClose={handleClose}></ProfileModal>
     </Container>

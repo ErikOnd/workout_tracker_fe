@@ -3,11 +3,14 @@
   color: white !important;
 }
 
-.contact-btn {
+.orange-btn {
   background-color: #ff8a00;
   padding-inline: 20px;
   padding-block: 10px;
   border-radius: 15px;
+  cursor: pointer;
+  color: white;
+  font-weight: 500;
 }
 
 .logo {

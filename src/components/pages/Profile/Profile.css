@@ -1,17 +1,19 @@
 .image-background {
-  background-image: url("https://res.cloudinary.com/dyy38u8x7/image/upload/v1682521193/1155708004-huge_yltwxi.jpg");
+  background-image: url("https://res.cloudinary.com/dyy38u8x7/image/upload/v1682671923/karsten-winegeart-0Wra5YYVQJE-unsplash_unzrlc.jpg");
   background-size: cover;
   background-position: bottom;
   height: 100vh;
+  overflow: hidden;
 }
 
 .second-layer {
-  background-color: rgb(0, 0, 0, 0.3);
+  background-color: rgb(0, 0, 0, 0.5);
   height: 100vh;
+  position: relative;
 }
 
 .profile-image-row {
-  padding-top: 170px;
+  padding-top: 100px;
 }
 
 .profile-card {
@@ -62,4 +64,10 @@
   width: 200px;
   object-fit: cover;
   border-radius: 50%;
+}
+
+.footer-div {
+  position: absolute;
+  width: 100vw;
+  bottom: 0;
 }

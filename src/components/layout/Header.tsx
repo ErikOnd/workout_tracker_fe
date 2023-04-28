@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 const Header = () => {
   return (
-    <Navbar bg="transparent" expand="lg" variant="dark" fixed="top">
+    <Navbar bg="transparent" expand="lg" variant="dark">
       <Container fluid className="px-5 align-items-start">
         <Navbar.Brand href="#"></Navbar.Brand>
         <Navbar.Toggle aria-controls="navbar-nav" />
@@ -25,7 +25,7 @@ const Header = () => {
               Find Workouts
             </Nav.Link>
             <Nav.Link as={Link} to="/contact">
-              <span className="contact-btn">Contact</span>
+              <span className="orange-btn">Contact</span>
             </Nav.Link>
             <Nav.Link as={Link} to="/login">
               <BoxArrowRight

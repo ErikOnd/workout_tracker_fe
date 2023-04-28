@@ -1,11 +1,12 @@
 import React from "react";
 import { Button, Image, Modal, Row } from "react-bootstrap";
 import ModalProps from "../../../interfaces/ModalProps";
+import "./ProfileModal.css";
 
 const ProfileModal = ({ show, handleClose }: ModalProps) => {
   return (
     <>
-      <Modal show={show} onHide={handleClose}>
+      <Modal show={show} onHide={handleClose} className="edit-profile-modal">
         <Modal.Header>
           <Modal.Title className="mx-auto">Edit Profile</Modal.Title>
         </Modal.Header>
@@ -17,9 +18,9 @@ const ProfileModal = ({ show, handleClose }: ModalProps) => {
           ></Image>
         </Modal.Body>
         <Modal.Footer className="d-flex justify-content-center">
-          <Button variant="primary" onClick={handleClose}>
+          <span className="orange-btn" onClick={handleClose}>
             Save Changes
-          </Button>
+          </span>
         </Modal.Footer>
       </Modal>
     </>
