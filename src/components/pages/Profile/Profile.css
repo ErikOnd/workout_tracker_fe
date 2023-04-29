@@ -13,7 +13,7 @@
 }
 
 .profile-image-row {
-  padding-top: 100px;
+  padding-top: 5vh;
 }
 
 .profile-card {
@@ -70,4 +70,9 @@
   position: absolute;
   width: 100vw;
   bottom: 0;
+}
+
+.modal-text {
+  font-size: 20px;
+  font-weight: 600;
 }
