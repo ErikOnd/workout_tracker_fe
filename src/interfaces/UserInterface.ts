@@ -1,11 +1,10 @@
+import ObjectId from "bson-objectid";
 export interface UserInterface {
-  _id: string;
+  _id: ObjectId;
   username: string;
   email: string;
   avatar: string;
   googleId: string;
   role: string;
   goals: any[];
-  createdAt: Date;
-  updatedAt: Date;
 }

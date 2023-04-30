@@ -1,6 +1,7 @@
+import ObjectID from "bson-objectid";
 const apiUrl = process.env.REACT_APP_API_URL;
 
-const updateImage = async (newImage: File | undefined, userId: string) => {
+const updateImage = async (newImage: File | undefined, userId: ObjectID) => {
   try {
     const data = new FormData();
     if (newImage !== undefined) {

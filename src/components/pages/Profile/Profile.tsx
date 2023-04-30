@@ -1,16 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { Container, Row, Card, Col } from "react-bootstrap";
+import { Container, Row, Card } from "react-bootstrap";
 import { PencilSquare } from "react-bootstrap-icons";
 import "./Profile.css";
 import Header from "../../layout/Header";
 import ProfileModal from "./ProfileModal";
 import Footer from "../../layout/Footer";
 import getUserData from "../../../services/getUserData";
-import { UserInterface } from "../../../interfaces/UserInterface";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../../redux/store";
+import { setUser } from "../../../redux/reducers/userSlice";
 
 const Profile = () => {
   const [show, setShow] = useState(false);
-  const [userData, setUserData] = useState<UserInterface>();
+  const dispatch = useDispatch();
+  const userData = useSelector((state: RootState) => state.user.data);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const accessToken = localStorage.getItem("accessToken");
@@ -22,7 +25,7 @@ const Profile = () => {
   const reloadUserData = async () => {
     if (accessToken) {
       const reloadData = await getUserData(accessToken);
-      setUserData(reloadData);
+      dispatch(setUser(reloadData));
     }
   };
 
