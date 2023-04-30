@@ -1,7 +1,27 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Form } from "react-bootstrap";
+import ExerciseSets from "./ExerciseSets";
 
 const Exercise = () => {
+  const [setsCount, setSetsCount] = useState<number>(0);
+  const [setsComponents, setSetsComponents] = useState<React.ReactNode[]>([]);
+
+  useEffect(() => {
+    if (!isNaN(setsCount)) {
+      const components = [];
+      for (let i = 0; i < setsCount; i++) {
+        components.push(<ExerciseSets key={i} setNumber={i} />);
+      }
+      setSetsComponents(components);
+    } else {
+      setSetsComponents([]);
+    }
+  }, [setsCount]);
+
+  const handleSets = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setSetsCount(parseInt(value, 10));
+  };
   return (
     <Container>
       <div className="exercise-div mt-5">
@@ -19,6 +39,9 @@ const Exercise = () => {
               type="text"
               placeholder="Sets"
               className=" w-placeholder"
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                handleSets(e);
+              }}
             />
           </Col>
           <span className="text-left p-0 sets-col">Focus:</span>
@@ -33,31 +56,7 @@ const Exercise = () => {
           </Col>
         </Row>
       </div>
-      <div className="set-div">
-        <Row>
-          <Row>Set 1</Row>
-          <Row className="align-items-center mt-3">
-            {" "}
-            <span className="text-left p-0 sets-col">Reps:</span>
-            <Col>
-              <Form.Control
-                type="text"
-                placeholder="Reps"
-                className=" w-placeholder"
-              />
-            </Col>
-            <span className="text-left p-0 sets-col">Weight:</span>
-            <Col className="weight-input-col">
-              <Form.Control
-                type="text"
-                placeholder="Weight"
-                className="w-placeholder "
-              />
-            </Col>
-            <span>kg</span>
-          </Row>
-        </Row>
-      </div>
+      {setsComponents}
     </Container>
   );
 };

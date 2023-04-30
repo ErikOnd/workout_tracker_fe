@@ -1,14 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import "./CreateWorkout.css";
-import { Container, Form, Row } from "react-bootstrap";
+import { Container, Form, Row, Button } from "react-bootstrap";
 import Header from "../../layout/Header";
 import Exercise from "./Exercise";
-import { useSelector } from "react-redux";
-import { RootState } from "../../../redux/store";
 
 const CreateWorkout = () => {
-  const userData = useSelector((state: RootState) => state.user.data);
-  console.log(userData);
+  const [exerciseCount, setExerciseCount] = useState(1);
+
+  const handleAddExercise = () => {
+    setExerciseCount(exerciseCount + 1);
+  };
+
+  const exerciseComponents = [];
+
+  for (let i = 0; i < exerciseCount; i++) {
+    exerciseComponents.push(<Exercise key={i} />);
+  }
+
   return (
     <Container fluid className="create-workout-con text-center">
       <Header></Header>
@@ -20,7 +28,10 @@ const CreateWorkout = () => {
           className="workout-name"
         />
       </Row>
-      <Exercise></Exercise>
+      {exerciseComponents}
+      <Button className="mt-5 orange-btn" onClick={handleAddExercise}>
+        Add Exercise
+      </Button>
     </Container>
   );
 };
