@@ -30,15 +30,19 @@ const Exercise = () => {
             type="text"
             placeholder="Exercise Name"
             className="w-placeholder ex-name"
+            id=""
+            onBlur={(e: React.ChangeEvent<HTMLInputElement>) => {
+              e.target.id = e.target.value.replace(/\s+/g, "-").toLowerCase();
+            }}
           />
         </Row>
-        <Row className="pt-4 align-items-center setsAndFocus">
+        <Row className="pt-4 align-items-start setsAndFocus">
           <span className="text-left p-0 sets-col">Sets:</span>
           <Col>
             <Form.Control
               type="text"
               placeholder="Sets"
-              className=" w-placeholder"
+              className="w-placeholder lift-sets"
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 handleSets(e);
               }}
@@ -48,7 +52,7 @@ const Exercise = () => {
           <Col>
             <Form.Control
               as="textarea"
-              rows={1}
+              rows={2}
               placeholder="Focused Muscle groups"
               className="w-placeholder focus-area pl-0"
               readOnly

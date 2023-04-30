@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import "./CreateWorkout.css";
-import { Container, Form, Row, Button } from "react-bootstrap";
+import { Container, Form, Row, Button, Col } from "react-bootstrap";
 import Header from "../../layout/Header";
 import Exercise from "./Exercise";
+import ExerciseTable from "./ExerciseTable";
 
 const CreateWorkout = () => {
   const [exerciseCount, setExerciseCount] = useState(1);
@@ -20,7 +21,7 @@ const CreateWorkout = () => {
   return (
     <Container fluid className="create-workout-con text-center">
       <Header></Header>
-      <Row className="mt-5">
+      <Row className="my-5">
         <Form.Control
           size="lg"
           type="text"
@@ -28,10 +29,23 @@ const CreateWorkout = () => {
           className="workout-name"
         />
       </Row>
-      {exerciseComponents}
-      <Button className="mt-5 orange-btn" onClick={handleAddExercise}>
-        Add Exercise
-      </Button>
+      <Row>
+        <Col className="col-3">
+          <ExerciseTable />
+        </Col>
+        <Col className="col-9">
+          {" "}
+          {exerciseComponents}
+          <Row>
+            <span
+              className="mt-5 ml-3 orange-btn mr-auto"
+              onClick={handleAddExercise}
+            >
+              Add Exercise
+            </span>
+          </Row>
+        </Col>
+      </Row>
     </Container>
   );
 };
