@@ -15,7 +15,6 @@ const getExercise = async (
       throw new Error(await res.text());
     } else {
       const exercise = await res.json();
-      console.log("exercises:", exercise.muscles);
       const muscleGroupsArr = exercise.muscles;
       const muscleGroup = muscleGroupsArr.join(", ");
 
