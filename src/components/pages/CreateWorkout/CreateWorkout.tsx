@@ -36,14 +36,16 @@ const CreateWorkout = () => {
         <Col className="col-9">
           {" "}
           {exerciseComponents}
-          <Row>
-            <span
-              className="mt-5 ml-3 orange-btn mr-auto"
-              onClick={handleAddExercise}
-            >
-              Add Exercise
-            </span>
-          </Row>
+          <Container>
+            <Row>
+              <span
+                className="my-5 orange-btn mr-auto"
+                onClick={handleAddExercise}
+              >
+                Add Exercise
+              </span>
+            </Row>
+          </Container>
         </Col>
       </Row>
     </Container>
