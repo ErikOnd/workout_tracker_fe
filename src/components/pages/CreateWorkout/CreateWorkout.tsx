@@ -18,6 +18,7 @@ const CreateWorkout = () => {
     likes: 0,
     exercises: [],
   });
+  console.log(workoutData);
 
   const [exerciseCount, setExerciseCount] = useState(1);
 
@@ -43,6 +44,9 @@ const CreateWorkout = () => {
           type="text"
           placeholder="Workout Name"
           className="workout-name"
+          onChange={(e) => {
+            setWorkoutData({ ...workoutData, workout_name: e.target.value });
+          }}
         />
       </Row>
       <Row>
