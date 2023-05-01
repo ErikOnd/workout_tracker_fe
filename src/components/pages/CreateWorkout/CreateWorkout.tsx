@@ -4,12 +4,28 @@ import { Container, Form, Row, Button, Col } from "react-bootstrap";
 import Header from "../../layout/Header";
 import Exercise from "./Exercise";
 import ExerciseTable from "./ExerciseTable";
+import WorkoutData from "../../../interfaces/WorkoutData";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../redux/store";
 
 const CreateWorkout = () => {
+  const userData = useSelector((state: RootState) => state.user.data);
+
+  const [workoutData, setWorkoutData] = useState<WorkoutData>({
+    user_id: userData?._id,
+    workout_name: "",
+    focus: "",
+    likes: 0,
+    exercises: [],
+  });
+
   const [exerciseCount, setExerciseCount] = useState(1);
+
+  const exercise = { exercise_id: "", sets: [] };
 
   const handleAddExercise = () => {
     setExerciseCount(exerciseCount + 1);
+    workoutData.exercises.push(exercise);
   };
 
   const exerciseComponents = [];
