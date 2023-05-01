@@ -34,7 +34,6 @@ const CreateWorkout = () => {
           <ExerciseTable />
         </Col>
         <Col className="col-9">
-          {" "}
           {exerciseComponents}
           <Container>
             <Row>

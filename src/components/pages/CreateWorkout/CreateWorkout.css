@@ -47,6 +47,18 @@
   font-size: 40px;
 }
 
+.ex-name:focus {
+  font-size: 40px;
+  border: none;
+  outline: none;
+  box-shadow: none;
+  color: #ff8a00;
+}
+
+.ex-name::placeholder {
+  color: rgb(155, 167, 179);
+}
+
 .setsAndFocus {
   font-size: 30px;
 }
@@ -55,12 +67,7 @@
 }
 
 .focus-area {
-  border: 1px solid white;
   padding-left: 10px;
-}
-
-.focus-area:focus {
-  border: 1px solid white;
 }
 
 .focus-area:read-only {

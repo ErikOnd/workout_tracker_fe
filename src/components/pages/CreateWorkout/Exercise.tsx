@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Form } from "react-bootstrap";
 import ExerciseSets from "./ExerciseSets";
+import exercises from "../../../assets/exercises";
 
+const exArray = exercises;
 const Exercise = () => {
   const [setsCount, setSetsCount] = useState<number>(0);
   const [setsComponents, setSetsComponents] = useState<React.ReactNode[]>([]);
@@ -26,15 +28,21 @@ const Exercise = () => {
     <Container>
       <div className="exercise-div mt-5">
         <Row>
-          <Form.Control
+          <input
             type="text"
+            list="data"
             placeholder="Exercise Name"
             className="w-placeholder ex-name"
-            id=""
             onBlur={(e: React.ChangeEvent<HTMLInputElement>) => {
               e.target.id = e.target.value.replace(/\s+/g, "-").toLowerCase();
             }}
           />
+
+          <datalist id="data">
+            {exArray.map((item, key) => (
+              <option key={key} value={item} />
+            ))}
+          </datalist>
         </Row>
         <Row className="pt-4 align-items-start setsAndFocus">
           <span className="text-left p-0 sets-col">Sets:</span>
@@ -53,9 +61,8 @@ const Exercise = () => {
             <Form.Control
               as="textarea"
               rows={2}
-              placeholder="Focused Muscle groups"
+              placeholder="Focused Muscle groups (Optional)"
               className="w-placeholder focus-area pl-0"
-              readOnly
             />
           </Col>
         </Row>
