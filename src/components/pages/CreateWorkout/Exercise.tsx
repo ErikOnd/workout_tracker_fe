@@ -2,12 +2,14 @@ import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Form } from "react-bootstrap";
 import ExerciseSets from "./ExerciseSets";
 import exercises from "../../../assets/exercises";
+import getExercise from "../../../services/getExercise";
 
 const exArray = exercises;
 const Exercise = () => {
   const [setsCount, setSetsCount] = useState<number>(0);
   const [setsComponents, setSetsComponents] = useState<React.ReactNode[]>([]);
-
+  const [exerciseName, setExerciseName] = useState("");
+  const [muscleGroups, setMuscleGroups] = useState("Focused Muscle groups");
   useEffect(() => {
     if (!isNaN(setsCount)) {
       const components = [];
@@ -24,6 +26,10 @@ const Exercise = () => {
     const value = e.target.value;
     setSetsCount(parseInt(value, 10));
   };
+
+  const handleExerciseNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setExerciseName(e.target.value);
+  };
   return (
     <Container>
       <div className="exercise-div mt-5">
@@ -33,12 +39,15 @@ const Exercise = () => {
             list="data"
             placeholder="Exercise Name"
             className="w-placeholder ex-name"
+            value={exerciseName}
+            onChange={handleExerciseNameChange}
             onBlur={(e: React.ChangeEvent<HTMLInputElement>) => {
               e.target.id = e.target.value.replace(/\s+/g, "-").toLowerCase();
+              getExercise(exerciseName, setMuscleGroups);
             }}
           />
 
-          <datalist id="data">
+          <datalist id="data" className="datalist-style">
             {exArray.map((item, key) => (
               <option key={key} value={item} />
             ))}
@@ -61,8 +70,10 @@ const Exercise = () => {
             <Form.Control
               as="textarea"
               rows={2}
-              placeholder="Focused Muscle groups (Optional)"
+              placeholder="Focused Muscle groups"
               className="w-placeholder focus-area pl-0"
+              readOnly
+              value={muscleGroups}
             />
           </Col>
         </Row>
