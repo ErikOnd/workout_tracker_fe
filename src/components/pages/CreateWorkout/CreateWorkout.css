@@ -134,3 +134,7 @@
   background-color: #ff8a00;
   border: none;
 }
+
+.w-placeholder:read-only {
+  background-color: transparent;
+}

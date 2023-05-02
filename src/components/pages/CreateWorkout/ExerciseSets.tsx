@@ -11,16 +11,25 @@ interface ExerciseSet {
 const ExerciseSets = ({ exerciseId, setNumber }: ExerciseSet) => {
   const [reps, setReps] = useState("");
   const [weight, setWeight] = useState("");
+  const [readOnly, setReadOnly] = useState(false);
   const dispatch = useDispatch();
 
   const addSet = () => {
-    console.log("reps:", reps, "weight:", weight);
     if (reps !== "" && weight !== "") {
       const newSet = {
         reps: parseInt(reps),
         weight: parseInt(weight),
       };
       dispatch(addSets({ exerciseId: exerciseId, set: newSet }));
+    }
+  };
+
+  const handleBlur = () => {
+    if (reps !== "" && weight !== "") {
+      setReadOnly(true);
+      addSet();
+    } else {
+      setReadOnly(false);
     }
   };
 
@@ -38,7 +47,12 @@ const ExerciseSets = ({ exerciseId, setNumber }: ExerciseSet) => {
               className=" w-placeholder"
               value={reps}
               onChange={(e) => setReps(e.target.value)}
-              onBlur={addSet}
+              onBlur={() => {
+                if (!readOnly) {
+                  handleBlur();
+                }
+              }}
+              readOnly={readOnly}
             />
           </Col>
           <span className="text-left p-0 sets-col">Weight:</span>
@@ -49,7 +63,12 @@ const ExerciseSets = ({ exerciseId, setNumber }: ExerciseSet) => {
               className="w-placeholder"
               value={weight}
               onChange={(e) => setWeight(e.target.value)}
-              onBlur={addSet}
+              onBlur={() => {
+                if (!readOnly) {
+                  handleBlur();
+                }
+              }}
+              readOnly={readOnly}
             />
           </Col>
           <span>kg</span>
