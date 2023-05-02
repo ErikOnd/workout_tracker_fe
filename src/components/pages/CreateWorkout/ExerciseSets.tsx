@@ -1,8 +1,28 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Row, Col, Form } from "react-bootstrap";
 import Sets from "../../../interfaces/Sets";
+import { useDispatch } from "react-redux";
+import { addSets } from "../../../redux/reducers/workoutSlice";
+import ObjectId from "bson-objectid";
 
-const ExerciseSets = ({ setNumber }: Sets) => {
+interface ExerciseSet {
+  exerciseId: string | undefined;
+  setNumber: number;
+}
+
+const ExerciseSets = ({ exerciseId, setNumber }: ExerciseSet) => {
+  const [reps, setReps] = useState("");
+  const [weight, setWeight] = useState("");
+  const dispatch = useDispatch();
+
+  const handleAddSet = () => {
+    const newSet = {
+      reps: reps,
+      weight: weight,
+    };
+    dispatch(addSets({ exerciseId: exerciseId, set: newSet }));
+  };
+
   return (
     <div className="set-div">
       <Row>
@@ -15,6 +35,8 @@ const ExerciseSets = ({ setNumber }: Sets) => {
               type="text"
               placeholder="Reps"
               className=" w-placeholder"
+              value={reps}
+              onChange={(e) => setReps(e.target.value)}
             />
           </Col>
           <span className="text-left p-0 sets-col">Weight:</span>
@@ -22,7 +44,9 @@ const ExerciseSets = ({ setNumber }: Sets) => {
             <Form.Control
               type="text"
               placeholder="Weight"
-              className="w-placeholder "
+              className="w-placeholder"
+              value={weight}
+              onChange={(e) => setWeight(e.target.value)}
             />
           </Col>
           <span>kg</span>

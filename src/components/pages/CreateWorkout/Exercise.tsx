@@ -6,6 +6,7 @@ import getExercise from "../../../services/getExercise";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import { addExercise } from "../../../redux/reducers/workoutSlice";
+import ObjectId from "bson-objectid";
 const exArray = exercises;
 const Exercise = () => {
   const [setsCount, setSetsCount] = useState<number>(0);
@@ -22,7 +23,9 @@ const Exercise = () => {
     if (!isNaN(setsCount)) {
       const components = [];
       for (let i = 0; i < setsCount; i++) {
-        components.push(<ExerciseSets key={i} setNumber={i} />);
+        components.push(
+          <ExerciseSets key={i} exerciseId={exerciseId} setNumber={i} />
+        );
       }
       setSetsComponents(components);
     } else {
@@ -31,7 +34,7 @@ const Exercise = () => {
   }, [setsCount]);
 
   useEffect(() => {
-    if (exerciseId !== "") {
+    if (exerciseId) {
       dispatch(
         addExercise({
           exercise_id: exerciseId,
@@ -98,6 +101,7 @@ const Exercise = () => {
         </Row>
       </div>
       {setsComponents}
+      <button className="add-set-btn">Add Set</button>
     </Container>
   );
 };

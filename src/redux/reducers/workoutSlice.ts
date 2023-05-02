@@ -25,15 +25,28 @@ export const workoutSlice = createSlice({
       }
     },
     removeExercise: (state, action) => {
+      //add exercise id to remove
       if (state.data) {
         state.data.exercises = state.data.exercises.filter(
           (exercise) => exercise.exercise_id !== action.payload
         );
       }
     },
+    addSets: (state, action) => {
+      const { exerciseId, set } = action.payload;
+      if (state.data) {
+        const exercise = state.data.exercises.find(
+          (exercise) => exercise.exercise_id === exerciseId
+        );
+        if (exercise) {
+          exercise.sets.push(set);
+        }
+      }
+    },
   },
 });
 
-export const { setWorkout, clearWorkout, addExercise } = workoutSlice.actions;
+export const { setWorkout, clearWorkout, addExercise, addSets } =
+  workoutSlice.actions;
 
 export default workoutSlice.reducer;
