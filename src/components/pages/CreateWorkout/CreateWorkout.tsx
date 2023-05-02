@@ -1,33 +1,41 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./CreateWorkout.css";
-import { Container, Form, Row, Button, Col } from "react-bootstrap";
+import { Container, Form, Row, Col } from "react-bootstrap";
 import Header from "../../layout/Header";
 import Exercise from "./Exercise";
 import ExerciseTable from "./ExerciseTable";
-import WorkoutData from "../../../interfaces/WorkoutData";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
+import { setWorkout } from "../../../redux/reducers/workoutSlice";
 
 const CreateWorkout = () => {
-  const userData = useSelector((state: RootState) => state.user.data);
-
-  const [workoutData, setWorkoutData] = useState<WorkoutData>({
-    user_id: userData?._id,
-    workout_name: "",
-    focus: "",
-    likes: 0,
-    exercises: [],
-  });
-  console.log(workoutData);
-
+  const workoutData = useSelector((state: RootState) => state.workout.data);
+  const userId = useSelector((state: RootState) => state.user.data?._id);
+  const dispatch = useDispatch();
   const [exerciseCount, setExerciseCount] = useState(1);
 
-  const exercise = { exercise_id: "", sets: [] };
+  useEffect(() => {
+    dispatch(
+      setWorkout({
+        ...workoutData,
+        userId: userId,
+        focus: "",
+        likes: 0,
+        exercises: [],
+      })
+    );
+  }, []);
 
   const handleAddExercise = () => {
     setExerciseCount(exerciseCount + 1);
-    workoutData.exercises.push(exercise);
   };
+
+  const handleSetWorkoutName = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const workoutName = e.target.value;
+    dispatch(setWorkout({ ...workoutData, workout_name: workoutName }));
+  };
+
+  console.log(workoutData);
 
   const exerciseComponents = [];
 
@@ -44,9 +52,7 @@ const CreateWorkout = () => {
           type="text"
           placeholder="Workout Name"
           className="workout-name"
-          onChange={(e) => {
-            setWorkoutData({ ...workoutData, workout_name: e.target.value });
-          }}
+          onChange={handleSetWorkoutName}
         />
       </Row>
       <Row>

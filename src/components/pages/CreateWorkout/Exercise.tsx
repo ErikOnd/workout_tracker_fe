@@ -10,6 +10,7 @@ const Exercise = () => {
   const [setsComponents, setSetsComponents] = useState<React.ReactNode[]>([]);
   const [exerciseName, setExerciseName] = useState("");
   const [muscleGroups, setMuscleGroups] = useState("Focused Muscle groups");
+
   useEffect(() => {
     if (!isNaN(setsCount)) {
       const components = [];
