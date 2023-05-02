@@ -35,8 +35,6 @@ const CreateWorkout = () => {
     dispatch(setWorkout({ ...workoutData, workout_name: workoutName }));
   };
 
-  console.log(workoutData);
-
   const exerciseComponents = [];
 
   for (let i = 0; i < exerciseCount; i++) {

@@ -3,14 +3,21 @@ import { Container, Row, Col, Form } from "react-bootstrap";
 import ExerciseSets from "./ExerciseSets";
 import exercises from "../../../assets/exercises";
 import getExercise from "../../../services/getExercise";
-
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../../redux/store";
+import { addExercise } from "../../../redux/reducers/workoutSlice";
 const exArray = exercises;
 const Exercise = () => {
   const [setsCount, setSetsCount] = useState<number>(0);
   const [setsComponents, setSetsComponents] = useState<React.ReactNode[]>([]);
   const [exerciseName, setExerciseName] = useState("");
   const [muscleGroups, setMuscleGroups] = useState("Focused Muscle groups");
+  const [exerciseId, setExerciseId] = useState("");
+  console.log(exerciseId);
 
+  const workoutData = useSelector((state: RootState) => state.workout.data);
+  const dispatch = useDispatch();
+  console.log(workoutData);
   useEffect(() => {
     if (!isNaN(setsCount)) {
       const components = [];
@@ -22,6 +29,17 @@ const Exercise = () => {
       setSetsComponents([]);
     }
   }, [setsCount]);
+
+  useEffect(() => {
+    if (exerciseId !== "") {
+      dispatch(
+        addExercise({
+          exercise_id: exerciseId,
+          sets: [],
+        })
+      );
+    }
+  }, [exerciseId]);
 
   const handleSets = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -44,7 +62,7 @@ const Exercise = () => {
             onChange={handleExerciseNameChange}
             onBlur={(e: React.ChangeEvent<HTMLInputElement>) => {
               e.target.id = e.target.value.replace(/\s+/g, "-").toLowerCase();
-              getExercise(exerciseName, setMuscleGroups);
+              getExercise(exerciseName, setMuscleGroups, setExerciseId);
             }}
           />
 

@@ -3,7 +3,8 @@ const accessToken = localStorage.getItem("accessToken");
 
 const getExercise = async (
   exercise: string,
-  setMuscleGroups: React.Dispatch<React.SetStateAction<string>>
+  setMuscleGroups: React.Dispatch<React.SetStateAction<string>>,
+  setExersiceId: React.Dispatch<React.SetStateAction<string>>
 ) => {
   try {
     const res = await fetch(`${apiUrl}/exercises/${exercise}`, {
@@ -16,8 +17,10 @@ const getExercise = async (
     } else {
       const exercise = await res.json();
       const muscleGroupsArr = exercise.muscles;
+      const exerciseId = exercise._id;
       const muscleGroup = muscleGroupsArr.join(", ");
 
+      setExersiceId(exerciseId);
       setMuscleGroups(muscleGroup);
     }
   } catch (error) {
