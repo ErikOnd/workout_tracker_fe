@@ -6,10 +6,10 @@ import getExercise from "../../../services/getExercise";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import { addExercise } from "../../../redux/reducers/workoutSlice";
-import ObjectId from "bson-objectid";
 const exArray = exercises;
 const Exercise = () => {
   const [setsCount, setSetsCount] = useState<number>(0);
+  const [addSet, setAddSet] = useState<number>(0);
   const [setsComponents, setSetsComponents] = useState<React.ReactNode[]>([]);
   const [exerciseName, setExerciseName] = useState("");
   const [muscleGroups, setMuscleGroups] = useState("Focused Muscle groups");
@@ -24,7 +24,12 @@ const Exercise = () => {
       const components = [];
       for (let i = 0; i < setsCount; i++) {
         components.push(
-          <ExerciseSets key={i} exerciseId={exerciseId} setNumber={i} />
+          <ExerciseSets
+            key={i}
+            exerciseId={exerciseId}
+            setNumber={i}
+            addSet={addSet}
+          />
         );
       }
       setSetsComponents(components);
@@ -43,11 +48,6 @@ const Exercise = () => {
       );
     }
   }, [exerciseId]);
-
-  const handleSets = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setSetsCount(parseInt(value, 10));
-  };
 
   const handleExerciseNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setExerciseName(e.target.value);
@@ -76,17 +76,6 @@ const Exercise = () => {
           </datalist>
         </Row>
         <Row className="pt-4 align-items-start setsAndFocus">
-          <span className="text-left p-0 sets-col">Sets:</span>
-          <Col>
-            <Form.Control
-              type="text"
-              placeholder="Sets"
-              className="w-placeholder lift-sets"
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                handleSets(e);
-              }}
-            />
-          </Col>
           <span className="text-left p-0 sets-col">Focus:</span>
           <Col>
             <Form.Control
@@ -101,7 +90,18 @@ const Exercise = () => {
         </Row>
       </div>
       {setsComponents}
-      <button className="add-set-btn">Add Set</button>
+
+      <Row>
+        <span
+          className="my-5 orange-btn mr-auto"
+          onClick={() => {
+            setAddSet(addSet + 1);
+            setSetsCount(setsCount + 1);
+          }}
+        >
+          Add Set
+        </span>
+      </Row>
     </Container>
   );
 };

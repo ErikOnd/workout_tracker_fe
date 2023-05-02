@@ -1,27 +1,28 @@
 import React, { useEffect, useState } from "react";
 import { Row, Col, Form } from "react-bootstrap";
-import Sets from "../../../interfaces/Sets";
 import { useDispatch } from "react-redux";
 import { addSets } from "../../../redux/reducers/workoutSlice";
-import ObjectId from "bson-objectid";
 
 interface ExerciseSet {
   exerciseId: string | undefined;
   setNumber: number;
+  addSet: number;
 }
 
-const ExerciseSets = ({ exerciseId, setNumber }: ExerciseSet) => {
+const ExerciseSets = ({ exerciseId, setNumber, addSet }: ExerciseSet) => {
   const [reps, setReps] = useState("");
   const [weight, setWeight] = useState("");
   const dispatch = useDispatch();
 
-  const handleAddSet = () => {
-    const newSet = {
-      reps: reps,
-      weight: weight,
-    };
-    dispatch(addSets({ exerciseId: exerciseId, set: newSet }));
-  };
+  useEffect(() => {
+    if (reps !== "") {
+      const newSet = {
+        reps: parseInt(reps),
+        weight: parseInt(weight),
+      };
+      dispatch(addSets({ exerciseId: exerciseId, set: newSet }));
+    }
+  }, [addSet]);
 
   return (
     <div className="set-div">
