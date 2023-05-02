@@ -6,23 +6,23 @@ import { addSets } from "../../../redux/reducers/workoutSlice";
 interface ExerciseSet {
   exerciseId: string | undefined;
   setNumber: number;
-  addSet: number;
 }
 
-const ExerciseSets = ({ exerciseId, setNumber, addSet }: ExerciseSet) => {
+const ExerciseSets = ({ exerciseId, setNumber }: ExerciseSet) => {
   const [reps, setReps] = useState("");
   const [weight, setWeight] = useState("");
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    if (reps !== "") {
+  const addSet = () => {
+    console.log("reps:", reps, "weight:", weight);
+    if (reps !== "" && weight !== "") {
       const newSet = {
         reps: parseInt(reps),
         weight: parseInt(weight),
       };
       dispatch(addSets({ exerciseId: exerciseId, set: newSet }));
     }
-  }, [addSet]);
+  };
 
   return (
     <div className="set-div">
@@ -38,6 +38,7 @@ const ExerciseSets = ({ exerciseId, setNumber, addSet }: ExerciseSet) => {
               className=" w-placeholder"
               value={reps}
               onChange={(e) => setReps(e.target.value)}
+              onBlur={addSet}
             />
           </Col>
           <span className="text-left p-0 sets-col">Weight:</span>
@@ -48,6 +49,7 @@ const ExerciseSets = ({ exerciseId, setNumber, addSet }: ExerciseSet) => {
               className="w-placeholder"
               value={weight}
               onChange={(e) => setWeight(e.target.value)}
+              onBlur={addSet}
             />
           </Col>
           <span>kg</span>

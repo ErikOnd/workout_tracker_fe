@@ -107,3 +107,30 @@
 .datalist-style {
   background-color: aqua;
 }
+
+.exercise-con {
+  position: relative;
+}
+
+.remove-ex-btn {
+  position: absolute;
+  top: 2px;
+  right: 17px;
+  border-radius: 7px;
+}
+
+.add-exercise-btn {
+  font-size: 25px;
+}
+
+.save-workout-btn {
+  font-size: 35px;
+}
+.save-workout-btn:hover {
+  background-color: rgb(4 170 109);
+}
+
+.trash-icon {
+  background-color: #ff8a00;
+  border: none;
+}

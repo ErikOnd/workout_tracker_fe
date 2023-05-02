@@ -7,6 +7,7 @@ import ExerciseTable from "./ExerciseTable";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import { setWorkout } from "../../../redux/reducers/workoutSlice";
+import { PlusSquareFill } from "react-bootstrap-icons";
 
 const CreateWorkout = () => {
   const workoutData = useSelector((state: RootState) => state.workout.data);
@@ -62,10 +63,19 @@ const CreateWorkout = () => {
           <Container>
             <Row>
               <span
-                className="my-5 orange-btn mr-auto"
+                className="my-4 orange-btn mr-auto add-exercise-btn d-flex align-items-center"
                 onClick={handleAddExercise}
               >
-                Add Exercise
+                <PlusSquareFill className="mr-2" size={25}></PlusSquareFill>{" "}
+                Exercise
+              </span>
+            </Row>
+            <Row>
+              <span
+                className="my-4 orange-btn mr-auto save-workout-btn"
+                /*                onClick={saveWorkout} */
+              >
+                Save Workout
               </span>
             </Row>
           </Container>
