@@ -8,6 +8,9 @@ import { RootState } from "../../../redux/store";
 import { addExercise } from "../../../redux/reducers/workoutSlice";
 import { removeExercise } from "../../../redux/reducers/workoutSlice";
 import { PlusSquareFill, Trash } from "react-bootstrap-icons";
+import { addExerciseName } from "../../../redux/reducers/exerciseListSlice";
+import { removeExerciseName } from "../../../redux/reducers/exerciseListSlice";
+
 const exArray = exercises;
 const Exercise = () => {
   const [setsCount, setSetsCount] = useState<number>(0);
@@ -41,6 +44,13 @@ const Exercise = () => {
           sets: [],
         })
       );
+      dispatch(
+        addExerciseName({
+          exerciseId,
+          exerciseName,
+        })
+      );
+      //next dispatch
     }
   }, [exerciseId]);
 
@@ -50,6 +60,7 @@ const Exercise = () => {
 
   const handleRemoveExercise = () => {
     dispatch(removeExercise(exerciseId));
+    dispatch(removeExerciseName(exerciseId));
     const element = document.getElementById(exerciseId);
     element?.remove();
   };

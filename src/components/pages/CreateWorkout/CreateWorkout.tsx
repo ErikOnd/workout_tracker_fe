@@ -70,14 +70,6 @@ const CreateWorkout = () => {
                 Exercise
               </span>
             </Row>
-            <Row>
-              <span
-                className="my-4 orange-btn mr-auto save-workout-btn"
-                /*                onClick={saveWorkout} */
-              >
-                Save Workout
-              </span>
-            </Row>
           </Container>
         </Col>
       </Row>

@@ -68,6 +68,7 @@
 
 .focus-area {
   padding-left: 10px;
+  resize: none;
 }
 
 .focus-area:read-only {
@@ -137,4 +138,8 @@
 
 .w-placeholder:read-only {
   background-color: transparent;
+}
+
+.exercise-list-item:hover {
+  background-color: rgb(74 74 82);
 }
