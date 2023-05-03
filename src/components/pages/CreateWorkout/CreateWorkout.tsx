@@ -11,7 +11,7 @@ import { PlusSquareFill } from "react-bootstrap-icons";
 
 const CreateWorkout = () => {
   const workoutData = useSelector((state: RootState) => state.workout.data);
-  const userId = useSelector((state: RootState) => state.user.data?._id);
+  const user_id = useSelector((state: RootState) => state.user.data?._id);
   const dispatch = useDispatch();
   const [exerciseCount, setExerciseCount] = useState(1);
 
@@ -19,7 +19,7 @@ const CreateWorkout = () => {
     dispatch(
       setWorkout({
         ...workoutData,
-        userId: userId,
+        user_id: user_id,
         focus: "",
         likes: 0,
         exercises: [],

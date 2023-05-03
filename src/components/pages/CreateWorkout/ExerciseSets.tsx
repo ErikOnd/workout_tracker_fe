@@ -17,8 +17,8 @@ const ExerciseSets = ({ exerciseId, setNumber }: ExerciseSet) => {
   const addSet = () => {
     if (reps !== "" && weight !== "") {
       const newSet = {
-        reps: parseInt(reps),
-        weight: parseInt(weight),
+        repetitions: parseInt(reps),
+        weight_lifted: parseInt(weight),
       };
       dispatch(addSets({ exerciseId: exerciseId, set: newSet }));
     }

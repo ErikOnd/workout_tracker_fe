@@ -2,12 +2,14 @@ import React from "react";
 import { Container, ListGroup, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
+import saveWorkout from "../../../services/saveWorkout";
 
 const ExerciseTable = () => {
   const dispatch = useDispatch();
   const exerciseList = useSelector(
     (state: RootState) => state.exerciseList.exercises
   );
+  const workout = useSelector((state: RootState) => state.workout.data);
 
   function scrollToDiv(exerciseId: string) {
     const element = document.getElementById(exerciseId);
@@ -31,7 +33,9 @@ const ExerciseTable = () => {
 
         <div
           className="mt-4 orange-btn mr-auto save-workout-btn"
-          /*                onClick={saveWorkout} */
+          onClick={() => {
+            saveWorkout(workout);
+          }}
         >
           Save Workout
         </div>
