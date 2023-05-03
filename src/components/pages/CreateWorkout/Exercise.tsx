@@ -3,8 +3,7 @@ import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import ExerciseSets from "./ExerciseSets";
 import exercises from "../../../assets/exercises";
 import getExercise from "../../../services/getExercise";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../../redux/store";
+import { useDispatch } from "react-redux";
 import { addExercise } from "../../../redux/reducers/workoutSlice";
 import { removeExercise } from "../../../redux/reducers/workoutSlice";
 import { PlusSquareFill, Trash } from "react-bootstrap-icons";
@@ -19,9 +18,7 @@ const Exercise = () => {
   const [muscleGroups, setMuscleGroups] = useState("Focused Muscle groups");
   const [exerciseId, setExerciseId] = useState("");
 
-  const workoutData = useSelector((state: RootState) => state.workout.data);
   const dispatch = useDispatch();
-  console.log(workoutData);
   useEffect(() => {
     if (!isNaN(setsCount)) {
       const components = [];
