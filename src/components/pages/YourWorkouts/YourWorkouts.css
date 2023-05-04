@@ -1,3 +1,8 @@
+.your-w-header {
+  font-size: 40px;
+  font-weight: 700;
+}
+
 .your-workout-con {
   background-color: rgb(54, 54, 60);
   min-height: 100vh;
@@ -19,4 +24,36 @@
 .your-w-table td,
 .your-w-table th {
   border: none;
+}
+
+.collapse-row {
+  background-color: rgb(222, 222, 222);
+}
+
+.your-w-table tbody tr {
+  border-bottom: 1px solid rgb(54 54 60);
+}
+
+.parent-row {
+  cursor: pointer;
+}
+.tableAndBtn {
+  position: relative;
+}
+
+.btn-group-vertical {
+  position: absolute;
+  bottom: 0;
+  right: -51px;
+}
+
+.y-w-btn {
+  height: 50px;
+  background-color: #ff8a00;
+  outline: none;
+  border: 1px solid rgb(54 54 60);
+}
+
+.y-w-btn.btn.btn-warning {
+  color: white;
 }

@@ -1,21 +1,41 @@
 import React, { useEffect, useState } from "react";
-import { Col, Container, Row, Table } from "react-bootstrap";
+import {
+  Button,
+  ButtonGroup,
+  Col,
+  Collapse,
+  Container,
+  Row,
+  Table,
+} from "react-bootstrap";
 import "./YourWorkouts.css";
 import getWorkouts from "../../../services/getWorkouts";
 import Header from "../../layout/Header";
-import { WorkoutList } from "../../../interfaces/WorkoutList";
+import { Exercise, WorkoutList } from "../../../interfaces/WorkoutList";
+import {
+  ArrowCounterclockwise,
+  PencilSquare,
+  Trash,
+} from "react-bootstrap-icons";
+import deleteWorkout from "../../../services/deleteWorkout";
 
 const YourWorkouts = () => {
-  const [workouts, setWorkouts] = useState<WorkoutList | null>(null);
-  console.log(workouts);
-  useEffect(() => {
-    async function fetchWorkouts() {
-      const workoutList = await getWorkouts();
-      setWorkouts(workoutList);
-    }
+  const [workouts, setWorkouts] = useState<any>(null);
 
+  useEffect(() => {
     fetchWorkouts();
   }, []);
+
+  async function fetchWorkouts() {
+    const workoutList = await getWorkouts();
+    setWorkouts(workoutList);
+  }
+
+  const [openRowId, setOpenRowId] = useState(null);
+
+  const handleRowClick = (rowId: any) => {
+    setOpenRowId(rowId === openRowId ? null : rowId);
+  };
 
   return (
     <Container fluid className="your-workout-con  text-center">
@@ -25,27 +45,69 @@ const YourWorkouts = () => {
       </Row>
       <Container>
         {}
-        <Table striped bordered hover className="your-w-table">
-          <thead>
-            <tr>
-              <th>Exercise</th>
-              <th>Sets</th>
-              <th>Target</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-            </tr>
-            <tr>
-              <td>Jacob</td>
-              <td>Thornton</td>
-              <td>@fat</td>
-            </tr>
-          </tbody>
-        </Table>
+        {workouts?.map((workout: any) => (
+          <div className="tableAndBtn">
+            <h2 className="your-w-header">{workout.workout_name}</h2>
+            <Table hover className="your-w-table text-left mb-5">
+              <thead>
+                <tr>
+                  <th>Exercise</th>
+                  <th>Sets</th>
+                  <th>Target</th>
+                </tr>
+              </thead>
+              <tbody>
+                {workout.exercises.map((exercise: any) => (
+                  <React.Fragment key={exercise.exercise_id._id}>
+                    <tr
+                      className="parent-row"
+                      onClick={() => handleRowClick(exercise.exercise_id._id)}
+                    >
+                      <td>{exercise.exercise_id.exercise}</td>
+                      <td>{exercise.sets.length}</td>
+                      <td>{exercise.exercise_id.muscles.join(", ")}</td>
+                    </tr>
+
+                    {exercise.sets.map((set: any, index: number) => (
+                      <Collapse in={exercise.exercise_id._id === openRowId}>
+                        <tr key={index}>
+                          <td className="collapse-row">
+                            {"Set " + (index + 1)}
+                          </td>
+                          <td className="collapse-row">
+                            {"Reps: " + set.repetitions}
+                          </td>
+                          <td className="collapse-row">
+                            {"Weight: " + set.weight_lifted + "kg"}
+                          </td>
+                        </tr>
+                      </Collapse>
+                    ))}
+                  </React.Fragment>
+                ))}
+              </tbody>
+            </Table>
+            <ButtonGroup vertical>
+              <Button className="y-w-btn" variant="info">
+                <ArrowCounterclockwise size={25}></ArrowCounterclockwise>
+              </Button>
+              <Button className="y-w-btn" variant="warning">
+                <PencilSquare size={25}></PencilSquare>
+              </Button>
+
+              <Button
+                className="y-w-btn"
+                variant="danger"
+                onClick={() => {
+                  deleteWorkout(workout._id);
+                  fetchWorkouts();
+                }}
+              >
+                <Trash size={25}></Trash>
+              </Button>
+            </ButtonGroup>
+          </div>
+        ))}
       </Container>
     </Container>
   );
