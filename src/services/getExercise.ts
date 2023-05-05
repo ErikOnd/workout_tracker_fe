@@ -4,7 +4,8 @@ const accessToken = localStorage.getItem("accessToken");
 const getExercise = async (
   exercise: string,
   setMuscleGroups: React.Dispatch<React.SetStateAction<string>>,
-  setExersiceId: React.Dispatch<React.SetStateAction<string>>
+  setExersiceId: React.Dispatch<React.SetStateAction<string>>,
+  setGifLink: React.Dispatch<React.SetStateAction<string>>
 ) => {
   try {
     const res = await fetch(`${apiUrl}/exercises/${exercise}`, {
@@ -16,12 +17,15 @@ const getExercise = async (
       throw new Error(await res.text());
     } else {
       const exercise = await res.json();
-      const muscleGroupsArr = exercise.muscles;
       const exerciseId = exercise._id;
-      const muscleGroup = muscleGroupsArr.join(", ");
+      const bodyPart = exercise.bodyPart;
+      const target = exercise.target;
+      const gifLink = exercise.gifUrl;
+      const focus = "Bodypart[" + bodyPart + "]\n" + "Target[" + target + "]";
 
       setExersiceId(exerciseId);
-      setMuscleGroups(muscleGroup);
+      setMuscleGroups(focus);
+      setGifLink(gifLink);
     }
   } catch (error) {
     console.log(error);

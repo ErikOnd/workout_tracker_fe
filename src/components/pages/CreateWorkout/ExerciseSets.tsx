@@ -59,7 +59,7 @@ const ExerciseSets = ({ exerciseId, setNumber }: ExerciseSet) => {
           <Col className="weight-input-col">
             <Form.Control
               type="text"
-              placeholder="Weight"
+              placeholder="weight"
               className="w-placeholder"
               value={weight}
               onChange={(e) => setWeight(e.target.value)}

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Container, Row, Col, Form, Button } from "react-bootstrap";
+import { Container, Row, Col, Form, Button, Image } from "react-bootstrap";
 import ExerciseSets from "./ExerciseSets";
 import exercises from "../../../assets/exercises";
 import getExercise from "../../../services/getExercise";
@@ -9,13 +9,16 @@ import { removeExercise } from "../../../redux/reducers/workoutSlice";
 import { PlusSquareFill, Trash } from "react-bootstrap-icons";
 import { addExerciseName } from "../../../redux/reducers/exerciseListSlice";
 import { removeExerciseName } from "../../../redux/reducers/exerciseListSlice";
-
-const exArray = exercises;
+import getAllExerciseNames from "../../../services/getAllExerciseNames";
 const Exercise = () => {
+  type ExerciseName = string;
+
   const [setsCount, setSetsCount] = useState<number>(0);
   const [setsComponents, setSetsComponents] = useState<React.ReactNode[]>([]);
   const [exerciseName, setExerciseName] = useState("");
+  const [allNames, setAllNames] = useState<ExerciseName[]>([]);
   const [muscleGroups, setMuscleGroups] = useState("Focused Muscle groups");
+  const [gifLink, setGifLink] = useState("");
   const [exerciseId, setExerciseId] = useState("");
 
   const dispatch = useDispatch();
@@ -51,6 +54,15 @@ const Exercise = () => {
     }
   }, [exerciseId]);
 
+  async function fetchExerciseNames() {
+    const response = await getAllExerciseNames();
+    setAllNames(response);
+  }
+
+  useEffect(() => {
+    fetchExerciseNames();
+  }, []);
+
   const handleExerciseNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setExerciseName(e.target.value);
   };
@@ -69,7 +81,7 @@ const Exercise = () => {
             type="text"
             list="data"
             placeholder="Exercise Name"
-            className="w-placeholder ex-name"
+            className="w-placeholder ex-name w-100"
             value={exerciseName}
             onChange={handleExerciseNameChange}
             onBlur={(e: React.ChangeEvent<HTMLInputElement>) => {
@@ -78,12 +90,17 @@ const Exercise = () => {
                 e.target.readOnly = true;
               }
               e.target.id = e.target.value.replace(/\s+/g, "-").toLowerCase();
-              getExercise(exerciseName, setMuscleGroups, setExerciseId);
+              getExercise(
+                exerciseName,
+                setMuscleGroups,
+                setExerciseId,
+                setGifLink
+              );
             }}
           />
 
           <datalist id="data" className="datalist-style">
-            {exArray.map((item, key) => (
+            {allNames.map((item, key) => (
               <option key={key} value={item} />
             ))}
           </datalist>
@@ -99,6 +116,9 @@ const Exercise = () => {
               readOnly
               value={muscleGroups}
             />
+          </Col>
+          <Col>
+            <Image src={gifLink} alt="" className="exercise-gif" />
           </Col>
         </Row>
         <Row>

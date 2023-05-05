@@ -18,10 +18,11 @@ import {
   Trash,
 } from "react-bootstrap-icons";
 import deleteWorkout from "../../../services/deleteWorkout";
+import { useNavigate } from "react-router-dom";
 
 const YourWorkouts = () => {
   const [workouts, setWorkouts] = useState<any>(null);
-
+  const navigate = useNavigate();
   useEffect(() => {
     fetchWorkouts();
   }, []);
@@ -30,11 +31,16 @@ const YourWorkouts = () => {
     const workoutList = await getWorkouts();
     setWorkouts(workoutList);
   }
+  console.log(workouts);
 
   const [openRowId, setOpenRowId] = useState(null);
 
   const handleRowClick = (rowId: any) => {
     setOpenRowId(rowId === openRowId ? null : rowId);
+  };
+
+  const handleCreateWorkoutClick = () => {
+    navigate("/your-workouts/create");
   };
 
   return (
@@ -63,9 +69,9 @@ const YourWorkouts = () => {
                       className="parent-row"
                       onClick={() => handleRowClick(exercise.exercise_id._id)}
                     >
-                      <td>{exercise.exercise_id.exercise}</td>
+                      <td>{exercise.exercise_id.name}</td>
                       <td>{exercise.sets.length}</td>
-                      <td>{exercise.exercise_id.muscles.join(", ")}</td>
+                      <td>{exercise.exercise_id.target}</td>
                     </tr>
 
                     {exercise.sets.map((set: any, index: number) => (
@@ -88,13 +94,16 @@ const YourWorkouts = () => {
               </tbody>
             </Table>
             <ButtonGroup vertical>
-              <Button className="y-w-btn" variant="info">
+              <Button
+                className="y-w-btn"
+                variant="info"
+                onClick={handleCreateWorkoutClick}
+              >
                 <ArrowCounterclockwise size={25}></ArrowCounterclockwise>
               </Button>
               <Button className="y-w-btn" variant="warning">
                 <PencilSquare size={25}></PencilSquare>
               </Button>
-
               <Button
                 className="y-w-btn"
                 variant="danger"

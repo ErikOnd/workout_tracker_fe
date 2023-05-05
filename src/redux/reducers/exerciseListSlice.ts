@@ -25,10 +25,14 @@ const exerciseListSlice = createSlice({
         (exercise) => exercise.exerciseId !== exerciseId
       );
     },
+    removeAllExerciseNames: (state) => {
+      console.log("removing workout names");
+      state.exercises = [];
+    },
   },
 });
 
-export const { addExerciseName, removeExerciseName } =
+export const { addExerciseName, removeExerciseName, removeAllExerciseNames } =
   exerciseListSlice.actions;
 
 export default exerciseListSlice.reducer;

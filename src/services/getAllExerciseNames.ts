@@ -1,24 +1,23 @@
-import WorkoutData from "../interfaces/WorkoutData";
-
 const apiUrl = process.env.REACT_APP_API_URL;
 const accessToken = localStorage.getItem("accessToken");
 
-const saveWorkout = async (data: WorkoutData | null) => {
+const getAllExerciseNames = async () => {
   try {
-    const res = await fetch(`${apiUrl}/workouts`, {
+    const res = await fetch(`${apiUrl}/exercises/all`, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
-        "Content-Type": "application/json",
       },
-      method: "POST",
-      body: JSON.stringify(data),
     });
     if (!res.ok) {
       throw new Error(await res.text());
+    } else {
+      const exerciseNames = await res.json();
+
+      return exerciseNames;
     }
   } catch (error) {
     console.log(error);
   }
 };
 
-export default saveWorkout;
+export default getAllExerciseNames;

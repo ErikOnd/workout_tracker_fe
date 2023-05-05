@@ -10,6 +10,7 @@ import Progress from "./components/pages/Progress/Progress";
 import Register from "./components/pages/Register/Register";
 import NotFound from "./components/pages/NotFound/NotFound";
 import Login from "./components/pages/Login/Login";
+import YourWorkoutUpdate from "./components/pages/YourWorkouts/update/YourWorkoutUpdate";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -20,6 +21,7 @@ function App() {
       setIsLoggedIn(true);
     }
   }, []);
+  console.log("isLoggedIn:", isLoggedIn);
   return (
     <BrowserRouter>
       <Routes>
@@ -35,6 +37,16 @@ function App() {
           element={
             isLoggedIn ? (
               <YourWorkouts />
+            ) : (
+              <Navigate to="/login" replace={true} />
+            )
+          }
+        />
+        <Route
+          path="/your-workouts/update"
+          element={
+            isLoggedIn ? (
+              <YourWorkoutUpdate />
             ) : (
               <Navigate to="/login" replace={true} />
             )
