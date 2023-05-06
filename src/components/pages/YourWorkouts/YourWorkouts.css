@@ -13,26 +13,35 @@
 .your-workouts-header {
   font-size: 70px;
   font-weight: 700;
+  color: #ff8a00;
 }
 
 .your-w-table {
-  background-color: white;
-  border-radius: 10px;
-  border: none;
   border-collapse: collapse;
+  color: white;
+  background-color: transparent;
+  border: 1px solid #ff8a00;
 }
 
-.your-w-table td,
+.your-w-table:hover {
+  color: white;
+}
+
 .your-w-table th {
   border: none;
+  color: white;
+  font-weight: 900;
+  font-size: 20px;
+}
+
+.your-w-table td {
+  color: white;
+  font-weight: 700;
 }
 
 .collapse-row {
-  background-color: rgb(222, 222, 222);
-}
-
-.your-w-table tbody tr {
-  border-bottom: 1px solid rgb(54 54 60);
+  border: 1px solid white;
+  background-color: rgb(67 67 74);
 }
 
 .parent-row {
@@ -57,9 +66,4 @@
 
 .y-w-btn.btn.btn-warning {
   color: white;
-}
-
-.exercise-gif {
-  width: 200px;
-  border-radius: 10px;
 }

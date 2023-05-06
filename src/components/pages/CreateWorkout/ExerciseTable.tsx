@@ -53,7 +53,7 @@ const ExerciseTable = () => {
             dispatch(removeAllExerciseNames);
             dispatch(clearWorkout);
             setIsLoading(false);
-            navigate("/your-workouts");
+            navigate("/your-workouts/");
           }}
         >
           Save Workout

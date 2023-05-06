@@ -143,3 +143,8 @@
 .exercise-list-item:hover {
   background-color: rgb(74 74 82);
 }
+
+.exercise-gif {
+  width: 200px;
+  border-radius: 10px;
+}

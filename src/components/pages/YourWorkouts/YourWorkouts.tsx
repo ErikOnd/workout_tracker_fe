@@ -12,11 +12,7 @@ import "./YourWorkouts.css";
 import getWorkouts from "../../../services/getWorkouts";
 import Header from "../../layout/Header";
 import { Exercise, WorkoutList } from "../../../interfaces/WorkoutList";
-import {
-  ArrowCounterclockwise,
-  PencilSquare,
-  Trash,
-} from "react-bootstrap-icons";
+import { PencilSquare, Trash } from "react-bootstrap-icons";
 import deleteWorkout from "../../../services/deleteWorkout";
 import { useNavigate } from "react-router-dom";
 
@@ -39,10 +35,6 @@ const YourWorkouts = () => {
     setOpenRowId(rowId === openRowId ? null : rowId);
   };
 
-  const handleCreateWorkoutClick = () => {
-    navigate("/your-workouts/create");
-  };
-
   return (
     <Container fluid className="your-workout-con  text-center">
       <Header></Header>
@@ -50,7 +42,6 @@ const YourWorkouts = () => {
         <Col className="your-workouts-header">Your Workouts</Col>
       </Row>
       <Container>
-        {}
         {workouts?.map((workout: any) => (
           <div className="tableAndBtn">
             <h2 className="your-w-header">{workout.workout_name}</h2>
@@ -96,12 +87,11 @@ const YourWorkouts = () => {
             <ButtonGroup vertical>
               <Button
                 className="y-w-btn"
-                variant="info"
-                onClick={handleCreateWorkoutClick}
+                variant="warning"
+                onClick={() => {
+                  navigate("/create-workout");
+                }}
               >
-                <ArrowCounterclockwise size={25}></ArrowCounterclockwise>
-              </Button>
-              <Button className="y-w-btn" variant="warning">
                 <PencilSquare size={25}></PencilSquare>
               </Button>
               <Button
