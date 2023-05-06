@@ -43,6 +43,17 @@ export const workoutSlice = createSlice({
         }
       }
     },
+    removeSet: (state, action) => {
+      const { exerciseId, setId } = action.payload;
+      if (state.data) {
+        const exercise = state.data.exercises.find(
+          (exercise) => exercise.exercise_id === exerciseId
+        );
+        if (exercise) {
+          exercise.sets = exercise.sets.filter((set) => set.set_id !== setId);
+        }
+      }
+    },
   },
 });
 
@@ -52,6 +63,7 @@ export const {
   addExercise,
   removeExercise,
   addSets,
+  removeSet,
 } = workoutSlice.actions;
 
 export default workoutSlice.reducer;

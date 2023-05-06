@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Row, Col, Form } from "react-bootstrap";
+import { Row, Col, Form, Button } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { addSets } from "../../../redux/reducers/workoutSlice";
+import { Trash } from "react-bootstrap-icons";
+import { removeSet } from "../../../redux/reducers/workoutSlice";
 
 interface ExerciseSet {
   exerciseId: string | undefined;
@@ -13,12 +15,14 @@ const ExerciseSets = ({ exerciseId, setNumber }: ExerciseSet) => {
   const [weight, setWeight] = useState("");
   const [readOnly, setReadOnly] = useState(false);
   const dispatch = useDispatch();
+  const setId = exerciseId + "_" + setNumber;
 
   const addSet = () => {
     if (reps !== "" && weight !== "") {
       const newSet = {
         repetitions: parseInt(reps),
         weight_lifted: parseInt(weight),
+        set_id: setId,
       };
       dispatch(addSets({ exerciseId: exerciseId, set: newSet }));
     }
@@ -33,8 +37,14 @@ const ExerciseSets = ({ exerciseId, setNumber }: ExerciseSet) => {
     }
   };
 
+  const handleRemoveSet = () => {
+    dispatch(removeSet({ exerciseId: exerciseId, setId: setId }));
+    const element = document.getElementById(setId);
+    element?.remove();
+  };
+
   return (
-    <div className="set-div">
+    <div className="set-div" id={setId}>
       <Row>
         <Row>Set {setNumber + 1}</Row>
         <Row className="align-items-center mt-3">
@@ -72,6 +82,13 @@ const ExerciseSets = ({ exerciseId, setNumber }: ExerciseSet) => {
             />
           </Col>
           <span>kg</span>
+          <Button
+            variant="danger"
+            onClick={handleRemoveSet}
+            className="remove-set-btn trash-icon"
+          >
+            <Trash size={20}></Trash>
+          </Button>
         </Row>
       </Row>
     </div>

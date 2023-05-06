@@ -1,4 +1,4 @@
 export default interface ExerciseData {
   exercise_id: string;
-  sets: { repetitions: number; weight_lifted: number }[];
+  sets: { repetitions: number; weight_lifted: number; set_id: string }[];
 }

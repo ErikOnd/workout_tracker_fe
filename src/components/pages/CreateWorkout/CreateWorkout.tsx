@@ -14,7 +14,7 @@ const CreateWorkout = () => {
   const user_id = useSelector((state: RootState) => state.user.data?._id);
   const dispatch = useDispatch();
   const [exerciseCount, setExerciseCount] = useState(1);
-
+  console.log(workoutData);
   useEffect(() => {
     dispatch(
       setWorkout({

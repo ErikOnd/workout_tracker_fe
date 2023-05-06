@@ -50,10 +50,12 @@ const ExerciseTable = () => {
           onClick={() => {
             setIsLoading(true);
             saveWorkout(workout);
-            dispatch(removeAllExerciseNames);
-            dispatch(clearWorkout);
-            setIsLoading(false);
-            navigate("/your-workouts/");
+            setTimeout(() => {
+              setIsLoading(false);
+              navigate("/your-workouts/");
+            }, 1000);
+            dispatch(removeAllExerciseNames());
+            dispatch(clearWorkout());
           }}
         >
           Save Workout
