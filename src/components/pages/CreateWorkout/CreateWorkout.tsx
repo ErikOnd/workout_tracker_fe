@@ -6,7 +6,7 @@ import Exercise from "./Exercise";
 import ExerciseTable from "./ExerciseTable";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
-import { setWorkout } from "../../../redux/reducers/workoutSlice";
+import { clearWorkout, setWorkout } from "../../../redux/reducers/workoutSlice";
 import { PlusSquareFill } from "react-bootstrap-icons";
 import { removeAllExerciseNames } from "../../../redux/reducers/exerciseListSlice";
 import { useParams } from "react-router-dom";
@@ -19,6 +19,8 @@ const CreateWorkout = () => {
   const [exerciseCount, setExerciseCount] = useState(1);
   const { workout_id } = useParams();
   useEffect(() => {
+    dispatch(removeAllExerciseNames);
+    dispatch(clearWorkout());
     dispatch(
       setWorkout({
         ...workoutData,
@@ -28,7 +30,6 @@ const CreateWorkout = () => {
         exercises: [],
       })
     );
-    dispatch(removeAllExerciseNames());
   }, []);
 
   const handleAddExercise = () => {
@@ -56,6 +57,7 @@ const CreateWorkout = () => {
           placeholder="Workout Name"
           className="workout-name"
           onChange={handleSetWorkoutName}
+          value={workout_id && workoutData?.workout_name}
         />
       </Row>
       <Row>

@@ -58,8 +58,6 @@ const ExerciseTable = () => {
                 setIsLoading(false);
                 navigate("/your-workouts/");
               }, 1000);
-              dispatch(removeAllExerciseNames());
-              dispatch(clearWorkout());
             }}
           >
             Update Workout
@@ -74,8 +72,6 @@ const ExerciseTable = () => {
                 setIsLoading(false);
                 navigate("/your-workouts/");
               }, 1000);
-              dispatch(removeAllExerciseNames());
-              dispatch(clearWorkout());
             }}
           >
             Save Workout

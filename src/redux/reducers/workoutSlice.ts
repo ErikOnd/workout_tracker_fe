@@ -14,7 +14,6 @@ export const workoutSlice = createSlice({
   initialState,
   reducers: {
     setWorkout: (state, action) => {
-      console.log("action.payload:", action.payload);
       state.data = action.payload;
     },
     clearWorkout: (state) => {
@@ -29,6 +28,13 @@ export const workoutSlice = createSlice({
       if (state.data) {
         state.data.exercises = state.data.exercises.filter(
           (exercise) => exercise.exercise_id !== action.payload
+        );
+      }
+    },
+    removePrefExercise: (state, action) => {
+      if (state.data) {
+        state.data.exercises = state.data.exercises.filter(
+          (exercise) => exercise._id !== action.payload
         );
       }
     },
@@ -64,6 +70,7 @@ export const {
   removeExercise,
   addSets,
   removeSet,
+  removePrefExercise,
 } = workoutSlice.actions;
 
 export default workoutSlice.reducer;
