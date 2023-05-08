@@ -31,6 +31,7 @@ const Exercise = ({ exIndex }: { key: number; exIndex: number }) => {
           <ExerciseSets key={i} exerciseId={exerciseId} setNumber={i} />
         );
       }
+
       setSetsComponents(components);
     } else {
       setSetsComponents([]);
@@ -118,11 +119,23 @@ const Exercise = ({ exIndex }: { key: number; exIndex: number }) => {
               placeholder="Focused Muscle groups"
               className="w-placeholder focus-area pl-0"
               readOnly
-              value={muscleGroups}
+              value={
+                workoutData?.exercises[exIndex]
+                  ? workoutData?.exercises[exIndex].exercise_id.target
+                  : muscleGroups
+              }
             />
           </Col>
           <Col>
-            <Image src={gifLink} alt="" className="exercise-gif" />
+            <Image
+              src={
+                workoutData?.exercises[exIndex]
+                  ? workoutData?.exercises[exIndex].exercise_id.gifUrl
+                  : gifLink
+              }
+              alt=""
+              className="exercise-gif"
+            />
           </Col>
         </Row>
         <Row>
