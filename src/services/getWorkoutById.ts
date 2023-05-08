@@ -1,7 +1,7 @@
 const apiUrl = process.env.REACT_APP_API_URL;
 const accessToken = localStorage.getItem("accessToken");
 
-const getWorkoutById = async (workoutId: string | null) => {
+const getWorkoutById = async (workoutId: string | undefined) => {
   try {
     const res = await fetch(`${apiUrl}/workouts/${workoutId}`, {
       headers: {

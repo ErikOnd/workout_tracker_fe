@@ -64,6 +64,17 @@ function App() {
         />
 
         <Route
+          path="/create-workout/:id"
+          element={
+            isLoggedIn ? (
+              <CreateWorkout />
+            ) : (
+              <Navigate to="/login" replace={true} />
+            )
+          }
+        />
+
+        <Route
           path="/find-workouts"
           element={
             isLoggedIn ? (

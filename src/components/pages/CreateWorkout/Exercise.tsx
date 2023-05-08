@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Form, Button, Image } from "react-bootstrap";
 import ExerciseSets from "./ExerciseSets";
-import exercises from "../../../assets/exercises";
 import getExercise from "../../../services/getExercise";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addExercise } from "../../../redux/reducers/workoutSlice";
 import { removeExercise } from "../../../redux/reducers/workoutSlice";
 import { PlusSquareFill, Trash } from "react-bootstrap-icons";
 import { addExerciseName } from "../../../redux/reducers/exerciseListSlice";
 import { removeExerciseName } from "../../../redux/reducers/exerciseListSlice";
 import getAllExerciseNames from "../../../services/getAllExerciseNames";
-const Exercise = () => {
+import { RootState } from "../../../redux/store";
+const Exercise = ({ exIndex }: { key: number; exIndex: number }) => {
   type ExerciseName = string;
 
   const [setsCount, setSetsCount] = useState<number>(0);
@@ -21,6 +21,7 @@ const Exercise = () => {
   const [gifLink, setGifLink] = useState("");
   const [exerciseId, setExerciseId] = useState("");
 
+  const workoutData = useSelector((state: RootState) => state.workout.data);
   const dispatch = useDispatch();
   useEffect(() => {
     if (!isNaN(setsCount)) {
@@ -30,6 +31,7 @@ const Exercise = () => {
           <ExerciseSets key={i} exerciseId={exerciseId} setNumber={i} />
         );
       }
+
       setSetsComponents(components);
     } else {
       setSetsComponents([]);
@@ -50,7 +52,6 @@ const Exercise = () => {
           exerciseName,
         })
       );
-      //next dispatch
     }
   }, [exerciseId]);
 
@@ -82,7 +83,11 @@ const Exercise = () => {
             list="data"
             placeholder="Exercise Name"
             className="w-placeholder ex-name w-100"
-            value={exerciseName}
+            value={
+              workoutData?.exercises[exIndex]
+                ? workoutData?.exercises[exIndex].exercise_id.name
+                : exerciseName
+            }
             onChange={handleExerciseNameChange}
             onBlur={(e: React.ChangeEvent<HTMLInputElement>) => {
               //Set to read only to prevent bugs
@@ -114,11 +119,23 @@ const Exercise = () => {
               placeholder="Focused Muscle groups"
               className="w-placeholder focus-area pl-0"
               readOnly
-              value={muscleGroups}
+              value={
+                workoutData?.exercises[exIndex]
+                  ? workoutData?.exercises[exIndex].exercise_id.target
+                  : muscleGroups
+              }
             />
           </Col>
           <Col>
-            <Image src={gifLink} alt="" className="exercise-gif" />
+            <Image
+              src={
+                workoutData?.exercises[exIndex]
+                  ? workoutData?.exercises[exIndex].exercise_id.gifUrl
+                  : gifLink
+              }
+              alt=""
+              className="exercise-gif"
+            />
           </Col>
         </Row>
         <Row>

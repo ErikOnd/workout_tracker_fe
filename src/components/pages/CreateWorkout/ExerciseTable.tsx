@@ -6,10 +6,13 @@ import saveWorkout from "../../../services/saveWorkout";
 import { removeAllExerciseNames } from "../../../redux/reducers/exerciseListSlice";
 import { clearWorkout } from "../../../redux/reducers/workoutSlice";
 import { RotatingLines } from "react-loader-spinner";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import updateWorkout from "../../../services/updateWorkout";
 
 const ExerciseTable = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const { id } = useParams();
+  const workout_id: string | undefined = id;
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const exerciseList = useSelector(
@@ -45,21 +48,39 @@ const ExerciseTable = () => {
             visible={true}
           />
         )}
-        <div
-          className="mt-4 orange-btn mr-auto save-workout-btn"
-          onClick={() => {
-            setIsLoading(true);
-            saveWorkout(workout);
-            setTimeout(() => {
-              setIsLoading(false);
-              navigate("/your-workouts/");
-            }, 1000);
-            dispatch(removeAllExerciseNames());
-            dispatch(clearWorkout());
-          }}
-        >
-          Save Workout
-        </div>
+        {workout_id ? (
+          <div
+            className="mt-4 orange-btn mr-auto save-workout-btn"
+            onClick={() => {
+              setIsLoading(true);
+              updateWorkout(workout, workout_id);
+              setTimeout(() => {
+                setIsLoading(false);
+                navigate("/your-workouts/");
+              }, 1000);
+              dispatch(removeAllExerciseNames());
+              dispatch(clearWorkout());
+            }}
+          >
+            Update Workout
+          </div>
+        ) : (
+          <div
+            className="mt-4 orange-btn mr-auto save-workout-btn"
+            onClick={() => {
+              setIsLoading(true);
+              saveWorkout(workout);
+              setTimeout(() => {
+                setIsLoading(false);
+                navigate("/your-workouts/");
+              }, 1000);
+              dispatch(removeAllExerciseNames());
+              dispatch(clearWorkout());
+            }}
+          >
+            Save Workout
+          </div>
+        )}
       </div>
     </Container>
   );

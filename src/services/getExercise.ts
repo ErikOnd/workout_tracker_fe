@@ -18,13 +18,11 @@ const getExercise = async (
     } else {
       const exercise = await res.json();
       const exerciseId = exercise._id;
-      const bodyPart = exercise.bodyPart;
       const target = exercise.target;
       const gifLink = exercise.gifUrl;
-      const focus = "Bodypart[" + bodyPart + "]\n" + "Target[" + target + "]";
 
       setExersiceId(exerciseId);
-      setMuscleGroups(focus);
+      setMuscleGroups(target);
       setGifLink(gifLink);
     }
   } catch (error) {
