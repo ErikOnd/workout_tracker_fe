@@ -10,7 +10,7 @@ import { addExerciseName } from "../../../redux/reducers/exerciseListSlice";
 import { removeExerciseName } from "../../../redux/reducers/exerciseListSlice";
 import getAllExerciseNames from "../../../services/getAllExerciseNames";
 import { RootState } from "../../../redux/store";
-const Exercise = ({ exIndex }: { key: number; exIndex: number }) => {
+const Exercise = () => {
   type ExerciseName = string;
 
   const [setsCount, setSetsCount] = useState<number>(0);

@@ -18,7 +18,6 @@ const CreateWorkout = () => {
   const dispatch = useDispatch();
   const [exerciseCount, setExerciseCount] = useState(1);
   const { workout_id } = useParams();
-  console.log(workout_id);
   useEffect(() => {
     dispatch(
       setWorkout({
@@ -44,7 +43,7 @@ const CreateWorkout = () => {
   const exerciseComponents = [];
 
   for (let i = 0; i < exerciseCount; i++) {
-    exerciseComponents.push(<Exercise key={i} exIndex={i} />);
+    exerciseComponents.push(<Exercise key={i} />);
   }
 
   return (
