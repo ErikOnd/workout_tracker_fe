@@ -6,11 +6,14 @@ import PrefWorkout from "../../../interfaces/PrefWorkout";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import {
-  removeExercise,
   removePrefExercise,
+  removePrefSet,
+  removeSet,
   setWorkout,
 } from "../../../redux/reducers/workoutSlice";
 import { removeExerciseName } from "../../../redux/reducers/exerciseListSlice";
+
+//todo: make edit sets, add set and remove sets possible
 
 const ReconstructWorkout = ({ workout_id }: { workout_id: string }) => {
   const workoutData = useSelector((state: RootState) => state.workout.data);
@@ -46,8 +49,13 @@ const ReconstructWorkout = ({ workout_id }: { workout_id: string }) => {
     element?.remove();
   };
 
+  const handleRemoveSet = (exerciseId: string, setId: string) => {
+    dispatch(removePrefSet({ exerciseId: exerciseId, setId: setId }));
+    const element = document.getElementById(setId);
+    element?.remove();
+  };
+
   console.log("workoutData", workoutData);
-  console.log("prefWorkout", prefWorkout);
 
   return (
     <>
@@ -100,7 +108,7 @@ const ReconstructWorkout = ({ workout_id }: { workout_id: string }) => {
             </Row>
           </div>
           {exercise.sets.map((set, index) => (
-            <div className="set-div">
+            <div className="set-div" key={set._id} id={set._id}>
               <Row>
                 <Row>Set {index + 1}</Row>
                 <Row className="align-items-center mt-3">
@@ -127,6 +135,9 @@ const ReconstructWorkout = ({ workout_id }: { workout_id: string }) => {
                   <Button
                     variant="danger"
                     className="remove-set-btn trash-icon"
+                    onClick={() => {
+                      handleRemoveSet(exercise._id, set._id);
+                    }}
                   >
                     <Trash size={20}></Trash>
                   </Button>
