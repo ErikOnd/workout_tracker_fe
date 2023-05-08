@@ -21,7 +21,6 @@ const Exercise = ({ exIndex }: { key: number; exIndex: number }) => {
   const [gifLink, setGifLink] = useState("");
   const [exerciseId, setExerciseId] = useState("");
 
-  const workoutData = useSelector((state: RootState) => state.workout.data);
   const dispatch = useDispatch();
   useEffect(() => {
     if (!isNaN(setsCount)) {
@@ -83,11 +82,7 @@ const Exercise = ({ exIndex }: { key: number; exIndex: number }) => {
             list="data"
             placeholder="Exercise Name"
             className="w-placeholder ex-name w-100"
-            value={
-              workoutData?.exercises[exIndex]
-                ? workoutData?.exercises[exIndex].exercise_id.name
-                : exerciseName
-            }
+            value={exerciseName}
             onChange={handleExerciseNameChange}
             onBlur={(e: React.ChangeEvent<HTMLInputElement>) => {
               //Set to read only to prevent bugs
@@ -119,23 +114,11 @@ const Exercise = ({ exIndex }: { key: number; exIndex: number }) => {
               placeholder="Focused Muscle groups"
               className="w-placeholder focus-area pl-0"
               readOnly
-              value={
-                workoutData?.exercises[exIndex]
-                  ? workoutData?.exercises[exIndex].exercise_id.target
-                  : muscleGroups
-              }
+              value={muscleGroups}
             />
           </Col>
           <Col>
-            <Image
-              src={
-                workoutData?.exercises[exIndex]
-                  ? workoutData?.exercises[exIndex].exercise_id.gifUrl
-                  : gifLink
-              }
-              alt=""
-              className="exercise-gif"
-            />
+            <Image src={gifLink} alt="" className="exercise-gif" />
           </Col>
         </Row>
         <Row>
