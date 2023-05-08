@@ -26,7 +26,6 @@ const exerciseListSlice = createSlice({
       );
     },
     removeAllExerciseNames: (state) => {
-      console.log("removing workout names");
       state.exercises = [];
     },
   },

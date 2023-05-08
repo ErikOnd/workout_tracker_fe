@@ -8,13 +8,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import { setWorkout } from "../../../redux/reducers/workoutSlice";
 import { PlusSquareFill } from "react-bootstrap-icons";
+import { removeAllExerciseNames } from "../../../redux/reducers/exerciseListSlice";
+import { useParams } from "react-router-dom";
+import ReconstructWorkout from "./ReconstructWorkout";
 
 const CreateWorkout = () => {
   const workoutData = useSelector((state: RootState) => state.workout.data);
   const user_id = useSelector((state: RootState) => state.user.data?._id);
   const dispatch = useDispatch();
   const [exerciseCount, setExerciseCount] = useState(1);
-  console.log(workoutData);
+  const { workout_id } = useParams();
+  console.log(workout_id);
   useEffect(() => {
     dispatch(
       setWorkout({
@@ -25,6 +29,7 @@ const CreateWorkout = () => {
         exercises: [],
       })
     );
+    dispatch(removeAllExerciseNames());
   }, []);
 
   const handleAddExercise = () => {
@@ -59,6 +64,10 @@ const CreateWorkout = () => {
           <ExerciseTable />
         </Col>
         <Col className="col-9">
+          {workout_id && (
+            <ReconstructWorkout workout_id={workout_id}></ReconstructWorkout>
+          )}
+
           {exerciseComponents}
           <Container>
             <Row>

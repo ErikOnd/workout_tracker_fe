@@ -89,7 +89,7 @@ const YourWorkouts = () => {
                 className="y-w-btn"
                 variant="warning"
                 onClick={() => {
-                  navigate("/create-workout");
+                  navigate(`/create-workout/${workout._id}`);
                 }}
               >
                 <PencilSquare size={25}></PencilSquare>
