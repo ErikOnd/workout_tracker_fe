@@ -8,28 +8,56 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import { setWorkout } from "../../../redux/reducers/workoutSlice";
 import { PlusSquareFill } from "react-bootstrap-icons";
-import ReconstructWorkout from "./ReconstructWorkout";
 import { useParams } from "react-router-dom";
+import getWorkoutById from "../../../services/getWorkoutById";
+import { PrefWorkout } from "../../../interfaces/PrefWorkout";
 
 const CreateWorkout = () => {
   const workoutData = useSelector((state: RootState) => state.workout.data);
   const user_id = useSelector((state: RootState) => state.user.data?._id);
   const dispatch = useDispatch();
   const [exerciseCount, setExerciseCount] = useState(1);
+  const [prefWorkout, setPrefWorkout] = useState<PrefWorkout>();
   const { id } = useParams();
-  const workout_id = id;
+  const workout_id: string | undefined = id;
 
   useEffect(() => {
-    dispatch(
-      setWorkout({
-        ...workoutData,
-        user_id: user_id,
-        focus: "",
-        likes: 0,
-        exercises: [],
-      })
-    );
+    loadWorkoutData();
+    if (!workout_id) {
+      console.log("not pref");
+      dispatch(
+        setWorkout({
+          ...workoutData,
+          user_id: user_id,
+          focus: "",
+          likes: 0,
+          exercises: [],
+        })
+      );
+    }
   }, []);
+
+  useEffect(() => {
+    if (prefWorkout) {
+      dispatch(
+        setWorkout({
+          ...workoutData,
+          user_id: user_id,
+          workout_name: prefWorkout?.workout_name,
+          focus: "",
+          likes: 0,
+          exercises: prefWorkout?.exercises,
+        })
+      );
+    }
+  }, [prefWorkout]);
+
+  const loadWorkoutData = async () => {
+    const workoutData = await getWorkoutById(workout_id);
+    setPrefWorkout(workoutData);
+  };
+
+  console.log("Reducer Object", workoutData);
 
   const handleAddExercise = () => {
     setExerciseCount(exerciseCount + 1);
@@ -50,22 +78,30 @@ const CreateWorkout = () => {
     <Container fluid className="create-workout-con text-center">
       <Header></Header>
       <Row className="my-5">
-        <Form.Control
-          size="lg"
-          type="text"
-          placeholder="Workout Name"
-          className="workout-name"
-          onChange={handleSetWorkoutName}
-        />
+        {workout_id ? (
+          <Form.Control
+            size="lg"
+            type="text"
+            placeholder="Workout Name"
+            value={workoutData?.workout_name}
+            className="workout-name"
+            onChange={handleSetWorkoutName}
+          />
+        ) : (
+          <Form.Control
+            size="lg"
+            type="text"
+            placeholder="Workout Name"
+            className="workout-name"
+            onChange={handleSetWorkoutName}
+          />
+        )}
       </Row>
       <Row>
         <Col className="col-3">
           <ExerciseTable />
         </Col>
         <Col className="col-9">
-          {workout_id && (
-            <ReconstructWorkout workout_id={workout_id}></ReconstructWorkout>
-          )}{" "}
           {exerciseComponents}
           <Container>
             <Row>

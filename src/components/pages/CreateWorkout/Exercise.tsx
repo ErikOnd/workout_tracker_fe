@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Form, Button, Image } from "react-bootstrap";
 import ExerciseSets from "./ExerciseSets";
-import exercises from "../../../assets/exercises";
 import getExercise from "../../../services/getExercise";
 import { useDispatch } from "react-redux";
 import { addExercise } from "../../../redux/reducers/workoutSlice";
