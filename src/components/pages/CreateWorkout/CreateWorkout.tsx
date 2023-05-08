@@ -11,6 +11,7 @@ import { PlusSquareFill } from "react-bootstrap-icons";
 import { useParams } from "react-router-dom";
 import getWorkoutById from "../../../services/getWorkoutById";
 import { PrefWorkout } from "../../../interfaces/PrefWorkout";
+import { removeAllExerciseNames } from "../../../redux/reducers/exerciseListSlice";
 
 const CreateWorkout = () => {
   const workoutData = useSelector((state: RootState) => state.workout.data);
@@ -22,6 +23,7 @@ const CreateWorkout = () => {
   const workout_id: string | undefined = id;
 
   useEffect(() => {
+    dispatch(removeAllExerciseNames());
     if (workout_id) {
       loadWorkoutData();
     }
