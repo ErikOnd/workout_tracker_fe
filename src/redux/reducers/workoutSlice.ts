@@ -50,7 +50,7 @@ export const workoutSlice = createSlice({
           (exercise) => exercise.exercise_id === exerciseId
         );
         if (exercise) {
-          exercise.sets = exercise.sets.filter((set) => set.set_id !== setId);
+          exercise.sets = exercise.sets.filter((set) => set._id !== setId);
         }
       }
     },

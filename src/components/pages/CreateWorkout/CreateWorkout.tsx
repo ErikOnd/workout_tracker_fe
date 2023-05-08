@@ -16,15 +16,16 @@ const CreateWorkout = () => {
   const workoutData = useSelector((state: RootState) => state.workout.data);
   const user_id = useSelector((state: RootState) => state.user.data?._id);
   const dispatch = useDispatch();
-  const [exerciseCount, setExerciseCount] = useState(1);
+  const [exerciseCount, setExerciseCount] = useState(0);
   const [prefWorkout, setPrefWorkout] = useState<PrefWorkout>();
   const { id } = useParams();
   const workout_id: string | undefined = id;
 
   useEffect(() => {
-    loadWorkoutData();
+    if (workout_id) {
+      loadWorkoutData();
+    }
     if (!workout_id) {
-      console.log("not pref");
       dispatch(
         setWorkout({
           ...workoutData,
@@ -70,8 +71,14 @@ const CreateWorkout = () => {
 
   const exerciseComponents = [];
 
-  for (let i = 0; i < exerciseCount; i++) {
-    exerciseComponents.push(<Exercise key={i} />);
+  if (prefWorkout) {
+    for (let i = 0; i < exerciseCount + prefWorkout.exercises.length; i++) {
+      exerciseComponents.push(<Exercise key={i} exIndex={i} />);
+    }
+  } else {
+    for (let i = 0; i < exerciseCount + 1; i++) {
+      exerciseComponents.push(<Exercise key={i} exIndex={i} />);
+    }
   }
 
   return (
