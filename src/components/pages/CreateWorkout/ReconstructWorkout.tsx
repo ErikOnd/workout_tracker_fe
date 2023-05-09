@@ -12,6 +12,7 @@ import {
   setWorkout,
 } from "../../../redux/reducers/workoutSlice";
 import { removeExerciseName } from "../../../redux/reducers/exerciseListSlice";
+import { v4 as uuidv4 } from "uuid";
 
 //todo: make edit sets, add set and remove sets possible
 
