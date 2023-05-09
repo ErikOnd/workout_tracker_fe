@@ -39,49 +39,11 @@ export const workoutSlice = createSlice({
       }
     },
     addSets: (state, action) => {
-      console.log("addSets");
       const { exerciseId, set } = action.payload;
-
       if (state.data) {
         const exercise = state.data.exercises.find(
           (exercise) => exercise.exercise_id === exerciseId
         );
-
-        if (exercise) {
-          exercise.sets = exercise.sets.filter(
-            (s) => Object.keys(s).length !== 0
-          ); // filter out empty objects
-          exercise.sets.push(set);
-        }
-      }
-    },
-    addSetsAndClear: (state, action) => {
-      console.log("addSets");
-      const { exerciseId, set } = action.payload;
-
-      if (state.data) {
-        const exercise = state.data.exercises.find(
-          (exercise) => exercise._id === exerciseId
-        );
-
-        if (exercise) {
-          exercise.sets = exercise.sets.filter(
-            (s) => Object.keys(s).length !== 0
-          ); // filter out empty objects
-          exercise.sets.push(set);
-        }
-      }
-    },
-
-    addPrefSets: (state, action) => {
-      const { exerciseId, set } = action.payload;
-      console.log("exerciseId:", exerciseId);
-
-      if (state.data) {
-        const exercise = state.data.exercises.find(
-          (exercise) => exercise._id === exerciseId
-        );
-        console.log("exercise:", exercise);
         if (exercise) {
           exercise.sets.push(set);
         }
@@ -125,8 +87,6 @@ export const {
   removeSet,
   removePrefExercise,
   removePrefSet,
-  addPrefSets,
-  addSetsAndClear,
 } = workoutSlice.actions;
 
 export default workoutSlice.reducer;

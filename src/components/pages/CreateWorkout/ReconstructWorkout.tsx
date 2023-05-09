@@ -6,22 +6,18 @@ import PrefWorkout from "../../../interfaces/PrefWorkout";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import {
-  addPrefSets,
-  addSets,
-  addSetsAndClear,
   removePrefExercise,
   removePrefSet,
+  removeSet,
   setWorkout,
 } from "../../../redux/reducers/workoutSlice";
 import { removeExerciseName } from "../../../redux/reducers/exerciseListSlice";
-import { v4 as uuidv4 } from "uuid";
+
+//todo: make edit sets, add set and remove sets possible
 
 const ReconstructWorkout = ({ workout_id }: { workout_id: string }) => {
   const workoutData = useSelector((state: RootState) => state.workout.data);
-  const [prefWorkout, setPrefWorkout] = useState<any>();
-  const [exRep, setexRep] = useState<string>("");
-  const [exWeight, setExWeight] = useState<number>(0);
-  const [readOnly, setReadOnly] = useState(false);
+  const [prefWorkout, setPrefWorkout] = useState<PrefWorkout>();
   const dispatch = useDispatch();
   useEffect(() => {
     getWorkoutData();
@@ -49,64 +45,21 @@ const ReconstructWorkout = ({ workout_id }: { workout_id: string }) => {
   const handleRemoveExercise = (exerciseId: string) => {
     dispatch(removePrefExercise(exerciseId));
     dispatch(removeExerciseName(exerciseId));
-    const updatedExercises = prefWorkout?.exercises.filter(
-      (exercise: any) => exercise._id !== exerciseId
-    );
-    setPrefWorkout((prevState: any) => ({
-      ...prevState,
-      exercises: updatedExercises,
-    }));
+    const element = document.getElementById(exerciseId);
+    element?.remove();
   };
 
-  const handleRemoveSet = (exerciseId: string, setId: string | undefined) => {
+  const handleRemoveSet = (exerciseId: string, setId: string) => {
     dispatch(removePrefSet({ exerciseId: exerciseId, setId: setId }));
-    const updatedExercises = prefWorkout?.exercises.map((exercise: any) => {
-      if (exercise._id === exerciseId) {
-        const updatedSets = exercise.sets.filter(
-          (set: any) => set._id !== setId
-        );
-        return {
-          ...exercise,
-          sets: updatedSets,
-        };
-      }
-      return exercise;
-    });
-    setPrefWorkout((prevState: any) => ({
-      ...prevState,
-      exercises: updatedExercises,
-    }));
-  };
-
-  const handleAddSet = (exerciseId: string) => {
-    dispatch(addPrefSets({ exerciseId: exerciseId, set: {} }));
-  };
-
-  const addSet = (exerciseId: string) => {
-    if (exRep !== "" && exWeight !== 0) {
-      const newSet = {
-        repetitions: parseInt(exRep),
-        weight_lifted: exWeight,
-        set_id: uuidv4(),
-      };
-      dispatch(addSetsAndClear({ exerciseId: exerciseId, set: newSet }));
-    }
-  };
-
-  const handleBlur = (exerciseId: string) => {
-    if (exRep !== "" && exWeight !== 0) {
-      setReadOnly(true);
-      addSet(exerciseId);
-    } else {
-      setReadOnly(false);
-    }
+    const element = document.getElementById(setId);
+    element?.remove();
   };
 
   console.log("workoutData", workoutData);
 
   return (
     <>
-      {workoutData?.exercises?.map((exercise, index) => (
+      {prefWorkout?.exercises?.map((exercise, index) => (
         <Container
           id={exercise._id}
           key={exercise._id}
@@ -167,13 +120,6 @@ const ReconstructWorkout = ({ workout_id }: { workout_id: string }) => {
                       placeholder="Reps"
                       className=" w-placeholder"
                       value={set.repetitions}
-                      onChange={(e) => setexRep(e.target.value)}
-                      onBlur={() => {
-                        if (!readOnly) {
-                          handleBlur(exercise._id);
-                        }
-                      }}
-                      readOnly={readOnly}
                     />
                   </Col>
                   <span className="text-left p-0 sets-col">Weight:</span>
@@ -183,13 +129,6 @@ const ReconstructWorkout = ({ workout_id }: { workout_id: string }) => {
                       placeholder="weight"
                       className="w-placeholder"
                       value={set.weight_lifted}
-                      onChange={(e) => setExWeight(parseFloat(e.target.value))}
-                      onBlur={() => {
-                        if (!readOnly) {
-                          handleBlur(exercise._id);
-                        }
-                      }}
-                      readOnly={readOnly}
                     />
                   </Col>
                   <span>kg</span>
@@ -207,12 +146,7 @@ const ReconstructWorkout = ({ workout_id }: { workout_id: string }) => {
             </div>
           ))}
           <Row>
-            <span
-              className="mb-4 orange-btn mr-auto d-flex align-items-center"
-              onClick={() => {
-                handleAddSet(exercise._id);
-              }}
-            >
+            <span className="mb-4 orange-btn mr-auto d-flex align-items-center">
               <PlusSquareFill size={15} className="mr-2"></PlusSquareFill>
               Set
             </span>
