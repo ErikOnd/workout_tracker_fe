@@ -14,7 +14,7 @@ export interface ExerciseID {
 }
 
 export interface Set {
-  repetitions: number;
-  weight_lifted: number;
-  _id: string;
+  repetitions?: number;
+  weight_lifted?: number;
+  _id?: string;
 }

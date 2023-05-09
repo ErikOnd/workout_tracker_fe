@@ -11,8 +11,7 @@ import updateWorkout from "../../../services/updateWorkout";
 
 const ExerciseTable = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const { id } = useParams();
-  const workout_id: string | undefined = id;
+  const { workout_id } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const exerciseList = useSelector(
