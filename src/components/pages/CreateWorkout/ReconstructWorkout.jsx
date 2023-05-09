@@ -13,12 +13,14 @@ import {
 } from "../../../redux/reducers/workoutSlice";
 import { removeExerciseName } from "../../../redux/reducers/exerciseListSlice";
 import { v4 as uuidv4 } from "uuid";
+import SetComponent from "./SetComponent";
+import ReactDOM from "react-dom";
 
 //todo: make edit sets, add set and remove sets possible
 
-const ReconstructWorkout = ({ workout_id }: { workout_id: string }) => {
-  const workoutData = useSelector((state: RootState) => state.workout.data);
-  const [prefWorkout, setPrefWorkout] = useState<PrefWorkout>();
+const ReconstructWorkout = ({ workout_id }) => {
+  const workoutData = useSelector((state) => state.workout.data);
+  const [prefWorkout, setPrefWorkout] = useState();
   const dispatch = useDispatch();
   useEffect(() => {
     getWorkoutData();
@@ -43,20 +45,42 @@ const ReconstructWorkout = ({ workout_id }: { workout_id: string }) => {
     setPrefWorkout(await getWorkoutById(workout_id));
   };
 
-  const handleRemoveExercise = (exerciseId: string) => {
+  const handleRemoveExercise = (exerciseId) => {
     dispatch(removePrefExercise(exerciseId));
     dispatch(removeExerciseName(exerciseId));
     const element = document.getElementById(exerciseId);
     element?.remove();
   };
 
-  const handleRemoveSet = (exerciseId: string, setId: string) => {
+  const handleRemoveSet = (exerciseId, setId) => {
     dispatch(removePrefSet({ exerciseId: exerciseId, setId: setId }));
     const element = document.getElementById(setId);
     element?.remove();
   };
 
+  const addNewSet = (exercise_id) => {
+    const sets = prefWorkout?.exercises.find(
+      (exercise) => exercise._id === exercise_id
+    )?.sets;
+    if (sets !== undefined) {
+      const lastSetId = sets[sets.length - 1]._id;
+
+      const container = document.getElementById(exercise_id);
+      const portalNode = document.createElement("div");
+      portalNode.id = uuidv4();
+
+      const portal = <SetComponent />;
+
+      const targetElement = document.getElementById(lastSetId);
+      if (targetElement !== null) {
+        container?.insertBefore(portalNode, targetElement.nextSibling);
+        ReactDOM.render(portal, portalNode);
+      }
+    }
+  };
+
   console.log("workoutData", workoutData);
+  console.log("prefworkout", prefWorkout);
 
   return (
     <>
@@ -147,7 +171,12 @@ const ReconstructWorkout = ({ workout_id }: { workout_id: string }) => {
             </div>
           ))}
           <Row>
-            <span className="mb-4 orange-btn mr-auto d-flex align-items-center">
+            <span
+              className="mb-4 orange-btn mr-auto d-flex align-items-center"
+              onClick={() => {
+                addNewSet(exercise._id);
+              }}
+            >
               <PlusSquareFill size={15} className="mr-2"></PlusSquareFill>
               Set
             </span>
