@@ -44,7 +44,6 @@ const ReconstructWorkout = ({ workout_id }: { workout_id: string }) => {
 
   const handleRemoveExercise = (exerciseId: string) => {
     dispatch(removePrefExercise(exerciseId));
-    dispatch(removeExerciseName(exerciseId));
     const element = document.getElementById(exerciseId);
     element?.remove();
   };
