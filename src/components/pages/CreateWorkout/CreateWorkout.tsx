@@ -6,7 +6,12 @@ import Exercise from "./Exercise";
 import ExerciseTable from "./ExerciseTable";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
-import { clearWorkout, setWorkout } from "../../../redux/reducers/workoutSlice";
+import {
+  addEmptyExercise,
+  addPrefSets,
+  clearWorkout,
+  setWorkout,
+} from "../../../redux/reducers/workoutSlice";
 import { PlusSquareFill } from "react-bootstrap-icons";
 import { removeAllExerciseNames } from "../../../redux/reducers/exerciseListSlice";
 import { useParams } from "react-router-dom";
@@ -32,20 +37,10 @@ const CreateWorkout = () => {
     );
   }, []);
 
-  const handleAddExercise = () => {
-    setExerciseCount(exerciseCount + 1);
-  };
-
   const handleSetWorkoutName = (e: React.ChangeEvent<HTMLInputElement>) => {
     const workoutName = e.target.value;
     dispatch(setWorkout({ ...workoutData, workout_name: workoutName }));
   };
-
-  const exerciseComponents = [];
-
-  for (let i = 0; i < exerciseCount; i++) {
-    exerciseComponents.push(<Exercise key={i} />);
-  }
 
   return (
     <Container fluid className="create-workout-con text-center">
@@ -69,12 +64,14 @@ const CreateWorkout = () => {
             <ReconstructWorkout workout_id={workout_id}></ReconstructWorkout>
           )}
 
-          {exerciseComponents}
+          <Exercise></Exercise>
           <Container>
             <Row>
               <span
                 className="my-4 orange-btn mr-auto add-exercise-btn d-flex align-items-center"
-                onClick={handleAddExercise}
+                onClick={() => {
+                  dispatch(addEmptyExercise({}));
+                }}
               >
                 <PlusSquareFill className="mr-2" size={25}></PlusSquareFill>{" "}
                 Exercise

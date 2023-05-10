@@ -19,15 +19,25 @@ export const workoutSlice = createSlice({
     clearWorkout: (state) => {
       state.data = null;
     },
+
+    addEmptyExercise: (state, action) => {
+      if (state.data) {
+        state.data.exercises.push({});
+      }
+    },
+
     addExercise: (state, action) => {
       if (state.data) {
         state.data.exercises.push(action.payload);
+        state.data.exercises = state.data.exercises.filter(
+          (exercise) => Object.keys(exercise).length > 0
+        );
       }
     },
     removeExercise: (state, action) => {
       if (state.data) {
         state.data.exercises = state.data.exercises.filter(
-          (exercise) => exercise.exercise_id !== action.payload
+          (exercise) => exercise._id !== action.payload
         );
       }
     },
@@ -42,10 +52,26 @@ export const workoutSlice = createSlice({
       const { exerciseId, set } = action.payload;
       if (state.data) {
         const exercise = state.data.exercises.find(
-          (exercise) => exercise.exercise_id === exerciseId
+          (exercise) => exercise._id === exerciseId
         );
         if (exercise) {
-          exercise.sets.push(set);
+          if (exercise.sets) {
+            exercise.sets.push(set);
+          }
+        }
+      }
+    },
+
+    addPrefSets: (state, action) => {
+      const { exerciseId } = action.payload;
+      if (state.data) {
+        const exercise = state.data.exercises.find(
+          (exercise) => exercise._id === exerciseId
+        );
+        if (exercise) {
+          if (exercise.sets) {
+            exercise.sets.push({ _id: "1", repetitions: 0, weight_lifted: 0 });
+          }
         }
       }
     },
@@ -54,11 +80,13 @@ export const workoutSlice = createSlice({
       console.log(exerciseId, setId);
       if (state.data) {
         const exercise = state.data.exercises.find(
-          (exercise) => exercise.exercise_id === exerciseId
+          (exercise) => exercise._id === exerciseId
         );
         console.log(exercise);
         if (exercise) {
-          exercise.sets = exercise.sets.filter((set) => set._id !== setId);
+          if (exercise.sets) {
+            exercise.sets = exercise.sets.filter((set) => set._id !== setId);
+          }
         }
       }
     },
@@ -71,7 +99,9 @@ export const workoutSlice = createSlice({
         );
         console.log(exercise);
         if (exercise) {
-          exercise.sets = exercise.sets.filter((set) => set._id !== setId);
+          if (exercise.sets) {
+            exercise.sets = exercise.sets.filter((set) => set._id !== setId);
+          }
         }
       }
     },
@@ -82,11 +112,13 @@ export const {
   setWorkout,
   clearWorkout,
   addExercise,
+  addEmptyExercise,
   removeExercise,
   addSets,
   removeSet,
   removePrefExercise,
   removePrefSet,
+  addPrefSets,
 } = workoutSlice.actions;
 
 export default workoutSlice.reducer;
