@@ -27,8 +27,7 @@ const ExerciseTable = () => {
   return (
     <Container className="exercise-list-container">
       <div className="exercise-div mt-5">
-        <div className="exercise-list">Exercise List</div>
-        <ListGroup>
+        {/*   <ListGroup>
           {exerciseList.map((exercise) => (
             <ListGroup.Item
               className="exercise-list-item"
@@ -37,7 +36,7 @@ const ExerciseTable = () => {
               {exercise.exerciseName}
             </ListGroup.Item>
           ))}
-        </ListGroup>
+        </ListGroup> */}
         {isLoading && (
           <RotatingLines
             strokeColor="grey"
@@ -49,7 +48,7 @@ const ExerciseTable = () => {
         )}
         {workout_id ? (
           <div
-            className="mt-4 orange-btn mr-auto save-workout-btn"
+            className=" orange-btn mr-auto save-workout-btn"
             onClick={() => {
               setIsLoading(true);
               updateWorkout(workout, workout_id);
@@ -63,7 +62,7 @@ const ExerciseTable = () => {
           </div>
         ) : (
           <div
-            className="mt-4 orange-btn mr-auto save-workout-btn"
+            className="orange-btn mr-auto save-workout-btn"
             onClick={() => {
               setIsLoading(true);
               saveWorkout(workout);
