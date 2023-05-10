@@ -9,5 +9,5 @@ export default interface ExerciseData {
 export interface Set {
   repetitions?: number;
   weight_lifted?: number;
-  _id: string;
+  _id?: string;
 }

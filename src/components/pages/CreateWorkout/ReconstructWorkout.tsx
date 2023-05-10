@@ -6,7 +6,7 @@ import PrefWorkout from "../../../interfaces/PrefWorkout";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../redux/store";
 import {
-  addPrefSets,
+  addSets,
   removePrefExercise,
   removePrefSet,
   removeSet,
@@ -111,7 +111,7 @@ const ReconstructWorkout = ({ workout_id }: { workout_id: string }) => {
                     variant="danger"
                     className="remove-set-btn trash-icon"
                     onClick={() => {
-                      if (exercise._id) {
+                      if (exercise._id && set._id) {
                         handleRemoveSet(exercise._id, set._id);
                       }
                     }}
@@ -126,7 +126,7 @@ const ReconstructWorkout = ({ workout_id }: { workout_id: string }) => {
             <span
               className="mb-4 orange-btn mr-auto d-flex align-items-center"
               onClick={() => {
-                dispatch(addPrefSets({ exerciseId: exercise._id }));
+                dispatch(addSets({ exerciseId: exercise._id }));
               }}
             >
               <PlusSquareFill size={15} className="mr-2"></PlusSquareFill>

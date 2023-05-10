@@ -24,6 +24,7 @@ const getExercise = (
         name: exerciseName,
         gifUrl: exerciseData.gifUrl,
         target: exerciseData.target,
+        sets: [],
       };
 
       dispatch(addExercise(exerciseObj));

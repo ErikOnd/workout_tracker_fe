@@ -35,6 +35,7 @@ export const workoutSlice = createSlice({
       }
     },
     removeExercise: (state, action) => {
+      console.log("removeExercise", action.payload);
       if (state.data) {
         state.data.exercises = state.data.exercises.filter(
           (exercise) => exercise._id !== action.payload
@@ -48,21 +49,8 @@ export const workoutSlice = createSlice({
         );
       }
     },
-    addSets: (state, action) => {
-      const { exerciseId, set } = action.payload;
-      if (state.data) {
-        const exercise = state.data.exercises.find(
-          (exercise) => exercise._id === exerciseId
-        );
-        if (exercise) {
-          if (exercise.sets) {
-            exercise.sets.push(set);
-          }
-        }
-      }
-    },
 
-    addPrefSets: (state, action) => {
+    addSets: (state, action) => {
       const { exerciseId } = action.payload;
       if (state.data) {
         const exercise = state.data.exercises.find(
@@ -70,7 +58,7 @@ export const workoutSlice = createSlice({
         );
         if (exercise) {
           if (exercise.sets) {
-            exercise.sets.push({ _id: "1", repetitions: 0, weight_lifted: 0 });
+            exercise.sets.push({});
           }
         }
       }
@@ -118,7 +106,6 @@ export const {
   removeSet,
   removePrefExercise,
   removePrefSet,
-  addPrefSets,
 } = workoutSlice.actions;
 
 export default workoutSlice.reducer;

@@ -8,7 +8,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import {
   addEmptyExercise,
-  addPrefSets,
   clearWorkout,
   setWorkout,
 } from "../../../redux/reducers/workoutSlice";

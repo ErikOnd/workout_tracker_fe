@@ -3,7 +3,7 @@ import { Container, Row, Col, Form, Button, Image } from "react-bootstrap";
 import ExerciseSets from "./ExerciseSets";
 import getExercise from "../../../services/getExercise";
 import { useDispatch, useSelector } from "react-redux";
-import { addExercise } from "../../../redux/reducers/workoutSlice";
+import { addExercise, addSets } from "../../../redux/reducers/workoutSlice";
 import { removeExercise } from "../../../redux/reducers/workoutSlice";
 import { PlusSquareFill, Trash } from "react-bootstrap-icons";
 import { addExerciseName } from "../../../redux/reducers/exerciseListSlice";
@@ -13,38 +13,11 @@ import { AppDispatch, RootState } from "../../../redux/store";
 const Exercise = () => {
   type ExerciseName = string;
 
-  const [setsCount, setSetsCount] = useState<number>(0);
-  const [setsComponents, setSetsComponents] = useState<React.ReactNode[]>([]);
   const [exerciseName, setExerciseName] = useState("");
   const [allNames, setAllNames] = useState<ExerciseName[]>([]);
-  const [muscleGroups, setMuscleGroups] = useState("Focused Muscle groups");
-  const [gifLink, setGifLink] = useState("");
-  const [exerciseId, setExerciseId] = useState("");
   const workoutData = useSelector((state: RootState) => state.workout.data);
 
   const dispatch: AppDispatch = useDispatch();
-  useEffect(() => {
-    if (exerciseId) {
-      dispatch(
-        addExercise({
-          exercise_id: exerciseId,
-          sets: [],
-        })
-      );
-
-      setExerciseId("");
-      setExerciseName("");
-      setGifLink("");
-      setMuscleGroups("Focused Muscle groups");
-
-      dispatch(
-        addExerciseName({
-          exerciseId,
-          exerciseName,
-        })
-      );
-    }
-  }, [exerciseId]);
 
   async function fetchExerciseNames() {
     const response = await getAllExerciseNames();
@@ -60,16 +33,10 @@ const Exercise = () => {
     setExerciseName(e.target.value);
   };
 
-  const handleRemoveExercise = () => {
-    dispatch(removeExercise(exerciseId));
-    dispatch(removeExerciseName(exerciseId));
-    const element = document.getElementById(exerciseId);
-    element?.remove();
-  };
   return (
     <>
-      {workoutData?.exercises.map((exerxise) => (
-        <Container id={exerxise._id} className="exercise-con">
+      {workoutData?.exercises.map((exercise, index) => (
+        <Container id={exercise._id} className="exercise-con">
           <div className="exercise-div mt-5">
             <Row>
               <input
@@ -77,7 +44,7 @@ const Exercise = () => {
                 list="data"
                 placeholder="Exercise Name"
                 className="w-placeholder ex-name w-100"
-                value={exerxise.name}
+                value={exercise.name}
                 onChange={handleExerciseNameChange}
                 onBlur={(e: React.ChangeEvent<HTMLInputElement>) => {
                   if (e.target.value !== "") {
@@ -106,30 +73,35 @@ const Exercise = () => {
                   placeholder="Focused Muscle groups"
                   className="w-placeholder focus-area pl-0"
                   readOnly
-                  value={exerxise.target}
+                  value={exercise.target}
                 />
               </Col>
               <Col>
-                <Image src={exerxise.gifUrl} alt="" className="exercise-gif" />
+                <Image src={exercise.gifUrl} alt="" className="exercise-gif" />
               </Col>
             </Row>
             <Row>
               <Button
                 variant="danger"
-                onClick={handleRemoveExercise}
+                onClick={() => {
+                  dispatch(removeExercise(exercise._id));
+                }}
                 className="remove-ex-btn trash-icon"
               >
                 <Trash size={20}></Trash>
               </Button>
             </Row>
           </div>
-          {setsComponents}
+          <ExerciseSets
+            exerciseId={exercise._id}
+            exerciseIndex={index}
+          ></ExerciseSets>
 
           <Row>
             <span
               className="mb-4 orange-btn mr-auto d-flex align-items-center"
               onClick={() => {
-                setSetsCount(setsCount + 1);
+                dispatch(addSets({ exerciseId: exercise._id }));
               }}
             >
               <PlusSquareFill size={15} className="mr-2"></PlusSquareFill>
