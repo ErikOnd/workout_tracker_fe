@@ -27,7 +27,7 @@ const YourWorkouts = () => {
     const workoutList = await getWorkouts();
     setWorkouts(workoutList);
   }
-  console.log(workouts);
+  console.log("your workouts:", workouts);
 
   const [openRowId, setOpenRowId] = useState(null);
 
@@ -55,18 +55,18 @@ const YourWorkouts = () => {
               </thead>
               <tbody>
                 {workout.exercises.map((exercise: any) => (
-                  <React.Fragment key={exercise.exercise_id._id}>
+                  <React.Fragment key={exercise._id}>
                     <tr
                       className="parent-row"
-                      onClick={() => handleRowClick(exercise.exercise_id._id)}
+                      onClick={() => handleRowClick(exercise._id)}
                     >
-                      <td>{exercise.exercise_id.name}</td>
+                      <td>{exercise._id.name}</td>
                       <td>{exercise.sets.length}</td>
-                      <td>{exercise.exercise_id.target}</td>
+                      <td>{exercise.target}</td>
                     </tr>
 
                     {exercise.sets.map((set: any, index: number) => (
-                      <Collapse in={exercise.exercise_id._id === openRowId}>
+                      <Collapse in={exercise._id === openRowId}>
                         <tr key={index}>
                           <td className="collapse-row">
                             {"Set " + (index + 1)}

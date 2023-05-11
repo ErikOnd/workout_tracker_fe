@@ -4,6 +4,7 @@ const apiUrl = process.env.REACT_APP_API_URL;
 const accessToken = localStorage.getItem("accessToken");
 
 const saveWorkout = async (data: WorkoutData | null) => {
+  console.log("save workout:", data);
   try {
     const res = await fetch(`${apiUrl}/workouts`, {
       headers: {
