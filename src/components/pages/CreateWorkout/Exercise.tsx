@@ -56,7 +56,7 @@ const Exercise = () => {
                     .replace(/\s+/g, "-")
                     .toLowerCase();
 
-                  dispatch(getExercise(exerciseName));
+                  dispatch(getExercise(exerciseName, index));
                 }}
               />
 

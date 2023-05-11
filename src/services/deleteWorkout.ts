@@ -3,7 +3,7 @@ import ObjectID from "bson-objectid";
 const apiUrl = process.env.REACT_APP_API_URL;
 const accessToken = localStorage.getItem("accessToken");
 
-const deleteWorkout = async (workoutId: ObjectID) => {
+const deleteWorkout = async (workoutId: string) => {
   try {
     const res = await fetch(`${apiUrl}/workouts/${workoutId}`, {
       headers: {
