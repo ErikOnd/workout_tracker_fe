@@ -27,6 +27,8 @@ const getExercise = (
         name: exerciseName,
         gifUrl: exerciseData.gifUrl,
         target: exerciseData.target,
+        trackExercise: false,
+        exerciesId: exerciseData._id,
         sets: [],
       };
 

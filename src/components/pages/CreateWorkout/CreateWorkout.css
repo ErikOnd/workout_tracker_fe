@@ -121,6 +121,29 @@
   border-radius: 7px;
 }
 
+.add-ex-track {
+  position: absolute;
+  top: 271px;
+  left: 40px;
+  border-radius: 7px;
+  cursor: pointer;
+}
+
+.track-exercise-btn-on {
+  display: inline-block;
+  padding: 10px;
+  background-color: #ff8a00;
+  border: 2px solid white;
+  border-radius: 50%;
+}
+.track-exercise-btn-off {
+  display: inline-block;
+  padding: 10px;
+  background-color: rgb(54 54 60);
+  border: 2px solid white;
+  border-radius: 50%;
+}
+
 .remove-set-btn {
   position: absolute;
   top: 0px;

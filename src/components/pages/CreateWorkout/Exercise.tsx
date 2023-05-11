@@ -3,11 +3,13 @@ import { Container, Row, Col, Form, Button, Image } from "react-bootstrap";
 import ExerciseSets from "./ExerciseSets";
 import getExercise from "../../../services/getExercise";
 import { useDispatch, useSelector } from "react-redux";
-import { addExercise, addSets } from "../../../redux/reducers/workoutSlice";
+import {
+  addExercise,
+  addSets,
+  setTrackExercise,
+} from "../../../redux/reducers/workoutSlice";
 import { removeExercise } from "../../../redux/reducers/workoutSlice";
 import { PlusSquareFill, Trash } from "react-bootstrap-icons";
-import { addExerciseName } from "../../../redux/reducers/exerciseListSlice";
-import { removeExerciseName } from "../../../redux/reducers/exerciseListSlice";
 import getAllExerciseNames from "../../../services/getAllExerciseNames";
 import { AppDispatch, RootState } from "../../../redux/store";
 import { v4 as uuid } from "uuid";
@@ -33,6 +35,10 @@ const Exercise = () => {
 
   const handleExerciseNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setExerciseName(e.target.value);
+  };
+
+  const handleTrackWorkout = (exerciseId: string) => {
+    dispatch(setTrackExercise({ exerciseId: exerciseId }));
   };
 
   return (
@@ -68,6 +74,20 @@ const Exercise = () => {
             </Row>
             <Row className="pt-4 align-items-start setsAndFocus">
               <span className="text-left p-0 sets-col">Focus:</span>
+              {exercise.exerciesId && (
+                <span className="add-ex-track d-flex align-items-center">
+                  <div
+                    className={`track-exercise-btn${
+                      exercise.trackExercise ? "-on" : "-off"
+                    } mr-3`}
+                    onClick={() => {
+                      exercise._id && handleTrackWorkout(exercise._id);
+                    }}
+                  ></div>
+                  Track Exercise
+                </span>
+              )}
+
               <Col>
                 <Form.Control
                   as="textarea"

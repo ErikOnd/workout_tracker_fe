@@ -34,15 +34,21 @@ export const workoutSlice = createSlice({
         );
       }
     },
-    removeExercise: (state, action) => {
-      console.log("removeExercise", action.payload);
+    setTrackExercise: (state, action) => {
       if (state.data) {
-        state.data.exercises = state.data.exercises.filter(
-          (exercise) => exercise._id !== action.payload
+        const { exerciseId } = action.payload;
+        const exercise = state.data.exercises.find(
+          (exercise) => exercise._id === exerciseId
         );
+
+        if (exercise) {
+          exercise.trackExercise = !exercise.trackExercise;
+        }
       }
     },
-    removePrefExercise: (state, action) => {
+
+    removeExercise: (state, action) => {
+      console.log("removeExercise", action.payload);
       if (state.data) {
         state.data.exercises = state.data.exercises.filter(
           (exercise) => exercise._id !== action.payload
@@ -127,9 +133,9 @@ export const {
   removeExercise,
   addSets,
   removeSet,
-  removePrefExercise,
   addWeight,
   addReps,
+  setTrackExercise,
 } = workoutSlice.actions;
 
 export default workoutSlice.reducer;

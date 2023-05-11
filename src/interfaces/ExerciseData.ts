@@ -1,8 +1,11 @@
+import ObjectId from "bson-objectid";
 export default interface ExerciseData {
   _id?: string;
   name?: string;
   gifUrl?: string;
   target?: string;
+  trackExercise?: boolean;
+  exerciesId?: ObjectId;
   sets?: Set[];
 }
 
