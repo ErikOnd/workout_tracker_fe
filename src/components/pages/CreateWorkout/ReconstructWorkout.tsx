@@ -8,7 +8,6 @@ import { AppDispatch, RootState } from "../../../redux/store";
 import {
   addSets,
   removePrefExercise,
-  removePrefSet,
   removeSet,
   setWorkout,
 } from "../../../redux/reducers/workoutSlice";
@@ -29,7 +28,7 @@ const ReconstructWorkout = ({ workout_id }: { workout_id: string }) => {
   };
 
   const handleRemoveSet = (exerciseId: string, setId: string) => {
-    dispatch(removePrefSet({ exerciseId: exerciseId, setId: setId }));
+    dispatch(removeSet({ exerciseId: exerciseId, setId: setId }));
   };
 
   console.log("workoutData", workoutData);

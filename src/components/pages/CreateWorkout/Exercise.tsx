@@ -10,6 +10,8 @@ import { addExerciseName } from "../../../redux/reducers/exerciseListSlice";
 import { removeExerciseName } from "../../../redux/reducers/exerciseListSlice";
 import getAllExerciseNames from "../../../services/getAllExerciseNames";
 import { AppDispatch, RootState } from "../../../redux/store";
+import { v4 as uuid } from "uuid";
+
 const Exercise = () => {
   type ExerciseName = string;
 
@@ -101,7 +103,7 @@ const Exercise = () => {
             <span
               className="mb-4 orange-btn mr-auto d-flex align-items-center"
               onClick={() => {
-                dispatch(addSets({ exerciseId: exercise._id }));
+                dispatch(addSets({ exerciseId: exercise._id, setId: uuid() }));
               }}
             >
               <PlusSquareFill size={15} className="mr-2"></PlusSquareFill>

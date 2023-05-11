@@ -2,7 +2,11 @@ import React, { useEffect, useState } from "react";
 import { Row, Col, Form, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Trash } from "react-bootstrap-icons";
-import { removeSet } from "../../../redux/reducers/workoutSlice";
+import {
+  addReps,
+  addWeight,
+  removeSet,
+} from "../../../redux/reducers/workoutSlice";
 import { RootState } from "../../../redux/store";
 
 const ExerciseSets = ({
@@ -31,6 +35,16 @@ const ExerciseSets = ({
                     placeholder="Reps"
                     className=" w-placeholder"
                     value={set.repetitions}
+                    onBlur={(e: React.ChangeEvent<HTMLInputElement>) => {
+                      const reps = e.target.value;
+                      dispatch(
+                        addReps({
+                          exerciseId: exerciseId,
+                          setId: set._id,
+                          repetitions: Number(reps),
+                        })
+                      );
+                    }}
                   />
                 </Col>
                 <span className="text-left p-0 sets-col">Weight:</span>
@@ -40,13 +54,26 @@ const ExerciseSets = ({
                     placeholder="weight"
                     className="w-placeholder"
                     value={set.weight_lifted}
+                    onBlur={(e: React.ChangeEvent<HTMLInputElement>) => {
+                      const weight = e.target.value;
+                      dispatch(
+                        addWeight({
+                          exerciseId: exerciseId,
+                          setId: set._id,
+                          weightLifted: Number(weight),
+                        })
+                      );
+                    }}
                   />
                 </Col>
                 <span>kg</span>
                 <Button
                   variant="danger"
                   onClick={() => {
-                    dispatch(removeSet(exerciseId + setIndex));
+                    console.log("remove_set:", set._id);
+                    dispatch(
+                      removeSet({ exerciseId: exerciseId, setId: set._id })
+                    );
                   }}
                   className="remove-set-btn trash-icon"
                 >
@@ -59,6 +86,5 @@ const ExerciseSets = ({
     </>
   );
 };
-//todo: when creating a set, generate an id with uuidv4 and give that set this is in the reudux store, also change the setID in the backend from an ObjectId to a string
 
 export default ExerciseSets;

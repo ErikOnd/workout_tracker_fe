@@ -51,14 +51,14 @@ export const workoutSlice = createSlice({
     },
 
     addSets: (state, action) => {
-      const { exerciseId } = action.payload;
+      const { exerciseId, setId } = action.payload;
       if (state.data) {
         const exercise = state.data.exercises.find(
           (exercise) => exercise._id === exerciseId
         );
         if (exercise) {
           if (exercise.sets) {
-            exercise.sets.push({});
+            exercise.sets.push({ _id: setId });
           }
         }
       }
@@ -78,17 +78,40 @@ export const workoutSlice = createSlice({
         }
       }
     },
-    removePrefSet: (state, action) => {
-      const { exerciseId, setId } = action.payload;
-      console.log(exerciseId, setId);
+    addWeight: (state, action) => {
+      const { exerciseId, setId, weightLifted } = action.payload;
+
       if (state.data) {
         const exercise = state.data.exercises.find(
           (exercise) => exercise._id === exerciseId
         );
-        console.log(exercise);
+
         if (exercise) {
           if (exercise.sets) {
-            exercise.sets = exercise.sets.filter((set) => set._id !== setId);
+            const set = exercise.sets.find((set) => set._id === setId);
+
+            if (set) {
+              set.weight_lifted = weightLifted;
+            }
+          }
+        }
+      }
+    },
+    addReps: (state, action) => {
+      const { exerciseId, setId, repetitions } = action.payload;
+
+      if (state.data) {
+        const exercise = state.data.exercises.find(
+          (exercise) => exercise._id === exerciseId
+        );
+
+        if (exercise) {
+          if (exercise.sets) {
+            const set = exercise.sets.find((set) => set._id === setId);
+
+            if (set) {
+              set.repetitions = repetitions;
+            }
           }
         }
       }
@@ -105,7 +128,8 @@ export const {
   addSets,
   removeSet,
   removePrefExercise,
-  removePrefSet,
+  addWeight,
+  addReps,
 } = workoutSlice.actions;
 
 export default workoutSlice.reducer;
