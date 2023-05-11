@@ -52,6 +52,7 @@ const ExerciseTable = () => {
             onClick={() => {
               setIsLoading(true);
               updateWorkout(workout, workout_id);
+              dispatch(clearWorkout());
               setTimeout(() => {
                 setIsLoading(false);
                 navigate("/your-workouts/");
@@ -66,6 +67,7 @@ const ExerciseTable = () => {
             onClick={() => {
               setIsLoading(true);
               saveWorkout(workout);
+              dispatch(clearWorkout());
               setTimeout(() => {
                 setIsLoading(false);
                 navigate("/your-workouts/");

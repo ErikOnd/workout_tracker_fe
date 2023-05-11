@@ -34,7 +34,7 @@ const CreateWorkout = () => {
       })
     );
   }, []);
-
+  console.log("workout_id:", workout_id);
   useEffect(() => {
     if (workout_id) {
       dispatch(getWorkoutById(workout_id));
