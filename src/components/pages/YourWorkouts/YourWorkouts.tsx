@@ -15,9 +15,10 @@ import { Exercise, WorkoutList } from "../../../interfaces/WorkoutList";
 import { PencilSquare, Trash } from "react-bootstrap-icons";
 import deleteWorkout from "../../../services/deleteWorkout";
 import { useNavigate } from "react-router-dom";
+import WorkoutData from "../../../interfaces/WorkoutData";
 
 const YourWorkouts = () => {
-  const [workouts, setWorkouts] = useState<any>(null);
+  const [workouts, setWorkouts] = useState<WorkoutData[]>();
   const navigate = useNavigate();
   useEffect(() => {
     fetchWorkouts();
@@ -42,7 +43,7 @@ const YourWorkouts = () => {
         <Col className="your-workouts-header">Your Workouts</Col>
       </Row>
       <Container>
-        {workouts?.map((workout: any) => (
+        {workouts?.map((workout) => (
           <div className="tableAndBtn">
             <h2 className="your-w-header">{workout.workout_name}</h2>
             <Table hover className="your-w-table text-left mb-5">
@@ -54,18 +55,18 @@ const YourWorkouts = () => {
                 </tr>
               </thead>
               <tbody>
-                {workout.exercises.map((exercise: any) => (
+                {workout.exercises.map((exercise) => (
                   <React.Fragment key={exercise._id}>
                     <tr
                       className="parent-row"
                       onClick={() => handleRowClick(exercise._id)}
                     >
-                      <td>{exercise._id.name}</td>
-                      <td>{exercise.sets.length}</td>
+                      <td>{exercise.name}</td>
+                      <td>{exercise.sets?.length}</td>
                       <td>{exercise.target}</td>
                     </tr>
 
-                    {exercise.sets.map((set: any, index: number) => (
+                    {exercise.sets?.map((set, index: number) => (
                       <Collapse in={exercise._id === openRowId}>
                         <tr key={index}>
                           <td className="collapse-row">
@@ -98,8 +99,10 @@ const YourWorkouts = () => {
                 className="y-w-btn"
                 variant="danger"
                 onClick={() => {
-                  deleteWorkout(workout._id);
-                  fetchWorkouts();
+                  if (workout._id) {
+                    deleteWorkout(workout._id);
+                    fetchWorkouts();
+                  }
                 }}
               >
                 <Trash size={25}></Trash>

@@ -7,4 +7,5 @@ export default interface WorkoutData {
   focus: string;
   likes: number;
   exercises: ExerciseData[];
+  _id?: ObjectId;
 }

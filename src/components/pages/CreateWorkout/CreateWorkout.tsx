@@ -5,7 +5,7 @@ import Header from "../../layout/Header";
 import Exercise from "./Exercise";
 import ExerciseTable from "./ExerciseTable";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../../redux/store";
+import { AppDispatch, RootState } from "../../../redux/store";
 import {
   addEmptyExercise,
   clearWorkout,
@@ -14,13 +14,12 @@ import {
 import { PlusSquareFill } from "react-bootstrap-icons";
 import { removeAllExerciseNames } from "../../../redux/reducers/exerciseListSlice";
 import { useParams } from "react-router-dom";
-import ReconstructWorkout from "./ReconstructWorkout";
+import getWorkoutById from "../../../services/getWorkoutById";
 
 const CreateWorkout = () => {
   const workoutData = useSelector((state: RootState) => state.workout.data);
   const user_id = useSelector((state: RootState) => state.user.data?._id);
-  const dispatch = useDispatch();
-  const [exerciseCount, setExerciseCount] = useState(1);
+  const dispatch: AppDispatch = useDispatch();
   const { workout_id } = useParams();
   useEffect(() => {
     dispatch(removeAllExerciseNames);
@@ -35,6 +34,12 @@ const CreateWorkout = () => {
       })
     );
   }, []);
+
+  useEffect(() => {
+    if (workout_id) {
+      dispatch(getWorkoutById(workout_id));
+    }
+  }, [workout_id]);
 
   const handleSetWorkoutName = (e: React.ChangeEvent<HTMLInputElement>) => {
     const workoutName = e.target.value;
@@ -59,10 +64,6 @@ const CreateWorkout = () => {
           <ExerciseTable />
         </Col>
         <Col className="col-9">
-          {workout_id && (
-            <ReconstructWorkout workout_id={workout_id}></ReconstructWorkout>
-          )}
-
           <Exercise></Exercise>
           <Container>
             <Row>
