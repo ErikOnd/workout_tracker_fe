@@ -68,7 +68,7 @@ const CreateWorkout = () => {
           <Container>
             <Row>
               <span
-                className="my-4 orange-btn mr-auto add-exercise-btn d-flex align-items-center"
+                className="my-5 orange-btn mr-auto add-exercise-btn d-flex align-items-center"
                 onClick={() => {
                   dispatch(addEmptyExercise({}));
                 }}
