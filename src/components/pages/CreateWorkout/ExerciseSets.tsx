@@ -19,6 +19,26 @@ const ExerciseSets = ({
   const workoutData = useSelector((state: RootState) => state.workout.data);
   const dispatch = useDispatch();
 
+  const handleReps = (reps: string, setId: string) => {
+    dispatch(
+      addReps({
+        exerciseId: exerciseId,
+        setId: setId,
+        repetitions: Number(reps),
+      })
+    );
+  };
+
+  const handleWeight = (weight: string, setId: string) => {
+    dispatch(
+      addWeight({
+        exerciseId: exerciseId,
+        setId: setId,
+        weightLifted: Number(weight),
+      })
+    );
+  };
+
   return (
     <>
       {exerciseId &&
@@ -35,15 +55,11 @@ const ExerciseSets = ({
                     placeholder="Reps"
                     className=" w-placeholder"
                     value={set.repetitions}
-                    onBlur={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                       const reps = e.target.value;
-                      dispatch(
-                        addReps({
-                          exerciseId: exerciseId,
-                          setId: set._id,
-                          repetitions: Number(reps),
-                        })
-                      );
+                      if (/^\d*$/.test(reps)) {
+                        set._id && handleReps(reps, set._id);
+                      }
                     }}
                   />
                 </Col>
@@ -54,15 +70,11 @@ const ExerciseSets = ({
                     placeholder="weight"
                     className="w-placeholder"
                     value={set.weight_lifted}
-                    onBlur={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                       const weight = e.target.value;
-                      dispatch(
-                        addWeight({
-                          exerciseId: exerciseId,
-                          setId: set._id,
-                          weightLifted: Number(weight),
-                        })
-                      );
+                      if (/^\d*$/.test(weight)) {
+                        set._id && handleWeight(weight, set._id);
+                      }
                     }}
                   />
                 </Col>

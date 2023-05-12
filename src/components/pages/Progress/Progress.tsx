@@ -87,7 +87,7 @@ const Progress = () => {
                 placeholder="Search exercises"
                 value={searchTerm}
                 onChange={handleSearch}
-                className="filter-exercise-progress"
+                className="filter-exercise-progress mb-5"
               />
             </Form.Group>
           </Col>
@@ -98,7 +98,7 @@ const Progress = () => {
             return (
               <Col
                 key={exerciseId}
-                className="d-flex justify-content-center mb-5"
+                className="d-flex justify-content-center mb-5 mx-5"
               >
                 <LineChart
                   width={400}
