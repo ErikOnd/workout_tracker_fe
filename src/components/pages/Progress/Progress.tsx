@@ -12,24 +12,8 @@ import {
   Tooltip,
   Legend,
 } from "recharts";
-
-interface Exercise {
-  _id: string;
-  name: string;
-}
-
-interface ProgressItem {
-  _id: string;
-  user_id: string;
-  exercise_id: Exercise;
-  weight_lifted: number;
-  createdAt: string;
-  __v: number;
-}
-
-interface GroupedProgressData {
-  [exerciseId: string]: ProgressItem[];
-}
+import ProgressItem from "../../../interfaces/ExerciseProgress";
+import GroupedProgressData from "../../../interfaces/GroupedProgressData";
 
 const Progress = () => {
   const [progressData, setProgressData] = useState<GroupedProgressData>({});
