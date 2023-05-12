@@ -54,7 +54,7 @@ const CreateWorkout = () => {
   };
 
   return (
-    <Container fluid className="create-workout-con text-center">
+    <Container fluid className="basic-workout-con text-center">
       <Header></Header>
       <Row className="my-5">
         <Form.Control
