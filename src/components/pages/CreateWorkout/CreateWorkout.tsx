@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import "./CreateWorkout.css";
 import { Container, Form, Row, Col } from "react-bootstrap";
 import Header from "../../layout/Header";
@@ -8,11 +8,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../redux/store";
 import {
   addEmptyExercise,
-  clearWorkout,
   setWorkout,
 } from "../../../redux/reducers/workoutSlice";
 import { PlusSquareFill } from "react-bootstrap-icons";
-import { removeAllExerciseNames } from "../../../redux/reducers/exerciseListSlice";
 import { useParams } from "react-router-dom";
 import getWorkoutById from "../../../services/getWorkoutById";
 
@@ -22,19 +20,28 @@ const CreateWorkout = () => {
   const dispatch: AppDispatch = useDispatch();
   const { workout_id } = useParams();
   useEffect(() => {
-    dispatch(removeAllExerciseNames);
-    dispatch(clearWorkout());
-    dispatch(
-      setWorkout({
-        ...workoutData,
-        user_id: user_id,
-        focus: "",
-        likes: 0,
-        exercises: [],
-      })
-    );
+    if (workout_id) {
+      dispatch(
+        setWorkout({
+          ...workoutData,
+          user_id: user_id,
+          focus: "",
+          likes: 0,
+          exercises: [],
+        })
+      );
+    } else {
+      dispatch(
+        setWorkout({
+          user_id: user_id,
+          focus: "",
+          likes: 0,
+          exercises: [],
+        })
+      );
+    }
   }, []);
-  console.log("workout_id:", workout_id);
+
   useEffect(() => {
     if (workout_id) {
       dispatch(getWorkoutById(workout_id));
