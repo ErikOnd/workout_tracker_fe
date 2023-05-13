@@ -122,19 +122,33 @@ const Progress = () => {
                   className="d-flex justify-content-center mb-5 mx-5"
                 >
                   <LineChart
-                    width={400}
-                    height={300}
+                    width={600}
+                    height={400}
                     data={formatDataForChart(exerciseId)}
+                    margin={{ top: 20, right: 30, left: 20, bottom: 10 }}
                   >
                     <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="date" />
-                    <YAxis />
-                    <Tooltip />
+                    <XAxis dataKey="date" tick={{ fontSize: 12 }} />
+                    <YAxis
+                      tick={{ fontSize: 12 }}
+                      domain={[
+                        (dataMin: number) =>
+                          dataMin > 0 ? dataMin - 1 : dataMin,
+                        (dataMax: number) => dataMax + 1,
+                      ]}
+                    />
+                    <Tooltip
+                      contentStyle={{ fontSize: 12 }}
+                      formatter={(value) => `${value} kg`}
+                    />
                     <Legend />
                     <Line
                       type="monotone"
                       dataKey="weight"
                       stroke="#FF8A00"
+                      strokeWidth={2}
+                      dot={{ stroke: "#FF8A00", fill: "#FF8A00", r: 3 }}
+                      activeDot={{ stroke: "#FF8A00", fill: "#FF8A00", r: 6 }}
                       name={progressItems[0].exercise_id.name}
                     />
                   </LineChart>
