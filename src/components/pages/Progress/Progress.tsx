@@ -22,6 +22,8 @@ import {
 import ProgressItem from "../../../interfaces/ExerciseProgress";
 import GroupedProgressData from "../../../interfaces/GroupedProgressData";
 import { Trash } from "react-bootstrap-icons";
+import deleteTrack from "../../../services/deleteTrack";
+import deleteChart from "../../../services/deleteChart";
 
 const Progress = () => {
   const [progressData, setProgressData] = useState<GroupedProgressData>({});
@@ -69,9 +71,15 @@ const Progress = () => {
     return chartData;
   };
 
-  const handleRemoveLastTrack = (trackId: string) => {};
+  const handleRemoveLastTrack = async (trackId: string) => {
+    await deleteTrack(trackId);
+    getData();
+  };
 
-  const handleRemoveAllTracks = (exerciseId: string) => {};
+  const handleRemoveAllTracks = async (exerciseId: string) => {
+    await deleteChart(exerciseId);
+    getData();
+  };
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
