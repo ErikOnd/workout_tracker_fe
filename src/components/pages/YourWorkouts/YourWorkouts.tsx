@@ -28,7 +28,6 @@ const YourWorkouts = () => {
     const workoutList = await getWorkouts();
     setWorkouts(workoutList);
   }
-  console.log("your workouts:", workouts);
 
   const [openRowId, setOpenRowId] = useState(null);
 
@@ -85,7 +84,7 @@ const YourWorkouts = () => {
                 ))}
               </tbody>
             </Table>
-            <ButtonGroup vertical>
+            <ButtonGroup vertical className="btn-group-y-workout">
               <Button
                 className="y-w-btn"
                 variant="warning"

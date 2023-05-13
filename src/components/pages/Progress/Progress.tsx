@@ -1,7 +1,14 @@
 import React, { useEffect, useState } from "react";
 import "./Progress.css";
 import Header from "../../layout/Header";
-import { Col, Container, Form, Row } from "react-bootstrap";
+import {
+  Button,
+  ButtonGroup,
+  Col,
+  Container,
+  Form,
+  Row,
+} from "react-bootstrap";
 import getProgressData from "../../../services/getProgressData";
 import {
   LineChart,
@@ -14,6 +21,7 @@ import {
 } from "recharts";
 import ProgressItem from "../../../interfaces/ExerciseProgress";
 import GroupedProgressData from "../../../interfaces/GroupedProgressData";
+import { Trash } from "react-bootstrap-icons";
 
 const Progress = () => {
   const [progressData, setProgressData] = useState<GroupedProgressData>({});
@@ -61,6 +69,10 @@ const Progress = () => {
     return chartData;
   };
 
+  const handleRemoveLastTrack = (trackId: string) => {};
+
+  const handleRemoveAllTracks = (exerciseId: string) => {};
+
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
   };
@@ -92,32 +104,63 @@ const Progress = () => {
             </Form.Group>
           </Col>
         </Row>
-        <Row>
-          {filteredExercises.map((progressItems) => {
+        <Row className="justify-content-center">
+          {filteredExercises.map((progressItems, index) => {
             const exerciseId = progressItems[0].exercise_id._id;
             return (
-              <Col
-                key={exerciseId}
-                className="d-flex justify-content-center mb-5 mx-5"
-              >
-                <LineChart
-                  width={400}
-                  height={300}
-                  data={formatDataForChart(exerciseId)}
+              <Row className="chart-holder-row">
+                <Col
+                  key={exerciseId}
+                  className="d-flex justify-content-center mb-5 mx-5"
                 >
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="date" />
-                  <YAxis />
-                  <Tooltip />
-                  <Legend />
-                  <Line
-                    type="monotone"
-                    dataKey="weight"
-                    stroke="#FF8A00"
-                    name={progressItems[0].exercise_id.name}
-                  />
-                </LineChart>
-              </Col>
+                  <LineChart
+                    width={400}
+                    height={300}
+                    data={formatDataForChart(exerciseId)}
+                  >
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="date" />
+                    <YAxis />
+                    <Tooltip />
+                    <Legend />
+                    <Line
+                      type="monotone"
+                      dataKey="weight"
+                      stroke="#FF8A00"
+                      name={progressItems[0].exercise_id.name}
+                    />
+                  </LineChart>
+                </Col>
+                <Col>
+                  <ButtonGroup vertical className="btn-group-progress">
+                    <Button
+                      className="y-w-btn"
+                      variant="warning"
+                      onClick={() => {
+                        console.log(progressItems);
+                        const lastIndex = progressData[exerciseId].length;
+                        const trackId =
+                          progressData[exerciseId][lastIndex - 1]._id;
+
+                        handleRemoveLastTrack(trackId);
+                      }}
+                      style={{ minHeight: "60px" }}
+                    >
+                      Remove Last
+                    </Button>
+                    <Button
+                      className="y-w-btn"
+                      variant="danger"
+                      onClick={() => {
+                        handleRemoveAllTracks(exerciseId);
+                      }}
+                      style={{ minHeight: "60px" }}
+                    >
+                      Remove All
+                    </Button>
+                  </ButtonGroup>
+                </Col>
+              </Row>
             );
           })}
         </Row>

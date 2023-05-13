@@ -1,3 +1,16 @@
 .filter-exercise-progress {
   max-width: 400px;
 }
+.chart-holder-row {
+  position: relative;
+}
+
+.btn-group-progress {
+  position: absolute;
+  bottom: 105px;
+  right: 0px;
+}
+
+.y-w-btn {
+  font-weight: 700;
+}
