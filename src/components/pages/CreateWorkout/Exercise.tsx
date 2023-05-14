@@ -10,35 +10,34 @@ import {
 } from "../../../redux/reducers/workoutSlice";
 import { removeExercise } from "../../../redux/reducers/workoutSlice";
 import { PlusSquareFill, Trash } from "react-bootstrap-icons";
-import getAllExerciseNames from "../../../services/getAllExerciseNames";
 import { AppDispatch, RootState } from "../../../redux/store";
 import { v4 as uuid } from "uuid";
+import ExerciseModal from "./ExerciseModal";
+import getAllExercies from "../../../services/getAllExerciseNames";
+import AllExercises from "../../../interfaces/allExercises";
 
 const Exercise = () => {
-  type ExerciseName = string;
-
-  const [exerciseName, setExerciseName] = useState("");
-  const [allNames, setAllNames] = useState<ExerciseName[]>([]);
+  const [allExercises, setAllExercises] = useState<AllExercises[]>([]);
   const workoutData = useSelector((state: RootState) => state.workout.data);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [exerciseIdModal, setExerciseIdModal] = useState<string>();
 
   const dispatch: AppDispatch = useDispatch();
 
   async function fetchExerciseNames() {
-    const response = await getAllExerciseNames();
-    setAllNames(response);
+    const response = await getAllExercies();
+    setAllExercises(response);
   }
-  console.log("workoutData", workoutData);
 
   useEffect(() => {
     fetchExerciseNames();
   }, []);
 
-  const handleExerciseNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setExerciseName(e.target.value);
-  };
-
   const handleTrackWorkout = (exerciseId: string) => {
     dispatch(setTrackExercise({ exerciseId: exerciseId }));
+  };
+  const handleInputClick = () => {
+    setIsModalOpen(true);
   };
 
   return (
@@ -53,24 +52,12 @@ const Exercise = () => {
                 placeholder="Exercise Name"
                 className="w-placeholder ex-name w-100"
                 value={exercise.name}
-                onChange={handleExerciseNameChange}
-                onBlur={(e: React.ChangeEvent<HTMLInputElement>) => {
-                  if (e.target.value !== "") {
-                    e.target.readOnly = true;
-                  }
-                  e.target.id = e.target.value
-                    .replace(/\s+/g, "-")
-                    .toLowerCase();
+                onClick={() => {
+                  setExerciseIdModal(workoutData.exercises[index]._id);
 
-                  dispatch(getExercise(exerciseName, index));
+                  handleInputClick();
                 }}
               />
-
-              <datalist id="data" className="datalist-style">
-                {allNames.map((item, key) => (
-                  <option key={key} value={item} />
-                ))}
-              </datalist>
             </Row>
             <Row className="pt-4 align-items-start setsAndFocus">
               <span className="text-left p-0 sets-col">Focus:</span>
@@ -132,6 +119,13 @@ const Exercise = () => {
           </Row>
         </Container>
       ))}
+
+      <ExerciseModal
+        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
+        allExercises={allExercises}
+        exerciseIdModal={exerciseIdModal}
+      />
     </>
   );
 };

@@ -22,16 +22,24 @@ export const workoutSlice = createSlice({
 
     addEmptyExercise: (state, action) => {
       if (state.data) {
-        state.data.exercises.push({});
+        const { id_ } = action.payload;
+        state.data.exercises.push({ _id: id_ });
       }
     },
 
     addExercise: (state, action) => {
       if (state.data) {
-        state.data.exercises.push(action.payload);
-        state.data.exercises = state.data.exercises.filter(
-          (exercise) => Object.keys(exercise).length > 0
+        let exercise = state.data.exercises.find(
+          (exercise) => exercise._id === action.payload._id
         );
+        if (exercise) {
+          exercise.name = action.payload.name;
+          exercise.gifUrl = action.payload.gifUrl;
+          exercise.target = action.payload.target;
+          exercise.trackExercise = false;
+          exercise.exerciesId = action.payload.exerciesId;
+          exercise.sets = [];
+        }
       }
     },
     setTrackExercise: (state, action) => {

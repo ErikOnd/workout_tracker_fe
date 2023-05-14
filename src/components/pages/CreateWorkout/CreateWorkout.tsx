@@ -13,7 +13,7 @@ import {
 import { PlusSquareFill } from "react-bootstrap-icons";
 import { useParams } from "react-router-dom";
 import getWorkoutById from "../../../services/getWorkoutById";
-
+import ObjectId from "bson-objectid";
 const CreateWorkout = () => {
   const workoutData = useSelector((state: RootState) => state.workout.data);
   const user_id = useSelector((state: RootState) => state.user.data?._id);
@@ -41,6 +41,8 @@ const CreateWorkout = () => {
       );
     }
   }, []);
+
+  console.log(workoutData);
 
   useEffect(() => {
     if (workout_id) {
@@ -77,7 +79,7 @@ const CreateWorkout = () => {
               <span
                 className="my-5 orange-btn mr-auto add-exercise-btn d-flex align-items-center"
                 onClick={() => {
-                  dispatch(addEmptyExercise({}));
+                  dispatch(addEmptyExercise({ id_: new ObjectId() }));
                 }}
               >
                 <PlusSquareFill className="mr-2" size={25}></PlusSquareFill>{" "}

@@ -1,7 +1,7 @@
 const apiUrl = process.env.REACT_APP_API_URL;
 const accessToken = localStorage.getItem("accessToken");
 
-const getAllExerciseNames = async () => {
+const getAllExercies = async () => {
   try {
     const res = await fetch(`${apiUrl}/exercises/all`, {
       headers: {
@@ -20,4 +20,4 @@ const getAllExerciseNames = async () => {
   }
 };
 
-export default getAllExerciseNames;
+export default getAllExercies;
