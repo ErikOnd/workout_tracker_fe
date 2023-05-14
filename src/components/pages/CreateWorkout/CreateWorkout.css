@@ -179,7 +179,7 @@
 }
 
 .exercise-gif {
-  width: 200px;
+  max-width: 200px;
   border-radius: 10px;
 }
 
@@ -187,4 +187,47 @@
   font-size: 40px;
   color: #ff8a00;
   font-weight: 700;
+}
+
+.modal-ex-img {
+  border-radius: 10px;
+  max-width: 200px;
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.modal-ex-img:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.modal-ex-col {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-bottom: 20px;
+  color: #ff8a00;
+  font-weight: 700;
+}
+
+.pagination-row {
+  margin-top: 30px;
+  margin-left: 36px;
+}
+
+.close-btn-ex-model {
+  margin-right: 35px;
+}
+
+.ex-name-span {
+  max-width: 200px;
+}
+
+.pagination-btn {
+  background-color: #ff8a00;
+  border: none;
+  margin-right: 5px;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
 }

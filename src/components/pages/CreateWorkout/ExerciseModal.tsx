@@ -4,6 +4,10 @@ import AllExercises from "../../../interfaces/allExercises";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../../redux/store";
 import { addExercise } from "../../../redux/reducers/workoutSlice";
+import {
+  ArrowLeftSquareFill,
+  ArrowRightSquareFill,
+} from "react-bootstrap-icons";
 
 interface ExerciseModalProps {
   isModalOpen: boolean;
@@ -22,7 +26,7 @@ const ExerciseModal = ({
   const [selectedBodyPart, setSelectedBodyPart] = useState("");
   const [selectedTarget, setSelectedTarget] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const exercisesPerPage = 100;
+  const exercisesPerPage = 48;
 
   const dispatch: AppDispatch = useDispatch();
 
@@ -63,63 +67,74 @@ const ExerciseModal = ({
   return (
     <Modal show={isModalOpen} onHide={() => setIsModalOpen(false)} size="xl">
       <Modal.Body>
-        <Form.Group>
-          <Form.Label>Filter by Body Part:</Form.Label>
-          <Form.Control as="select" onChange={handleBodyPartChange}>
-            <option value="">All</option>
+        <Row className="align-items-center my-3">
+          <Col>
+            <Form.Group className="mb-3" controlId="formBasicEmail">
+              <Form.Control
+                type="text"
+                placeholder="Search exercises..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+            </Form.Group>
+          </Col>
+          <Col>
+            <Form.Group>
+              <Form.Control as="select" onChange={handleBodyPartChange}>
+                <option value="">Body Part</option>
 
-            <option value="back">Back</option>
-            <option value="cardio">Cardio</option>
-            <option value="chest">Chest</option>
-            <option value="lower arms">Lower Arms</option>
-            <option value="lower legs">Lower Legs</option>
-            <option value="neck">Neck</option>
-            <option value="shoulders">Shoulders</option>
-            <option value="upper arms">Upper Arms</option>
-            <option value="upper legs">Upper Legs</option>
-            <option value="waist">Waist</option>
-          </Form.Control>
-        </Form.Group>
-        <Form.Group>
-          <Form.Label>Filter by Target:</Form.Label>
-          <Form.Control as="select" onChange={handleTargetChange}>
-            <option value="">All</option>
-            <option value="abductors">Abductors</option>
-            <option value="abs">Abs</option>
-            <option value="adductors">Adductors</option>
-            <option value="biceps">Biceps</option>
-            <option value="calves">Calves</option>
-            <option value="cardiovascular system">Cardiovascular System</option>
-            <option value="delts">Delts</option>
-            <option value="forearms">Forearms</option>
-            <option value="glutes">Glutes</option>
-            <option value="hamstrings">Hamstrings</option>
-            <option value="lats">Lats</option>
-            <option value="levator scapulae">Levator Scapulae</option>
-            <option value="pectorals">Pectorals</option>
-            <option value="quads">Quads</option>
-            <option value="serratus anterior">Serratus Anterior</option>
-            <option value="spine">Spine</option>
-            <option value="traps">Traps</option>
-            <option value="triceps">Triceps</option>
-            <option value="upper back">Upper Back</option>
-          </Form.Control>
-        </Form.Group>
-        <input
-          type="text"
-          placeholder="Search exercises..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
+                <option value="back">Back</option>
+                <option value="cardio">Cardio</option>
+                <option value="chest">Chest</option>
+                <option value="lower arms">Lower Arms</option>
+                <option value="lower legs">Lower Legs</option>
+                <option value="neck">Neck</option>
+                <option value="shoulders">Shoulders</option>
+                <option value="upper arms">Upper Arms</option>
+                <option value="upper legs">Upper Legs</option>
+                <option value="waist">Waist</option>
+              </Form.Control>
+            </Form.Group>
+          </Col>
+          <Col>
+            <Form.Group className="pr-3">
+              <Form.Control as="select" onChange={handleTargetChange}>
+                <option value="">Target Muscle</option>
+                <option value="abductors">Abductors</option>
+                <option value="abs">Abs</option>
+                <option value="adductors">Adductors</option>
+                <option value="biceps">Biceps</option>
+                <option value="calves">Calves</option>
+                <option value="cardiovascular system">
+                  Cardiovascular System
+                </option>
+                <option value="delts">Delts</option>
+                <option value="forearms">Forearms</option>
+                <option value="glutes">Glutes</option>
+                <option value="hamstrings">Hamstrings</option>
+                <option value="lats">Lats</option>
+                <option value="levator scapulae">Levator Scapulae</option>
+                <option value="pectorals">Pectorals</option>
+                <option value="quads">Quads</option>
+                <option value="serratus anterior">Serratus Anterior</option>
+                <option value="spine">Spine</option>
+                <option value="traps">Traps</option>
+                <option value="triceps">Triceps</option>
+                <option value="upper back">Upper Back</option>
+              </Form.Control>
+            </Form.Group>
+          </Col>
+        </Row>
+
         <div style={{ maxHeight: "500px", overflowY: "scroll" }}>
-          <Row>
+          <Row xs={1} md={2} xl={4}>
             {currentExercises.map((exercise) => (
-              <Col key={exercise._id} md={3}>
+              <Col key={exercise._id} className="modal-ex-col">
                 <Row>
                   <Image
+                    className="modal-ex-img"
                     src={exercise.gifUrl}
                     alt={exercise.name}
-                    style={{ width: "100%" }}
                     onClick={() => {
                       setIsModalOpen(false);
 
@@ -137,35 +152,43 @@ const ExerciseModal = ({
                   />
                 </Row>
                 <Row className="justify-content-center">
-                  <span>{exercise.name}</span>
+                  <span className="ex-name-span">{exercise.name}</span>
                 </Row>
               </Col>
             ))}
           </Row>
         </div>
         <div className="pagination">
-          {currentPage > 1 && (
-            <Button
-              variant="secondary"
-              onClick={() => handlePageChange(currentPage - 1)}
-            >
-              Previous Page
-            </Button>
-          )}
-          {currentPage < pageNumbers && (
-            <Button
-              variant="secondary"
-              onClick={() => handlePageChange(currentPage + 1)}
-            >
-              Next Page
-            </Button>
-          )}
+          <Row className="pagination-row">
+            {currentPage > 1 && (
+              <span
+                className="pagination-btn"
+                onClick={() => handlePageChange(currentPage - 1)}
+              >
+                <ArrowLeftSquareFill size={25}></ArrowLeftSquareFill>
+              </span>
+            )}
+            {currentPage < pageNumbers && (
+              <span
+                className="pagination-btn"
+                onClick={() => handlePageChange(currentPage + 1)}
+              >
+                <ArrowRightSquareFill size={25}></ArrowRightSquareFill>
+              </span>
+            )}
+          </Row>
         </div>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="secondary" onClick={() => setIsModalOpen(false)}>
-          Close
-        </Button>
+        <Row>
+          <Button
+            variant="secondary"
+            onClick={() => setIsModalOpen(false)}
+            className="close-btn-ex-model"
+          >
+            Close
+          </Button>
+        </Row>
       </Modal.Footer>
     </Modal>
   );
