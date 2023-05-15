@@ -21,7 +21,6 @@ import {
 } from "recharts";
 import ProgressItem from "../../../interfaces/ExerciseProgress";
 import GroupedProgressData from "../../../interfaces/GroupedProgressData";
-import { Trash } from "react-bootstrap-icons";
 import deleteTrack from "../../../services/deleteTrack";
 import deleteChart from "../../../services/deleteChart";
 

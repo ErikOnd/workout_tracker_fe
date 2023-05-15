@@ -1,14 +1,40 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Col, Container, Form, Row, Table } from "react-bootstrap";
 import Header from "../../layout/Header";
 import "./FindWorkout.css";
 import { Search } from "react-bootstrap-icons";
+import getPublicWorkouts from "../../../services/getPublicWorkouts";
+import { Heart } from "react-bootstrap-icons";
+import exercises from "../../../assets/exercises";
+import FindWorkoutInterface from "../../../interfaces/FindWorkoutInterface";
 
 const FindWorkout = () => {
+  const [publicWorkouts, setPublicWorkouts] = useState<FindWorkoutInterface[]>(
+    []
+  );
+  useEffect(() => {
+    getData();
+  }, []);
+
+  const getData = async () => {
+    const res = await getPublicWorkouts();
+    setPublicWorkouts(res);
+  };
+
+  console.log("publicWorkouts:", publicWorkouts);
+
   const [searchTerm, setSearchTerm] = useState("");
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
+  };
+
+  const getTargetMuscle = (workout: FindWorkoutInterface) => {
+    let targetArr: (string | undefined)[] = [];
+
+    workout.exercises.map((exercise) => targetArr.push(exercise.target));
+
+    return targetArr.join(", ");
   };
 
   return (
@@ -42,42 +68,19 @@ const FindWorkout = () => {
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>Upper Body</td>
-                <td>Arms, Chest, Lower Back</td>
-                <td>90</td>
-                <td>David Anderson</td>
-              </tr>
-              <tr>
-                <td>Upper Body</td>
-                <td>Arms, Chest, Lower Back</td>
-                <td>90</td>
-                <td>David Anderson</td>
-              </tr>
-              <tr>
-                <td>Upper Body</td>
-                <td>Arms, Chest, Lower Back</td>
-                <td>90</td>
-                <td>David Anderson</td>
-              </tr>
-              <tr>
-                <td>Upper Body</td>
-                <td>Arms, Chest, Lower Back</td>
-                <td>90</td>
-                <td>David Anderson</td>
-              </tr>
-              <tr>
-                <td>Upper Body</td>
-                <td>Arms, Chest, Lower Back</td>
-                <td>90</td>
-                <td>David Anderson</td>
-              </tr>
-              <tr>
-                <td>Upper Body</td>
-                <td>Arms, Chest, Lower Back</td>
-                <td>90</td>
-                <td>David Anderson</td>
-              </tr>
+              {publicWorkouts.map((workout) => (
+                <tr>
+                  <td className="find-workout-name" onClick={() => {}}>
+                    {workout.workout_name}
+                  </td>
+                  <td>{getTargetMuscle(workout)}</td>
+                  <td>
+                    {workout.likes ? workout.likes.length : 0}
+                    <Heart className="ml-2 like-workout" size={25}></Heart>
+                  </td>
+                  <td>{workout.user_id.username}</td>
+                </tr>
+              ))}
             </tbody>
           </Table>
         </div>

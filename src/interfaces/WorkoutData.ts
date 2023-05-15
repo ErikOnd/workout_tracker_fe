@@ -5,7 +5,7 @@ export default interface WorkoutData {
   user_id: ObjectId | undefined;
   workout_name: string;
   focus: string;
-  likes: number;
+  likes: ObjectId[];
   exercises: ExerciseData[];
   _id?: string;
   public?: boolean;

@@ -2,3 +2,15 @@
   max-height: 300px;
   overflow-y: scroll;
 }
+
+.find-workout-name {
+  cursor: pointer;
+}
+
+.find-workout-name:hover {
+  text-decoration: underline;
+}
+
+.like-workout {
+  cursor: pointer;
+}
