@@ -51,12 +51,6 @@
   position: relative;
 }
 
-.btn-group-y-workout {
-  position: absolute;
-  bottom: 0;
-  right: -51px;
-}
-
 .y-w-btn {
   height: 50px;
   background-color: #ff8a00;
@@ -64,6 +58,55 @@
   border: 1px solid rgb(54 54 60);
 }
 
+.y-w-btn:hover {
+  box-shadow: none;
+}
+
+.y-w-btn.public-btn {
+  background-color: #ff8a00;
+}
+
+.y-w-btn:focus {
+  background-color: #ff8a00;
+  box-shadow: none;
+}
+
+.btn-secondary:not(:disabled):not(.disabled).active,
+.btn-secondary:not(:disabled):not(.disabled):active,
+.show > .btn-secondary.dropdown-toggle {
+  background-color: #ff8a00;
+  box-shadow: none;
+}
+
+.btn-secondary:not(:disabled):not(.disabled).active:focus,
+.btn-secondary:not(:disabled):not(.disabled):active:focus,
+.show > .btn-secondary.dropdown-toggle:focus {
+  box-shadow: none;
+}
+
+.y-w-btn-off {
+  height: 50px;
+  outline: none;
+  border: 1px solid rgb(54 54 60);
+}
+
+.y-w-btn-off:focus {
+  height: 50px;
+  outline: none;
+  box-shadow: none;
+}
+
 .y-w-btn.btn.btn-warning {
   color: white;
+}
+
+.y-w-btn.btn.btn-warning:hover {
+  background-color: #ff8a00;
+  border: 1px solid rgb(54 54 60);
+}
+
+.btn-group-y-workout {
+  position: absolute;
+  bottom: 0;
+  right: -51px;
 }

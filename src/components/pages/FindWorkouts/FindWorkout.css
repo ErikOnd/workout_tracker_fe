@@ -1,0 +1,4 @@
+.find-workout-table-div {
+  max-height: 300px;
+  overflow-y: scroll;
+}

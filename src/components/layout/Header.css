@@ -24,3 +24,12 @@
 .dropdown-menu {
   background-color: rgb(255, 255, 255, 0.8);
 }
+
+.orange-btn-header {
+  background-color: #ff8a00;
+
+  border-radius: 15px;
+  cursor: pointer;
+  color: white;
+  font-weight: 500;
+}

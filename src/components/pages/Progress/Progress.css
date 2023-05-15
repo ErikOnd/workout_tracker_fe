@@ -14,3 +14,9 @@
 .y-w-btn {
   font-weight: 700;
 }
+
+.remove-last-pr:focus {
+  background-color: #ff8a00;
+  border: 1px solid rgb(54 54 60);
+  box-shadow: none;
+}

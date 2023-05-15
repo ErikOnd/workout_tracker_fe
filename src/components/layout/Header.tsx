@@ -11,28 +11,27 @@ const Header = () => {
         <Navbar.Brand href="#"></Navbar.Brand>
         <Navbar.Toggle aria-controls="navbar-nav" />
         <Navbar.Collapse id="navbar-nav">
-          <Nav className="ml-auto mt-2">
+          <Nav className="ml-auto mt-2 d-flex align-items-center">
             <Nav.Link as={Link} to="/profile">
               Profile
             </Nav.Link>
-            <NavDropdown title="Workouts" id="basic-nav-dropdown">
-              <NavDropdown.Item as={Link} to="/your-workouts">
-                Your Workouts
-              </NavDropdown.Item>
-              <NavDropdown.Item as={Link} to="/create-workout">
-                Create Workout
-              </NavDropdown.Item>
-              <NavDropdown.Item as={Link} to="/find-workouts">
-                Find Workouts
-              </NavDropdown.Item>
-            </NavDropdown>
-            <Nav.Link as={Link} to="/progress">
+            <span className="orange-btn-header ml-2">
+              <NavDropdown title="Workouts" id="basic-nav-dropdown">
+                <NavDropdown.Item as={Link} to="/your-workouts">
+                  Your Workouts
+                </NavDropdown.Item>
+                <NavDropdown.Item as={Link} to="/create-workout">
+                  Create Workout
+                </NavDropdown.Item>
+                <NavDropdown.Item as={Link} to="/find-workouts">
+                  Find Workouts
+                </NavDropdown.Item>
+              </NavDropdown>
+            </span>
+            <Nav.Link as={Link} to="/progress" className="ml-2">
               Progress
             </Nav.Link>
-            <Nav.Link as={Link} to="/contact">
-              <span className="orange-btn">Contact</span>
-            </Nav.Link>
-            <Nav.Link as={Link} to="/login">
+            <Nav.Link as={Link} to="/login" className="ml-2">
               <BoxArrowRight
                 onClick={() => {
                   localStorage.removeItem("accessToken");

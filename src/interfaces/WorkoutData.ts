@@ -8,4 +8,5 @@ export default interface WorkoutData {
   likes: number;
   exercises: ExerciseData[];
   _id?: string;
+  public?: boolean;
 }

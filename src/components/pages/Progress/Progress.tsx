@@ -156,7 +156,7 @@ const Progress = () => {
                 <Col>
                   <ButtonGroup vertical className="btn-group-progress">
                     <Button
-                      className="y-w-btn"
+                      className="y-w-btn remove-last-pr"
                       variant="warning"
                       onClick={() => {
                         console.log(progressItems);

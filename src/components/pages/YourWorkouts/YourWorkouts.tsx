@@ -5,17 +5,20 @@ import {
   Col,
   Collapse,
   Container,
+  OverlayTrigger,
   Row,
   Table,
+  Tooltip,
 } from "react-bootstrap";
 import "./YourWorkouts.css";
 import getWorkouts from "../../../services/getWorkouts";
 import Header from "../../layout/Header";
 import { Exercise, WorkoutList } from "../../../interfaces/WorkoutList";
-import { PencilSquare, Trash } from "react-bootstrap-icons";
+import { PencilSquare, PeopleFill, Trash } from "react-bootstrap-icons";
 import deleteWorkout from "../../../services/deleteWorkout";
 import { useNavigate } from "react-router-dom";
 import WorkoutData from "../../../interfaces/WorkoutData";
+import updateVisibility from "../../../services/updateVisibility";
 
 const YourWorkouts = () => {
   const [workouts, setWorkouts] = useState<WorkoutData[]>();
@@ -33,6 +36,11 @@ const YourWorkouts = () => {
 
   const handleRowClick = (rowId: any) => {
     setOpenRowId(rowId === openRowId ? null : rowId);
+  };
+
+  const handleVisibility = async (workoutId: string | undefined) => {
+    await updateVisibility(workoutId);
+    fetchWorkouts();
   };
 
   return (
@@ -85,6 +93,30 @@ const YourWorkouts = () => {
               </tbody>
             </Table>
             <ButtonGroup vertical className="btn-group-y-workout">
+              <Button
+                className={
+                  workout.public ? "y-w-btn public-btn" : "y-w-btn-off"
+                }
+                variant="secondary"
+                onClick={() => {
+                  handleVisibility(workout._id);
+                }}
+              >
+                <OverlayTrigger
+                  placement="top"
+                  overlay={
+                    <Tooltip id="tooltip">
+                      {workout.public
+                        ? "Workout is public"
+                        : "Workout is currently private"}
+                    </Tooltip>
+                  }
+                >
+                  <div>
+                    <PeopleFill size={25}></PeopleFill>
+                  </div>
+                </OverlayTrigger>
+              </Button>
               <Button
                 className="y-w-btn"
                 variant="warning"
