@@ -20,6 +20,7 @@ const CreateWorkout = () => {
   const dispatch: AppDispatch = useDispatch();
   const { workout_id } = useParams();
   useEffect(() => {
+    console.log("workout page");
     if (workout_id) {
       dispatch(
         setWorkout({

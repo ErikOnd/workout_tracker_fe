@@ -28,17 +28,13 @@ const Login = () => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const path = await userLogin(formData);
-
     if (path) {
       navigate(path);
+      window.location.reload();
     } else {
       console.error("Failed to log in");
     }
   };
-
-  if (localStorage.getItem("accessToken")) {
-    return <Navigate to="/profile" />;
-  }
 
   return (
     <Container

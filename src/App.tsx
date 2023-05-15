@@ -16,7 +16,7 @@ function App() {
 
   useEffect(() => {
     const accessToken = localStorage.getItem("accessToken");
-    if (accessToken) {
+    if (accessToken !== null) {
       setIsLoggedIn(true);
     }
   }, []);
@@ -24,85 +24,25 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route
-          path="/profile"
-          element={
-            isLoggedIn ? <Profile /> : <Navigate to="/login" replace={true} />
-          }
-        />
-
-        <Route
-          path="/your-workouts"
-          element={
-            isLoggedIn ? (
-              <YourWorkouts />
-            ) : (
-              <Navigate to="/login" replace={true} />
-            )
-          }
-        />
-
+        <Route path="/profile" element={isLoggedIn && <Profile />} />
+        <Route path="/your-workouts" element={isLoggedIn && <YourWorkouts />} />
         <Route
           path="/create-workout"
-          element={
-            isLoggedIn ? (
-              <CreateWorkout />
-            ) : (
-              <Navigate to="/login" replace={true} />
-            )
-          }
+          element={isLoggedIn && <CreateWorkout />}
         />
         <Route
           path="/create-workout/:workout_id"
-          element={
-            isLoggedIn ? (
-              <CreateWorkout />
-            ) : (
-              <Navigate to="/login" replace={true} />
-            )
-          }
+          element={isLoggedIn && <CreateWorkout />}
         />
-
         <Route
           path="/create-workout/:id"
-          element={
-            isLoggedIn ? (
-              <CreateWorkout />
-            ) : (
-              <Navigate to="/login" replace={true} />
-            )
-          }
+          element={isLoggedIn && <CreateWorkout />}
         />
-
-        <Route
-          path="/find-workouts"
-          element={
-            isLoggedIn ? (
-              <FindWorkout />
-            ) : (
-              <Navigate to="/login" replace={true} />
-            )
-          }
-        />
-
-        <Route
-          path="/contact"
-          element={
-            isLoggedIn ? <ContactUs /> : <Navigate to="/login" replace={true} />
-          }
-        />
-
-        <Route
-          path="/progress"
-          element={
-            isLoggedIn ? <Progress /> : <Navigate to="/login" replace={true} />
-          }
-        />
-
+        <Route path="/find-workouts" element={isLoggedIn && <FindWorkout />} />
+        <Route path="/contact" element={isLoggedIn && <ContactUs />} />
+        <Route path="/progress" element={isLoggedIn && <Progress />} />
         <Route path="/login" element={<Login />} />
-
         <Route path="/register" element={<Register />} />
-
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
