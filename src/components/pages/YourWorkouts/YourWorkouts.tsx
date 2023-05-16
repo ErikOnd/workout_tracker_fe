@@ -19,6 +19,7 @@ import deleteWorkout from "../../../services/deleteWorkout";
 import { useNavigate } from "react-router-dom";
 import WorkoutData from "../../../interfaces/WorkoutData";
 import updateVisibility from "../../../services/updateVisibility";
+import ObjectId from "bson-objectid";
 
 const YourWorkouts = () => {
   const [workouts, setWorkouts] = useState<WorkoutData[]>();
@@ -38,7 +39,7 @@ const YourWorkouts = () => {
     setOpenRowId(rowId === openRowId ? null : rowId);
   };
 
-  const handleVisibility = async (workoutId: string | undefined) => {
+  const handleVisibility = async (workoutId: ObjectId | undefined) => {
     await updateVisibility(workoutId);
     fetchWorkouts();
   };

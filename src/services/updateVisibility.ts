@@ -1,7 +1,9 @@
+import ObjectId from "bson-objectid";
+
 const apiUrl = process.env.REACT_APP_API_URL;
 const accessToken = localStorage.getItem("accessToken");
 
-const updateVisibility = async (workout_id: string | undefined) => {
+const updateVisibility = async (workout_id: ObjectId | undefined) => {
   try {
     const res = await fetch(`${apiUrl}/workouts/visibility/${workout_id}`, {
       headers: {

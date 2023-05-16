@@ -7,8 +7,10 @@ import getPublicWorkouts from "../../../services/getPublicWorkouts";
 import { Heart } from "react-bootstrap-icons";
 import exercises from "../../../assets/exercises";
 import FindWorkoutInterface from "../../../interfaces/FindWorkoutInterface";
+import { useNavigate } from "react-router-dom";
 
 const FindWorkout = () => {
+  const navigate = useNavigate();
   const [publicWorkouts, setPublicWorkouts] = useState<FindWorkoutInterface[]>(
     []
   );
@@ -70,7 +72,12 @@ const FindWorkout = () => {
             <tbody>
               {publicWorkouts.map((workout) => (
                 <tr>
-                  <td className="find-workout-name" onClick={() => {}}>
+                  <td
+                    className="find-workout-name"
+                    onClick={() => {
+                      navigate(`/create-workout/${workout._id}/import`);
+                    }}
+                  >
                     {workout.workout_name}
                   </td>
                   <td>{getTargetMuscle(workout)}</td>

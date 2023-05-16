@@ -27,7 +27,7 @@ const CreateWorkout = () => {
           ...workoutData,
           user_id: user_id,
           focus: "",
-          likes: 0,
+          likes: [],
           exercises: [],
         })
       );
@@ -36,7 +36,7 @@ const CreateWorkout = () => {
         setWorkout({
           user_id: user_id,
           focus: "",
-          likes: 0,
+          likes: [],
           exercises: [],
         })
       );

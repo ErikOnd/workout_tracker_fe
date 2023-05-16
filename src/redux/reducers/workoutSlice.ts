@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import WorkoutData from "../../interfaces/WorkoutData";
+import ObjectId from "bson-objectid";
 
 interface WorkoutState {
   data: WorkoutData | null;
@@ -56,7 +57,6 @@ export const workoutSlice = createSlice({
     },
 
     removeExercise: (state, action) => {
-      console.log("removeExercise", action.payload);
       if (state.data) {
         state.data.exercises = state.data.exercises.filter(
           (exercise) => exercise._id !== action.payload

@@ -35,7 +35,7 @@ function App() {
           element={isLoggedIn && <CreateWorkout />}
         />
         <Route
-          path="/create-workout/:id"
+          path="/create-workout/:workout_id/:importParam"
           element={isLoggedIn && <CreateWorkout />}
         />
         <Route path="/find-workouts" element={isLoggedIn && <FindWorkout />} />

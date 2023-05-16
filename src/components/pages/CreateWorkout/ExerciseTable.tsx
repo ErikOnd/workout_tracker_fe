@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Container, ListGroup, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
@@ -6,19 +6,33 @@ import saveWorkout from "../../../services/saveWorkout";
 import { clearWorkout } from "../../../redux/reducers/workoutSlice";
 import { RotatingLines } from "react-loader-spinner";
 import { useNavigate, useParams } from "react-router-dom";
+
 import updateWorkout from "../../../services/updateWorkout";
 
 const ExerciseTable = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const { workout_id } = useParams();
+  const { workout_id, importParam } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const workout = useSelector((state: RootState) => state.workout.data);
+  const user = useSelector((state: RootState) => state.user.data);
 
-  function scrollToDiv(exerciseId: string) {
+  console.log("importParam:", importParam);
+
+  const scrollToDiv = (exerciseId: string) => {
     const element = document.getElementById(exerciseId);
     element?.scrollIntoView({ behavior: "smooth" });
-  }
+  };
+
+  const handleSaveWorkout = () => {
+    setIsLoading(true);
+    saveWorkout(workout);
+    dispatch(clearWorkout());
+    setTimeout(() => {
+      setIsLoading(false);
+      navigate("/your-workouts/");
+    }, 1000);
+  };
 
   return (
     <Container className="exercise-list-container">
@@ -43,7 +57,26 @@ const ExerciseTable = () => {
             visible={true}
           />
         )}
-        {workout_id ? (
+
+        {workout_id && importParam === "import" ? (
+          <>
+            {" "}
+            <div
+              className="mt-5 orange-btn mr-auto save-workout-btn"
+              onClick={() => {
+                handleSaveWorkout();
+              }}
+            >
+              Import
+            </div>
+            <div
+              className="mt-1 orange-btn mr-auto go-back-btn"
+              onClick={() => navigate(-1)}
+            >
+              Go Back
+            </div>
+          </>
+        ) : workout_id ? (
           <div
             className="mt-5 orange-btn mr-auto save-workout-btn"
             onClick={() => {
@@ -62,13 +95,7 @@ const ExerciseTable = () => {
           <div
             className="mt-5 orange-btn mr-auto save-workout-btn"
             onClick={() => {
-              setIsLoading(true);
-              saveWorkout(workout);
-              dispatch(clearWorkout());
-              setTimeout(() => {
-                setIsLoading(false);
-                navigate("/your-workouts/");
-              }, 1000);
+              handleSaveWorkout();
             }}
           >
             Save Workout
