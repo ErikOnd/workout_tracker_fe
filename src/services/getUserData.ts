@@ -11,6 +11,8 @@ const getUserData = async (accessToken: string) => {
       throw new Error(await res.text());
     } else {
       const userData = await res.json();
+      console.log("userData:", userData);
+      localStorage.setItem("userId", userData._id);
       return userData;
     }
   } catch (error) {

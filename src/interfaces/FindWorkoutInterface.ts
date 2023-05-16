@@ -10,7 +10,7 @@ export default interface FindWorkoutInterface {
   updatedAt: Date;
   __v: number;
   public: boolean;
-  likes: ObjectId[];
+  likes: string[];
 }
 
 export interface Exercise {

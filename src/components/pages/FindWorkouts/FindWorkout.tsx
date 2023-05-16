@@ -2,12 +2,13 @@ import React, { useEffect, useState } from "react";
 import { Col, Container, Form, Row, Table } from "react-bootstrap";
 import Header from "../../layout/Header";
 import "./FindWorkout.css";
-import { Search } from "react-bootstrap-icons";
+import { HeartFill, Search } from "react-bootstrap-icons";
 import getPublicWorkouts from "../../../services/getPublicWorkouts";
 import { Heart } from "react-bootstrap-icons";
 import exercises from "../../../assets/exercises";
 import FindWorkoutInterface from "../../../interfaces/FindWorkoutInterface";
 import { useNavigate } from "react-router-dom";
+import addWorkoutLike from "../../../services/addWorkoutLike";
 
 const FindWorkout = () => {
   const navigate = useNavigate();
@@ -22,8 +23,7 @@ const FindWorkout = () => {
     const res = await getPublicWorkouts();
     setPublicWorkouts(res);
   };
-
-  console.log("publicWorkouts:", publicWorkouts);
+  const userId = localStorage.getItem("userId");
 
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -37,6 +37,11 @@ const FindWorkout = () => {
     workout.exercises.map((exercise) => targetArr.push(exercise.target));
 
     return targetArr.join(", ");
+  };
+
+  const handleLikeWorkout = async (workout_id: string) => {
+    await addWorkoutLike(workout_id);
+    getData();
   };
 
   return (
@@ -83,7 +88,23 @@ const FindWorkout = () => {
                   <td>{getTargetMuscle(workout)}</td>
                   <td>
                     {workout.likes ? workout.likes.length : 0}
-                    <Heart className="ml-2 like-workout" size={25}></Heart>
+                    {userId && workout.likes.includes(userId) ? (
+                      <HeartFill
+                        className="ml-2 like-workout"
+                        size={25}
+                        onClick={() => {
+                          handleLikeWorkout(workout._id);
+                        }}
+                      ></HeartFill>
+                    ) : (
+                      <Heart
+                        className="ml-2 like-workout"
+                        size={25}
+                        onClick={() => {
+                          handleLikeWorkout(workout._id);
+                        }}
+                      ></Heart>
+                    )}
                   </td>
                   <td>{workout.user_id.username}</td>
                 </tr>
