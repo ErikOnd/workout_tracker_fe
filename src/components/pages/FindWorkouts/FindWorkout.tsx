@@ -9,12 +9,16 @@ import exercises from "../../../assets/exercises";
 import FindWorkoutInterface from "../../../interfaces/FindWorkoutInterface";
 import { useNavigate } from "react-router-dom";
 import addWorkoutLike from "../../../services/addWorkoutLike";
+import getPublicWorkoutsFiltered from "../../../services/getPublicWorkoutsFiltered";
 
 const FindWorkout = () => {
+  const userId = localStorage.getItem("userId");
   const navigate = useNavigate();
   const [publicWorkouts, setPublicWorkouts] = useState<FindWorkoutInterface[]>(
     []
   );
+  const [searchTerm, setSearchTerm] = useState<string>("");
+
   useEffect(() => {
     getData();
   }, []);
@@ -23,12 +27,23 @@ const FindWorkout = () => {
     const res = await getPublicWorkouts();
     setPublicWorkouts(res);
   };
-  const userId = localStorage.getItem("userId");
 
-  const [searchTerm, setSearchTerm] = useState("");
+  const getfilteredData = async () => {
+    const res = await getPublicWorkoutsFiltered(searchTerm);
+    console.log("filtered workouts", res);
+    setPublicWorkouts(res);
+  };
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
+  };
+
+  const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      console.log("fire search");
+      getfilteredData();
+    }
   };
 
   const getTargetMuscle = (workout: FindWorkoutInterface) => {
@@ -59,6 +74,7 @@ const FindWorkout = () => {
                 placeholder="Search workouts"
                 value={searchTerm}
                 onChange={handleSearch}
+                onKeyPress={handleKeyPress}
                 className="filter-exercise-progress mb-5"
               />
             </Form.Group>
