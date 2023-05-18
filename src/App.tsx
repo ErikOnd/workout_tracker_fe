@@ -18,7 +18,11 @@ function App() {
 
   useEffect(() => {
     const accessToken = localStorage.getItem("accessToken");
-    if (accessToken) {
+    console.log("setting this accessToken, ", accessToken);
+    console.log("setIsLoggedIn, ", isLoggedIn);
+
+    if (accessToken && accessToken !== undefined) {
+      console.log("setting now this accesstoken (not undefinded)", accessToken);
       setIsLoggedIn(true);
     }
     setIsLoading(false); // Set loading to false after we've checked for token

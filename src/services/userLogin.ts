@@ -15,7 +15,9 @@ const userLogin = async (data: LoginData) => {
       throw new Error(await res.text());
     } else {
       const accessToken = await res.json();
-      localStorage.setItem("accessToken", accessToken.accessToken);
+      if (localStorage.getItem("accessToken") !== undefined) {
+        localStorage.setItem("accessToken", accessToken.accessToken);
+      }
       if (localStorage.getItem("accessToken")) {
         return "/profile";
       }

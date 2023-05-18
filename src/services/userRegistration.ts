@@ -14,11 +14,7 @@ const userRegistration = async (data: RegisterData) => {
     if (!res.ok) {
       throw new Error(await res.text());
     } else {
-      const accessToken = await res.json();
-      localStorage.setItem("accessToken", accessToken.accessToken);
-      if (localStorage.getItem("accessToken")) {
-        return "/profile";
-      }
+      return "/login";
     }
   } catch (error) {
     console.log(error);

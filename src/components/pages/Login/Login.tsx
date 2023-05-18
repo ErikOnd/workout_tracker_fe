@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Container, Form, Button } from "react-bootstrap";
+import { Container, Form, Button, Alert } from "react-bootstrap";
 import { Link, Navigate } from "react-router-dom";
 import GoogleButton from "react-google-button";
 import userLogin from "../../../services/userLogin";
@@ -20,6 +20,8 @@ const Login = () => {
     password: "",
   });
 
+  const [errorMessage, setErrorMessage] = useState(false);
+
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
@@ -32,7 +34,7 @@ const Login = () => {
       navigate(path);
       window.location.reload();
     } else {
-      console.error("Failed to log in");
+      setErrorMessage(true);
     }
   };
 
@@ -68,6 +70,11 @@ const Login = () => {
           <Button variant="primary" type="submit" className="mt-4">
             Submit
           </Button>
+          {errorMessage && (
+            <Alert variant="danger" className="mt-3">
+              Email or Password incorrect
+            </Alert>
+          )}
           <a href={`${apiUrl}/users/googleLogin`}>
             <GoogleButton className="mt-3" />
           </a>
