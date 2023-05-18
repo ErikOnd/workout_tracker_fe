@@ -1,13 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  Container,
-  Row,
-  Col,
-  Form,
-  Button,
-  Image,
-  Modal,
-} from "react-bootstrap";
+import { Container, Row, Col, Form, Button, Image } from "react-bootstrap";
 import ExerciseSets from "./ExerciseSets";
 import getExercise from "../../../services/getExercise";
 import { useDispatch, useSelector } from "react-redux";
@@ -29,7 +21,6 @@ const Exercise = () => {
   const workoutData = useSelector((state: RootState) => state.workout.data);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [exerciseIdModal, setExerciseIdModal] = useState<string>();
-  const [showModal, setShowModal] = useState(false);
 
   const dispatch: AppDispatch = useDispatch();
 
@@ -101,7 +92,9 @@ const Exercise = () => {
             <Row>
               <Button
                 variant="danger"
-                onClick={() => setShowModal(true)}
+                onClick={() => {
+                  dispatch(removeExercise(exercise._id));
+                }}
                 className="remove-ex-btn trash-icon"
               >
                 <Trash size={20}></Trash>
@@ -124,35 +117,6 @@ const Exercise = () => {
               Set
             </span>
           </Row>
-          <Modal
-            show={showModal}
-            onHide={() => setShowModal(false)}
-            dialogClassName="custom-modal"
-          >
-            <Modal.Header closeButton>
-              <Modal.Title>Confirm Deletion</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              Are you sure you want to delete this exercise?
-            </Modal.Body>
-            <Modal.Footer>
-              <Button
-                variant="secondary"
-                className="confirm-delete"
-                onClick={() => {
-                  dispatch(removeExercise(exercise._id));
-                }}
-              >
-                Confirm
-              </Button>
-              <span
-                className="orange-btn modal-text"
-                onClick={() => setShowModal(false)}
-              >
-                Cancel
-              </span>
-            </Modal.Footer>
-          </Modal>
         </Container>
       ))}
 
