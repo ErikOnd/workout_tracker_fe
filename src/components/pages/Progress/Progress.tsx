@@ -29,8 +29,14 @@ const Progress = () => {
   const [progressData, setProgressData] = useState<GroupedProgressData>({});
   const [searchTerm, setSearchTerm] = useState("");
   const [showModal, setShowModal] = useState(false);
+  const [mobileGraph, setMobileGraph] = useState(false);
 
   useEffect(() => {
+    const isMobile = window.innerWidth < 576; // Adjust the value to your desired breakpoint
+    if (isMobile) {
+      setMobileGraph(true);
+    }
+
     getData();
   }, []);
 
@@ -122,37 +128,71 @@ const Progress = () => {
                   key={exerciseId}
                   className="d-flex justify-content-center mb-5  chart-col"
                 >
-                  <LineChart
-                    width={400}
-                    height={200}
-                    data={formatDataForChart(exerciseId)}
-                    margin={{ top: 20, right: 30, left: 20, bottom: 10 }}
-                  >
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="date" tick={{ fontSize: 12 }} />
-                    <YAxis
-                      tick={{ fontSize: 12 }}
-                      domain={[
-                        (dataMin: number) =>
-                          dataMin > 0 ? dataMin - 1 : dataMin,
-                        (dataMax: number) => dataMax + 1,
-                      ]}
-                    />
-                    <Tooltip
-                      contentStyle={{ fontSize: 12 }}
-                      formatter={(value) => `${value} kg`}
-                    />
-                    <Legend />
-                    <Line
-                      type="monotone"
-                      dataKey="weight"
-                      stroke="#FF8A00"
-                      strokeWidth={2}
-                      dot={{ stroke: "#FF8A00", fill: "#FF8A00", r: 3 }}
-                      activeDot={{ stroke: "#FF8A00", fill: "#FF8A00", r: 6 }}
-                      name={progressItems[0].exercise_id.name}
-                    />
-                  </LineChart>
+                  {mobileGraph ? (
+                    <LineChart
+                      width={300}
+                      height={150}
+                      data={formatDataForChart(exerciseId)}
+                      margin={{ top: 20, right: 30, left: 20, bottom: 10 }}
+                    >
+                      <CartesianGrid strokeDasharray="3 3" />
+                      <XAxis dataKey="date" tick={{ fontSize: 12 }} />
+                      <YAxis
+                        tick={{ fontSize: 12 }}
+                        domain={[
+                          (dataMin: number) =>
+                            dataMin > 0 ? dataMin - 1 : dataMin,
+                          (dataMax: number) => dataMax + 1,
+                        ]}
+                      />
+                      <Tooltip
+                        contentStyle={{ fontSize: 12 }}
+                        formatter={(value) => `${value} kg`}
+                      />
+                      <Legend />
+                      <Line
+                        type="monotone"
+                        dataKey="weight"
+                        stroke="#FF8A00"
+                        strokeWidth={2}
+                        dot={{ stroke: "#FF8A00", fill: "#FF8A00", r: 3 }}
+                        activeDot={{ stroke: "#FF8A00", fill: "#FF8A00", r: 6 }}
+                        name={progressItems[0].exercise_id.name}
+                      />
+                    </LineChart>
+                  ) : (
+                    <LineChart
+                      width={600}
+                      height={300}
+                      data={formatDataForChart(exerciseId)}
+                      margin={{ top: 20, right: 30, left: 20, bottom: 10 }}
+                    >
+                      <CartesianGrid strokeDasharray="3 3" />
+                      <XAxis dataKey="date" tick={{ fontSize: 12 }} />
+                      <YAxis
+                        tick={{ fontSize: 12 }}
+                        domain={[
+                          (dataMin: number) =>
+                            dataMin > 0 ? dataMin - 1 : dataMin,
+                          (dataMax: number) => dataMax + 1,
+                        ]}
+                      />
+                      <Tooltip
+                        contentStyle={{ fontSize: 12 }}
+                        formatter={(value) => `${value} kg`}
+                      />
+                      <Legend />
+                      <Line
+                        type="monotone"
+                        dataKey="weight"
+                        stroke="#FF8A00"
+                        strokeWidth={2}
+                        dot={{ stroke: "#FF8A00", fill: "#FF8A00", r: 3 }}
+                        activeDot={{ stroke: "#FF8A00", fill: "#FF8A00", r: 6 }}
+                        name={progressItems[0].exercise_id.name}
+                      />
+                    </LineChart>
+                  )}
                 </Col>
                 <Col
                   key={exerciseId}
