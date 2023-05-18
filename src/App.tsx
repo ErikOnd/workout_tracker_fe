@@ -10,37 +10,74 @@ import Progress from "./components/pages/Progress/Progress";
 import Register from "./components/pages/Register/Register";
 import NotFound from "./components/pages/NotFound/NotFound";
 import Login from "./components/pages/Login/Login";
+import { RotatingLines } from "react-loader-spinner";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const accessToken = localStorage.getItem("accessToken");
-    if (accessToken !== null) {
+    if (accessToken) {
       setIsLoggedIn(true);
     }
+    setIsLoading(false); // Set loading to false after we've checked for token
   }, []);
-  console.log("isLoggedIn:", isLoggedIn);
+
+  if (isLoading) {
+    return (
+      <RotatingLines
+        strokeColor="grey"
+        strokeWidth="5"
+        animationDuration="0.75"
+        width="96"
+        visible={true}
+      />
+    );
+  }
+
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/profile" element={isLoggedIn && <Profile />} />
-        <Route path="/your-workouts" element={isLoggedIn && <YourWorkouts />} />
+        <Route
+          path="/"
+          element={
+            isLoggedIn ? <Navigate to="/profile" /> : <Navigate to="/login" />
+          }
+        />
+        <Route path="/" element={!isLoggedIn && <Navigate to="/login" />} />
+        <Route
+          path="/profile"
+          element={isLoggedIn ? <Profile /> : <Navigate to="/login" />}
+        />
+        <Route
+          path="/your-workouts"
+          element={isLoggedIn ? <YourWorkouts /> : <Navigate to="/login" />}
+        />
         <Route
           path="/create-workout"
-          element={isLoggedIn && <CreateWorkout />}
+          element={isLoggedIn ? <CreateWorkout /> : <Navigate to="/login" />}
         />
         <Route
           path="/create-workout/:workout_id"
-          element={isLoggedIn && <CreateWorkout />}
+          element={isLoggedIn ? <CreateWorkout /> : <Navigate to="/login" />}
         />
         <Route
           path="/create-workout/:workout_id/:importParam"
-          element={isLoggedIn && <CreateWorkout />}
+          element={isLoggedIn ? <CreateWorkout /> : <Navigate to="/login" />}
         />
-        <Route path="/find-workouts" element={isLoggedIn && <FindWorkout />} />
-        <Route path="/contact" element={isLoggedIn && <ContactUs />} />
-        <Route path="/progress" element={isLoggedIn && <Progress />} />
+        <Route
+          path="/find-workouts"
+          element={isLoggedIn ? <FindWorkout /> : <Navigate to="/login" />}
+        />
+        <Route
+          path="/contact"
+          element={isLoggedIn ? <ContactUs /> : <Navigate to="/login" />}
+        />
+        <Route
+          path="/progress"
+          element={isLoggedIn ? <Progress /> : <Navigate to="/login" />}
+        />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="*" element={<NotFound />} />
