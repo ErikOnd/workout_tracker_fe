@@ -120,11 +120,11 @@ const Progress = () => {
               <Row className="chart-holder-row">
                 <Col
                   key={exerciseId}
-                  className="d-flex justify-content-center mb-5 mx-5"
+                  className="d-flex justify-content-center mb-5  chart-col"
                 >
                   <LineChart
-                    width={600}
-                    height={400}
+                    width={400}
+                    height={200}
                     data={formatDataForChart(exerciseId)}
                     margin={{ top: 20, right: 30, left: 20, bottom: 10 }}
                   >
@@ -154,7 +154,10 @@ const Progress = () => {
                     />
                   </LineChart>
                 </Col>
-                <Col>
+                <Col
+                  key={exerciseId}
+                  className="d-flex justify-content-center mb-5 chart-col align-items-sm-end progress-btn-col"
+                >
                   <ButtonGroup vertical className="btn-group-progress">
                     <Button
                       className="y-w-btn remove-last-pr"
@@ -199,6 +202,7 @@ const Progress = () => {
                       className="confirm-delete"
                       onClick={() => {
                         handleRemoveAllTracks(exerciseId);
+                        setShowModal(false);
                       }}
                     >
                       Confirm

@@ -12,22 +12,23 @@ const Header = () => {
         <Navbar.Toggle aria-controls="navbar-nav" />
         <Navbar.Collapse id="navbar-nav">
           <Nav className="ml-auto mt-2 d-flex align-items-center">
-            <Nav.Link as={Link} to="/profile">
-              Profile
-            </Nav.Link>
             <span className="orange-btn-header ml-2">
-              <NavDropdown title="Workouts" id="basic-nav-dropdown">
-                <NavDropdown.Item as={Link} to="/your-workouts">
-                  Your Workouts
-                </NavDropdown.Item>
-                <NavDropdown.Item as={Link} to="/create-workout">
-                  Create Workout
-                </NavDropdown.Item>
-                <NavDropdown.Item as={Link} to="/find-workouts">
-                  Find Workouts
-                </NavDropdown.Item>
-              </NavDropdown>
+              <Nav.Link as={Link} to="/profile">
+                Profile
+              </Nav.Link>
             </span>
+            <NavDropdown title="Workouts" id="basic-nav-dropdown">
+              <NavDropdown.Item as={Link} to="/your-workouts">
+                Your Workouts
+              </NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/create-workout">
+                Create Workout
+              </NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/find-workouts">
+                Find Workouts
+              </NavDropdown.Item>
+            </NavDropdown>
+
             <Nav.Link as={Link} to="/progress" className="ml-2">
               Progress
             </Nav.Link>

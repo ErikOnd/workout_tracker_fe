@@ -5,12 +5,6 @@
   position: relative;
 }
 
-.btn-group-progress {
-  position: absolute;
-  bottom: 112px;
-  right: 0px;
-}
-
 .y-w-btn {
   font-weight: 700;
 }
@@ -19,4 +13,22 @@
   background-color: #ff8a00;
   border: 1px solid rgb(54 54 60);
   box-shadow: none;
+}
+
+.chart-col {
+  padding: 0px;
+}
+
+.progress-btn-col {
+  padding: 0px;
+  padding-bottom: 63px;
+  margin-right: 50px;
+}
+
+@media (max-width: 768px) {
+  .progress-btn-col {
+    padding: 0px;
+    padding-bottom: 63px;
+    margin-left: 90px;
+  }
 }
