@@ -54,7 +54,7 @@ const YourWorkouts = () => {
         {workouts?.map((workout) => (
           <div className="tableAndBtn">
             <h2 className="your-w-header">{workout.workout_name}</h2>
-            <Table hover className="your-w-table text-left mb-5">
+            <Table hover className="your-w-table text-left">
               <thead>
                 <tr>
                   <th>Exercise</th>
@@ -93,7 +93,7 @@ const YourWorkouts = () => {
                 ))}
               </tbody>
             </Table>
-            <ButtonGroup vertical className="btn-group-y-workout">
+            <Row className="mb-5">
               <Button
                 className={
                   workout.public ? "y-w-btn public-btn" : "y-w-btn-off"
@@ -139,7 +139,7 @@ const YourWorkouts = () => {
               >
                 <Trash size={25}></Trash>
               </Button>
-            </ButtonGroup>
+            </Row>
           </div>
         ))}
       </Container>
