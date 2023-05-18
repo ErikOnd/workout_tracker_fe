@@ -32,7 +32,9 @@ const Profile = () => {
   return (
     <Container fluid className="image-background p-0">
       <div className="second-layer">
-        <Header></Header>
+        <div className="header-correction">
+          <Header></Header>
+        </div>
         <Row className="profile-image-row d-flex justify-content-center">
           <Card className="profile-card">
             <Card.Img
@@ -66,9 +68,7 @@ const Profile = () => {
             </Card.Body>
           </Card>
         </Row>
-        <div className="footer-div">
-          <Footer />
-        </div>
+        <div className="footer-div">{/*     <Footer /> */}</div>
       </div>
       {userData && (
         <ProfileModal
