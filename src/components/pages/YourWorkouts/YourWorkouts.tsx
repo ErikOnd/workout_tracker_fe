@@ -5,6 +5,7 @@ import {
   Col,
   Collapse,
   Container,
+  Modal,
   OverlayTrigger,
   Row,
   Table,
@@ -23,6 +24,7 @@ import ObjectId from "bson-objectid";
 
 const YourWorkouts = () => {
   const [workouts, setWorkouts] = useState<WorkoutData[]>();
+  const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
   useEffect(() => {
     fetchWorkouts();
@@ -130,15 +132,43 @@ const YourWorkouts = () => {
               <Button
                 className="y-w-btn"
                 variant="danger"
-                onClick={() => {
-                  if (workout._id) {
-                    deleteWorkout(workout._id);
-                    fetchWorkouts();
-                  }
-                }}
+                onClick={() => setShowModal(true)}
               >
                 <Trash size={25}></Trash>
               </Button>
+              <Modal
+                show={showModal}
+                onHide={() => setShowModal(false)}
+                dialogClassName="custom-modal"
+              >
+                <Modal.Header closeButton>
+                  <Modal.Title>Confirm Deletion</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                  Are you sure you want to delete this workout?
+                </Modal.Body>
+                <Modal.Footer>
+                  <Button
+                    variant="secondary"
+                    className="confirm-delete"
+                    onClick={() => {
+                      if (workout._id) {
+                        deleteWorkout(workout._id);
+                        fetchWorkouts();
+                      }
+                      setShowModal(false);
+                    }}
+                  >
+                    Confirm
+                  </Button>
+                  <span
+                    className="orange-btn modal-text"
+                    onClick={() => setShowModal(false)}
+                  >
+                    Cancel
+                  </span>
+                </Modal.Footer>
+              </Modal>
             </Row>
           </div>
         ))}

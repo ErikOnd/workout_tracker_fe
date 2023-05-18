@@ -62,6 +62,11 @@
   box-shadow: none;
 }
 
+.btn-danger.focus,
+.btn-danger:focus {
+  border-color: rgb(54 54 60);
+}
+
 .y-w-btn.public-btn {
   background-color: #ff8a00;
 }
@@ -109,4 +114,11 @@
   position: absolute;
   bottom: 0;
   right: -51px;
+}
+
+.confirm-delete {
+  padding: 9px;
+  padding-inline: 20px;
+  border-radius: 15px;
+  font-size: 20px;
 }

@@ -7,6 +7,7 @@ import {
   Col,
   Container,
   Form,
+  Modal,
   Row,
 } from "react-bootstrap";
 import getProgressData from "../../../services/getProgressData";
@@ -27,6 +28,7 @@ import deleteChart from "../../../services/deleteChart";
 const Progress = () => {
   const [progressData, setProgressData] = useState<GroupedProgressData>({});
   const [searchTerm, setSearchTerm] = useState("");
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     getData();
@@ -172,15 +174,43 @@ const Progress = () => {
                     <Button
                       className="y-w-btn"
                       variant="danger"
-                      onClick={() => {
-                        handleRemoveAllTracks(exerciseId);
-                      }}
+                      onClick={() => setShowModal(true)}
                       style={{ minHeight: "60px" }}
                     >
                       Remove All
                     </Button>
                   </ButtonGroup>
                 </Col>
+                <Modal
+                  show={showModal}
+                  onHide={() => setShowModal(false)}
+                  dialogClassName="custom-modal"
+                >
+                  <Modal.Header closeButton>
+                    <Modal.Title>Confirm Deletion</Modal.Title>
+                  </Modal.Header>
+                  <Modal.Body>
+                    Are you sure you want to delete every every track for this
+                    exercise?
+                  </Modal.Body>
+                  <Modal.Footer>
+                    <Button
+                      variant="secondary"
+                      className="confirm-delete"
+                      onClick={() => {
+                        handleRemoveAllTracks(exerciseId);
+                      }}
+                    >
+                      Confirm
+                    </Button>
+                    <span
+                      className="orange-btn modal-text"
+                      onClick={() => setShowModal(false)}
+                    >
+                      Cancel
+                    </span>
+                  </Modal.Footer>
+                </Modal>
               </Row>
             );
           })}
