@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Container, ListGroup, Row } from "react-bootstrap";
+import { Alert, Container, ListGroup, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import saveWorkout from "../../../services/saveWorkout";
@@ -8,6 +8,7 @@ import { RotatingLines } from "react-loader-spinner";
 import { useNavigate, useParams } from "react-router-dom";
 
 import updateWorkout from "../../../services/updateWorkout";
+import { log } from "console";
 
 const ExerciseTable = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -16,6 +17,7 @@ const ExerciseTable = () => {
   const dispatch = useDispatch();
   const workout = useSelector((state: RootState) => state.workout.data);
   const user = useSelector((state: RootState) => state.user.data);
+  const [errorMessage, setErrorMessage] = useState(false);
 
   console.log("importParam:", importParam);
 
@@ -24,14 +26,32 @@ const ExerciseTable = () => {
     element?.scrollIntoView({ behavior: "smooth" });
   };
 
-  const handleSaveWorkout = () => {
+  const handleSaveWorkout = async () => {
     setIsLoading(true);
-    saveWorkout(workout);
-    dispatch(clearWorkout());
-    setTimeout(() => {
+    if (await saveWorkout(workout)) {
+      dispatch(clearWorkout());
+      setTimeout(() => {
+        setIsLoading(false);
+        navigate("/your-workouts/");
+      }, 1000);
+    } else {
+      setErrorMessage(true);
       setIsLoading(false);
-      navigate("/your-workouts/");
-    }, 1000);
+    }
+  };
+
+  const handleUpdateWorkout = async (workout_id: string) => {
+    setIsLoading(true);
+    if (await updateWorkout(workout, workout_id)) {
+      dispatch(clearWorkout());
+      setTimeout(() => {
+        setIsLoading(false);
+        navigate("/your-workouts/");
+      }, 1000);
+    } else {
+      setErrorMessage(true);
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -57,7 +77,11 @@ const ExerciseTable = () => {
             visible={true}
           />
         )}
-
+        {errorMessage && (
+          <Alert variant="danger" className="mt-1">
+            Workout couldn't get saved. Please check if all fields are filled in
+          </Alert>
+        )}
         {workout_id && importParam === "import" ? (
           <>
             {" "}
@@ -80,13 +104,7 @@ const ExerciseTable = () => {
           <div
             className="mt-5 orange-btn mr-auto save-workout-btn"
             onClick={() => {
-              setIsLoading(true);
-              updateWorkout(workout, workout_id);
-              dispatch(clearWorkout());
-              setTimeout(() => {
-                setIsLoading(false);
-                navigate("/your-workouts/");
-              }, 1000);
+              handleUpdateWorkout(workout_id);
             }}
           >
             Update Workout

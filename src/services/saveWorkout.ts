@@ -15,7 +15,9 @@ const saveWorkout = async (data: WorkoutData | null) => {
       body: JSON.stringify(data),
     });
     if (!res.ok) {
-      throw new Error(await res.text());
+      return false;
+    } else {
+      return true;
     }
   } catch (error) {
     console.log(error);

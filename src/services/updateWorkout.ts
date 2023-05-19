@@ -14,7 +14,9 @@ const updateWorkout = async (data: WorkoutData | null, workout_id: string) => {
       body: JSON.stringify(data),
     });
     if (!res.ok) {
-      throw new Error(await res.text());
+      return false;
+    } else {
+      return true;
     }
   } catch (error) {
     console.log(error);
