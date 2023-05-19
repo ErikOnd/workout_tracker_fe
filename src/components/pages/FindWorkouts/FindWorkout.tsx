@@ -80,8 +80,8 @@ const FindWorkout = () => {
             </Form.Group>
           </Col>
         </Row>
-        <div className="find-workout-table-div">
-          <Table striped bordered hover variant="dark">
+        <div className="find-workout-table-div pb-5">
+          <Table hover className="your-w-table text-left">
             <thead>
               <tr>
                 <th>Workout Name</th>

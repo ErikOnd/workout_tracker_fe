@@ -1,10 +1,15 @@
-.find-workout-table-div {
+/* .find-workout-table-div {
   max-height: 300px;
-  overflow-y: scroll;
+  overflow-y: auto;
+} */
+
+.find-workout-table-div::-webkit-scrollbar {
+  width: 0.5em;
+  background-color: #f5f5f5;
 }
 
-.find-workout-name {
-  cursor: pointer;
+.find-workout-table-div::-webkit-scrollbar-thumb {
+  background-color: #000000;
 }
 
 .find-workout-name:hover {
@@ -13,4 +18,5 @@
 
 .like-workout {
   cursor: pointer;
+  color: #ff8a00;
 }
