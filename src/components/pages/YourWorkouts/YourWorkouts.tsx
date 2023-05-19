@@ -14,7 +14,6 @@ import {
 import "./YourWorkouts.css";
 import getWorkouts from "../../../services/getWorkouts";
 import Header from "../../layout/Header";
-import { Exercise, WorkoutList } from "../../../interfaces/WorkoutList";
 import { PencilSquare, PeopleFill, Trash } from "react-bootstrap-icons";
 import deleteWorkout from "../../../services/deleteWorkout";
 import { useNavigate } from "react-router-dom";
@@ -25,6 +24,7 @@ import ObjectId from "bson-objectid";
 const YourWorkouts = () => {
   const [workouts, setWorkouts] = useState<WorkoutData[]>();
   const [showModal, setShowModal] = useState(false);
+  const [workout_id, setWorkout_id] = useState<ObjectId>();
   const navigate = useNavigate();
   useEffect(() => {
     fetchWorkouts();
@@ -53,6 +53,28 @@ const YourWorkouts = () => {
         <Col className="your-workouts-header">Your Workouts</Col>
       </Row>
       <Container>
+        {workouts !== undefined && workouts.length === 0 && (
+          <>
+            <Row>
+              <Col>
+                You don't have any workouts yet, let's start by creating one
+              </Col>
+            </Row>
+            <Row className="mt-5">
+              <Col>
+                {" "}
+                <span
+                  className="orange-btn-header p-3 no-workout-create"
+                  onClick={() => {
+                    navigate(`/create-workout/`);
+                  }}
+                >
+                  Create
+                </span>
+              </Col>
+            </Row>
+          </>
+        )}
         {workouts?.map((workout) => (
           <div className="tableAndBtn">
             <h2 className="your-w-header">{workout.workout_name}</h2>
@@ -132,46 +154,47 @@ const YourWorkouts = () => {
               <Button
                 className="y-w-btn"
                 variant="danger"
-                onClick={() => setShowModal(true)}
+                onClick={() => {
+                  setShowModal(true);
+                  setWorkout_id(workout._id);
+                }}
               >
                 <Trash size={25}></Trash>
               </Button>
-              <Modal
-                show={showModal}
-                onHide={() => setShowModal(false)}
-                dialogClassName="custom-modal"
-              >
-                <Modal.Header closeButton>
-                  <Modal.Title>Confirm Deletion</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                  Are you sure you want to delete this workout?
-                </Modal.Body>
-                <Modal.Footer>
-                  <Button
-                    variant="secondary"
-                    className="confirm-delete"
-                    onClick={() => {
-                      if (workout._id) {
-                        deleteWorkout(workout._id);
-                        fetchWorkouts();
-                      }
-                      setShowModal(false);
-                    }}
-                  >
-                    Confirm
-                  </Button>
-                  <span
-                    className="orange-btn modal-text"
-                    onClick={() => setShowModal(false)}
-                  >
-                    Cancel
-                  </span>
-                </Modal.Footer>
-              </Modal>
             </Row>
           </div>
         ))}
+        <Modal
+          show={showModal}
+          onHide={() => setShowModal(false)}
+          dialogClassName="custom-modal"
+        >
+          <Modal.Header closeButton>
+            <Modal.Title>Confirm Deletion</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>Are you sure you want to delete this workout?</Modal.Body>
+          <Modal.Footer>
+            <Button
+              variant="secondary"
+              className="confirm-delete"
+              onClick={async () => {
+                if (workout_id) {
+                  await deleteWorkout(workout_id);
+                  fetchWorkouts();
+                }
+                setShowModal(false);
+              }}
+            >
+              Confirm
+            </Button>
+            <span
+              className="orange-btn modal-text"
+              onClick={() => setShowModal(false)}
+            >
+              Cancel
+            </span>
+          </Modal.Footer>
+        </Modal>
       </Container>
     </Container>
   );
