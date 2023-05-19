@@ -7,6 +7,7 @@ import {
   Col,
   Container,
   Form,
+  Image,
   Modal,
   Row,
 } from "react-bootstrap";
@@ -32,7 +33,7 @@ const Progress = () => {
   const [mobileGraph, setMobileGraph] = useState(false);
 
   useEffect(() => {
-    const isMobile = window.innerWidth < 576; // Adjust the value to your desired breakpoint
+    const isMobile = window.innerWidth < 576;
     if (isMobile) {
       setMobileGraph(true);
     }
@@ -119,6 +120,22 @@ const Progress = () => {
             </Form.Group>
           </Col>
         </Row>
+        {Object.keys(progressData).length === 0 && (
+          <Row>
+            <Col>
+              No progress tracked yet. Edit a Workout and select Track Exercise
+              <Row>
+                <Col>
+                  <Image
+                    fluid
+                    src="https://res.cloudinary.com/dyy38u8x7/image/upload/v1684507629/Screenshot_2023-05-19_at_16.45.06_yviypk.png"
+                  ></Image>
+                </Col>
+              </Row>
+            </Col>
+          </Row>
+        )}
+
         <Row className="justify-content-center">
           {filteredExercises.map((progressItems, index) => {
             const exerciseId = progressItems[0].exercise_id._id;
@@ -203,7 +220,6 @@ const Progress = () => {
                       className="y-w-btn remove-last-pr"
                       variant="warning"
                       onClick={() => {
-                        console.log(progressItems);
                         const lastIndex = progressData[exerciseId].length;
                         const trackId =
                           progressData[exerciseId][lastIndex - 1]._id;
