@@ -98,7 +98,7 @@
 
 .exercise-list-container {
   position: sticky;
-  top: 248px;
+  top: 0px;
 }
 
 .exercise-list {
