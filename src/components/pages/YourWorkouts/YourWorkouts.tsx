@@ -5,6 +5,7 @@ import {
   Col,
   Collapse,
   Container,
+  Image,
   Modal,
   OverlayTrigger,
   Row,
@@ -62,15 +63,11 @@ const YourWorkouts = () => {
             </Row>
             <Row className="mt-5">
               <Col>
-                {" "}
-                <span
-                  className="orange-btn-header p-3 no-workout-create"
-                  onClick={() => {
-                    navigate(`/create-workout/`);
-                  }}
-                >
-                  Create
-                </span>
+                <Image
+                  fluid
+                  src="https://res.cloudinary.com/dyy38u8x7/image/upload/v1684511278/Screenshot_2023-05-19_at_17.47.40_v5nqli.png"
+                  className="img-helper"
+                ></Image>
               </Col>
             </Row>
           </>

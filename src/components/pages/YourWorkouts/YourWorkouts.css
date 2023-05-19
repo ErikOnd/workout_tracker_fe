@@ -126,3 +126,8 @@
 .no-workout-create {
   font-weight: 700;
 }
+
+.img-helper {
+  border: 2px solid rgb(155 155 158);
+  border-radius: 10px;
+}
