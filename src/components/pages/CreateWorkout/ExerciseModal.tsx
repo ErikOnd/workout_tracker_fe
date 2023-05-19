@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Button, Modal, Row, Col, Form, Image } from "react-bootstrap";
 import AllExercises from "../../../interfaces/allExercises";
 import { useDispatch } from "react-redux";
@@ -22,11 +22,20 @@ const ExerciseModal = ({
   allExercises,
   exerciseIdModal,
 }: ExerciseModalProps) => {
+  useEffect(() => {
+    setSearchTerm("");
+    setSelectedBodyPart("");
+    setSelectedTarget("");
+    setCurrentPage(1);
+  }, []);
+
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedBodyPart, setSelectedBodyPart] = useState("");
   const [selectedTarget, setSelectedTarget] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const exercisesPerPage = 48;
+
+  const scrollRef = useRef<HTMLDivElement>(null);
 
   const dispatch: AppDispatch = useDispatch();
 
@@ -50,6 +59,14 @@ const ExerciseModal = ({
     indexOfLastExercise
   );
 
+  const clearSearchData = () => {
+    console.log("clearing seach data");
+    setSearchTerm("");
+    setSelectedBodyPart("");
+    setSelectedTarget("");
+    setCurrentPage(1);
+  };
+
   const handleBodyPartChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedBodyPart(e.target.value);
   };
@@ -59,13 +76,23 @@ const ExerciseModal = ({
   };
 
   const handlePageChange = (pageNumber: number) => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollTop = 0;
+    }
     setCurrentPage(pageNumber);
   };
 
   const pageNumbers = Math.ceil(filteredExercises.length / exercisesPerPage);
 
   return (
-    <Modal show={isModalOpen} onHide={() => setIsModalOpen(false)} size="xl">
+    <Modal
+      show={isModalOpen}
+      onHide={() => {
+        setIsModalOpen(false);
+        clearSearchData();
+      }}
+      size="xl"
+    >
       <Modal.Body>
         <Row className="align-items-center my-3">
           <Col>
@@ -126,7 +153,10 @@ const ExerciseModal = ({
           </Col>
         </Row>
 
-        <div style={{ maxHeight: "500px", overflowY: "scroll" }}>
+        <div
+          ref={scrollRef}
+          style={{ maxHeight: "500px", overflowY: "scroll" }}
+        >
           <Row xs={1} md={2} xl={4}>
             {currentExercises.map((exercise) => (
               <Col key={exercise._id} className="modal-ex-col">
