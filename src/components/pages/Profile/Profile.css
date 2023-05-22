@@ -80,3 +80,7 @@
 .header-correction {
   margin-right: 15px;
 }
+
+.card-profile-img {
+  border: 2px solid rgb(255, 255, 255, 0.7);
+}

@@ -9,6 +9,8 @@ import getUserData from "../../../services/getUserData";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import { setUser } from "../../../redux/reducers/userSlice";
+import getLikesAmount from "../../../services/getLikesAmount";
+import getWorkoutsAmount from "../../../services/getWorkoutAmount";
 
 const Profile = () => {
   const [show, setShow] = useState(false);
@@ -17,16 +19,32 @@ const Profile = () => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const accessToken = localStorage.getItem("accessToken");
+  const [totalLikes, setTotalLikes] = useState<number>();
+  const [totalWorkouts, setTotalWorkouts] = useState<number>();
 
   useEffect(() => {
     reloadUserData();
+    fetchWorkoutCount();
+    fetchLikeCount();
   }, []);
+
+  console.log("totalLikes:", totalLikes, "totalWorkouts", totalWorkouts);
 
   const reloadUserData = async () => {
     if (accessToken) {
       const reloadData = await getUserData(accessToken);
       dispatch(setUser(reloadData));
     }
+  };
+
+  const fetchWorkoutCount = async () => {
+    const likesAmount = await getWorkoutsAmount();
+    setTotalWorkouts(likesAmount.count);
+  };
+
+  const fetchLikeCount = async () => {
+    const workoutAmount = await getLikesAmount();
+    setTotalLikes(workoutAmount.totalLikes);
   };
 
   return (
@@ -38,7 +56,7 @@ const Profile = () => {
         <Row className="profile-image-row d-flex justify-content-center">
           <Card className="profile-card">
             <Card.Img
-              className="d-none d-sm-block"
+              className="d-none d-sm-block card-profile-img"
               variant="top"
               src={userData?.avatar}
             />
@@ -50,14 +68,12 @@ const Profile = () => {
               <Card.Text>
                 <Row className="d-flex justify-content-between profile-row mt-3">
                   <span className="highlight">Workout Likes:</span>
-                  <span className="ml-auto">3</span>
+                  <span className="ml-auto">{totalLikes}</span>
                 </Row>
+
                 <Row className="d-flex justify-content-between profile-row mt-3">
-                  <span className="highlight">General Progress:</span>{" "}
-                  <span>7.43%</span>
-                </Row>
-                <Row className="d-flex justify-content-between profile-row mt-3">
-                  <span className="highlight">Workouts:</span> <span>4</span>
+                  <span className="highlight">Workouts:</span>{" "}
+                  <span>{totalWorkouts}</span>
                 </Row>
               </Card.Text>
               <PencilSquare
