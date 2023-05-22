@@ -50,7 +50,7 @@ const Profile = () => {
               <Card.Text>
                 <Row className="d-flex justify-content-between profile-row mt-3">
                   <span className="highlight">Workout Likes:</span>
-                  <span className="ml-auto">34</span>
+                  <span className="ml-auto">3</span>
                 </Row>
                 <Row className="d-flex justify-content-between profile-row mt-3">
                   <span className="highlight">General Progress:</span>{" "}
