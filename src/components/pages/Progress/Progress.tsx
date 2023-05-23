@@ -31,6 +31,7 @@ const Progress = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [mobileGraph, setMobileGraph] = useState(false);
+  const [currentExerciseId, setCurrentExerciseId] = useState<string>("");
 
   useEffect(() => {
     const isMobile = window.innerWidth < 576;
@@ -86,7 +87,8 @@ const Progress = () => {
 
   const handleRemoveAllTracks = async (exerciseId: string) => {
     await deleteChart(exerciseId);
-    getData();
+
+    window.location.reload();
   };
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -233,7 +235,10 @@ const Progress = () => {
                     <Button
                       className="y-w-btn"
                       variant="danger"
-                      onClick={() => setShowModal(true)}
+                      onClick={() => {
+                        setShowModal(true);
+                        setCurrentExerciseId(exerciseId);
+                      }}
                       style={{ minHeight: "60px" }}
                     >
                       Remove All
@@ -257,7 +262,7 @@ const Progress = () => {
                       variant="secondary"
                       className="confirm-delete"
                       onClick={() => {
-                        handleRemoveAllTracks(exerciseId);
+                        handleRemoveAllTracks(currentExerciseId);
                         setShowModal(false);
                       }}
                     >
