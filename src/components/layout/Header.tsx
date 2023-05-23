@@ -9,7 +9,7 @@ const Header = () => {
   const navigate = useNavigate();
   return (
     <Navbar bg="transparent" expand="lg" variant="dark">
-      <Container fluid className="px-5 align-items-start">
+      <Container fluid className=" align-items-start">
         <Navbar.Brand>
           <Image
             src={logo}
