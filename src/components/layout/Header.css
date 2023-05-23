@@ -33,3 +33,8 @@
   color: white;
   font-weight: 500;
 }
+
+.header-logo {
+  width: 100px;
+  cursor: pointer;
+}

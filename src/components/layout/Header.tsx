@@ -1,14 +1,24 @@
 import React from "react";
-import { Navbar, Container, Nav, NavDropdown } from "react-bootstrap";
+import { Navbar, Container, Nav, NavDropdown, Image } from "react-bootstrap";
 import "./Header.css";
 import { BoxArrowRight } from "react-bootstrap-icons";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import logo from "../../assets/logo.png";
 
 const Header = () => {
+  const navigate = useNavigate();
   return (
     <Navbar bg="transparent" expand="lg" variant="dark">
       <Container fluid className="px-5 align-items-start">
-        <Navbar.Brand href="#"></Navbar.Brand>
+        <Navbar.Brand>
+          <Image
+            src={logo}
+            className="header-logo"
+            onClick={() => {
+              navigate("/profile");
+            }}
+          ></Image>
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls="navbar-nav" />
         <Navbar.Collapse id="navbar-nav">
           <Nav className="ml-auto mt-2 d-flex align-items-center">
