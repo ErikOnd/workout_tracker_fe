@@ -3,7 +3,6 @@ const accessToken = localStorage.getItem("accessToken");
 
 const getPublicWorkouts = async () => {
   try {
-    console.log(`${apiUrl}/workouts/public`);
     const res = await fetch(`${apiUrl}/workouts/public`, {
       headers: {
         Authorization: `Bearer ${accessToken}`,

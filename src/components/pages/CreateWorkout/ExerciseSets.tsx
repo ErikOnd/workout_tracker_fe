@@ -82,7 +82,6 @@ const ExerciseSets = ({
                 <Button
                   variant="danger"
                   onClick={() => {
-                    console.log("remove_set:", set._id);
                     dispatch(
                       removeSet({ exerciseId: exerciseId, setId: set._id })
                     );

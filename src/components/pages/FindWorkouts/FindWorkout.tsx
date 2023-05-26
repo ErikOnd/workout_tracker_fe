@@ -30,7 +30,6 @@ const FindWorkout = () => {
 
   const getfilteredData = async () => {
     const res = await getPublicWorkoutsFiltered(searchTerm);
-    console.log("filtered workouts", res);
     setPublicWorkouts(res);
   };
 
@@ -41,7 +40,6 @@ const FindWorkout = () => {
   const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
       event.preventDefault();
-      console.log("fire search");
       getfilteredData();
     }
   };

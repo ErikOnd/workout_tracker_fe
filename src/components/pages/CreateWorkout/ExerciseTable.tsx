@@ -19,8 +19,6 @@ const ExerciseTable = () => {
   const user = useSelector((state: RootState) => state.user.data);
   const [errorMessage, setErrorMessage] = useState(false);
 
-  console.log("importParam:", importParam);
-
   const scrollToDiv = (exerciseId: string) => {
     const element = document.getElementById(exerciseId);
     element?.scrollIntoView({ behavior: "smooth" });

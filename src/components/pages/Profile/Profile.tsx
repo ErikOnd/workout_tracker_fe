@@ -28,8 +28,6 @@ const Profile = () => {
     fetchLikeCount();
   }, []);
 
-  console.log("totalLikes:", totalLikes, "totalWorkouts", totalWorkouts);
-
   const reloadUserData = async () => {
     if (accessToken) {
       const reloadData = await getUserData(accessToken);

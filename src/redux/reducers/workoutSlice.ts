@@ -79,12 +79,10 @@ export const workoutSlice = createSlice({
     },
     removeSet: (state, action) => {
       const { exerciseId, setId } = action.payload;
-      console.log(exerciseId, setId);
       if (state.data) {
         const exercise = state.data.exercises.find(
           (exercise) => exercise._id === exerciseId
         );
-        console.log(exercise);
         if (exercise) {
           if (exercise.sets) {
             exercise.sets = exercise.sets.filter((set) => set._id !== setId);

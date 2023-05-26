@@ -60,7 +60,6 @@ const ExerciseModal = ({
   );
 
   const clearSearchData = () => {
-    console.log("clearing seach data");
     setSearchTerm("");
     setSelectedBodyPart("");
     setSelectedTarget("");
