@@ -1,6 +1,6 @@
 # Workout Tracker
 
-This is a workout tracker app that allows users to create an account and track their workouts. Users can also create an account directly via Google or Apple.
+This is a workout tracker app that allows users to create an account and track their workouts. Users can also create an account directly via Google.
 
 ## Design
 
