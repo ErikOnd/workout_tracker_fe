@@ -1,11 +1,21 @@
 import React, { useEffect, useState } from "react";
-import { Container, Form, Button, Alert } from "react-bootstrap";
+import {
+  Container,
+  Form,
+  Button,
+  Alert,
+  Row,
+  Col,
+  Image,
+} from "react-bootstrap";
 import { Link, Navigate } from "react-router-dom";
 import GoogleButton from "react-google-button";
 import userLogin from "../../../services/userLogin";
 import LoginData from "../../../interfaces/LoginData";
 import storeAccessToken from "../../../helpers/storeAccessToken";
 import { useNavigate } from "react-router-dom";
+import logo from "../../../assets/logo.png";
+import "./Login.css";
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
@@ -44,6 +54,10 @@ const Login = () => {
       style={{ height: "100vh" }}
     >
       <div style={{ maxWidth: 400 }}>
+        <Row className="justify-content-center mb-5">
+          <Image className="login-logo" src={logo}></Image>
+        </Row>
+
         <Form onSubmit={handleSubmit}>
           <Form.Group controlId="formEmail">
             <Form.Label>Email</Form.Label>

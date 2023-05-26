@@ -7,3 +7,5 @@ This is a workout tracker app that allows users to create an account and track t
 - **General design:** The design should be kept very clear and minimalistic.
 
 Link to backend repository: [https://github.com/ErikOnd/workout_tracker_be](https://github.com/ErikOnd/workout_tracker_be)
+
+Live preview: https://workout-tracker-fe.vercel.app/login

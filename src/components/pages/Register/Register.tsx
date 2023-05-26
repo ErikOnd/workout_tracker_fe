@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Container, Form, Button, Alert } from "react-bootstrap";
+import { Container, Form, Button, Alert, Row, Image } from "react-bootstrap";
 import { Link, Navigate } from "react-router-dom";
 import GoogleButton from "react-google-button";
 import RegisterData from "../../../interfaces/RegisterData";
 import userRegistration from "../../../services/userRegistration";
 import storeAccessToken from "../../../helpers/storeAccessToken";
 import { useNavigate } from "react-router-dom";
+import logo from "../../../assets/logo.png";
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
@@ -78,6 +79,9 @@ const Register = () => {
       style={{ height: "100vh" }}
     >
       <div style={{ maxWidth: 400 }}>
+        <Row className="justify-content-center mb-5">
+          <Image className="login-logo" src={logo}></Image>
+        </Row>
         <Form onSubmit={handleSubmit}>
           <Form.Group controlId="formName">
             <Form.Label>Username</Form.Label>
