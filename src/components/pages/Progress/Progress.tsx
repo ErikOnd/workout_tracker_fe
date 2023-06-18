@@ -42,6 +42,8 @@ const Progress = () => {
     getData();
   }, []);
 
+  console.log(progressData);
+
   const getData = async () => {
     const data: ProgressItem[] = await getProgressData();
     const groupedData = groupByExerciseId(data);
@@ -130,7 +132,7 @@ const Progress = () => {
                 <Col>
                   <Image
                     fluid
-                    src="https://res.cloudinary.com/dyy38u8x7/image/upload/v1684507629/Screenshot_2023-05-19_at_16.45.06_yviypk.png"
+                    src="https://res.cloudinary.com/dyy38u8x7/image/upload/v1687094461/workoutTracker/Screenshot_2023-06-18_at_15.20.53_jhbi6k.png"
                   ></Image>
                 </Col>
               </Row>

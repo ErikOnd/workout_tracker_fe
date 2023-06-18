@@ -65,8 +65,8 @@ const YourWorkouts = () => {
               <Col>
                 <Image
                   fluid
-                  src="https://res.cloudinary.com/dyy38u8x7/image/upload/v1684511278/Screenshot_2023-05-19_at_17.47.40_v5nqli.png"
-                  className="img-helper"
+                  src="https://res.cloudinary.com/dyy38u8x7/image/upload/v1687094647/workoutTracker/Screenshot_2023-06-18_at_15.23.53_naqbhm.png"
+                  className="img-helper pt-2"
                 ></Image>
               </Col>
             </Row>
